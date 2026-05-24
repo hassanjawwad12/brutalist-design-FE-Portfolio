@@ -1,0 +1,61 @@
+/* ===========================================================
+   Design Tokens — Brutalist-Glass Hybrid
+   Palette: Concrete + Acid Yellow
+   =========================================================== */
+
+:root {
+  /* ------ Color ------ */
+  --c-concrete: #edeae3;
+  --c-concrete-deep: #e2dfd6;
+  --c-ink: #141414;
+  --c-ink-soft: #2a2a2a;
+  --c-ink-muted: #6b6b6b;
+  --c-acid: #e4ff3a;
+  --c-acid-deep: #c7e116;
+  --c-glass-tint: #b8c4d6;
+  --c-rule: rgba(20, 20, 20, 0.18);
+  --c-rule-strong: rgba(20, 20, 20, 0.6);
+
+  /* ------ Type scale (fluid) — reduced ~2-3px ------ */
+  --text-2xs: clamp(0.5625rem, 0.54rem + 0.1vw, 0.625rem);
+  --text-xs: clamp(0.6875rem, 0.66rem + 0.15vw, 0.75rem);
+  --text-sm: clamp(0.75rem, 0.72rem + 0.2vw, 0.8125rem);
+  --text-base: clamp(0.875rem, 0.84rem + 0.25vw, 0.9375rem);
+  --text-lg: clamp(0.9375rem, 0.9rem + 0.3vw, 1.125rem);
+  --text-xl: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
+  --text-2xl: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+  --text-3xl: clamp(2rem, 1.6rem + 1.7vw, 3rem);
+  --text-display: clamp(2.5rem, 1.7rem + 3.4vw, 4.75rem);
+  --text-mega: clamp(3.5rem, 1.8rem + 8.5vw, 10rem);
+  --text-giga: clamp(4.5rem, 1rem + 16vw, 17rem);
+
+  /* ------ Spacing ------ */
+  --gutter: clamp(1.25rem, 1rem + 1.5vw, 2.5rem);
+  --space-section: clamp(5rem, 4rem + 6vw, 10rem);
+
+  /* ------ Motion ------ */
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 640ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* ------ Layout ------ */
+  --max-w: 1440px;
+  --rule-w: 1px;
+  --rule-w-bold: 2px;
+
+  /* ------ Glass ------ */
+  --glass-bg: rgba(184, 196, 214, 0.16);
+  --glass-bg-strong: rgba(184, 196, 214, 0.28);
+  --glass-border: rgba(20, 20, 20, 0.12);
+  --glass-blur: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+  }
+}
