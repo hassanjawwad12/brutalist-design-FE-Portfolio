@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { skills } from "@/data/skills";
 import { useInView } from "@/hooks/useInView";
+import { useTheme } from "@/components/providers/ThemeProvider";
 
 const SkillsPhysics = dynamic(
   () => import("@/components/three/SkillsPhysics"),
@@ -11,6 +12,8 @@ const SkillsPhysics = dynamic(
 
 export function Skills() {
   const [arenaRef, inView] = useInView<HTMLDivElement>({ rootMargin: "300px" });
+  const { theme } = useTheme();
+  const showPhysics = theme === "brutalist";
   return (
     <section id="skills" className="border-b border-[color:var(--c-ink)]">
       <div className="mx-auto w-full max-w-[var(--max-w)] px-[var(--gutter)] pt-[var(--space-section)] pb-20">
@@ -25,18 +28,19 @@ export function Skills() {
             </h2>
           </div>
           <p className="hidden md:block max-w-xs text-[length:var(--text-sm)] text-[color:var(--c-ink-soft)] text-right">
-            The skills below are simulated rigid bodies — click and drag to
-            fling them around. Yellow chips are backend, ink chips are
-            frontend.
+            {showPhysics
+              ? "The skills below are simulated rigid bodies — click and drag to fling them around. Yellow chips are backend, ink chips are frontend."
+              : "A typeset index of the stack — grouped by surface, oldest to newest. Switch to the brutalist theme to play with the physics arena."}
           </p>
         </header>
 
-        {/* Physics arena */}
-        <div
-          ref={arenaRef}
-          className="relative mt-10 aspect-[16/9] w-full border-2 border-[color:var(--c-ink)] bg-[color:var(--c-concrete-deep)] overflow-hidden"
-        >
-          {inView && <SkillsPhysics />}
+        {showPhysics && (
+          /* Physics arena */
+          <div
+            ref={arenaRef}
+            className="relative mt-10 aspect-[16/9] w-full border-2 border-[color:var(--c-ink)] bg-[color:var(--c-concrete-deep)] overflow-hidden"
+          >
+            {inView && <SkillsPhysics />}
           {/* Brutalist corner labels */}
           <span className="pointer-events-none absolute top-3 left-4 mono text-[length:var(--text-2xs)] tracking-[0.28em] text-[color:var(--c-ink)]">
             ↳ DRAG ME
@@ -47,10 +51,11 @@ export function Skills() {
           <span className="pointer-events-none absolute bottom-3 left-4 mono text-[length:var(--text-2xs)] tracking-[0.28em] text-[color:var(--c-ink)]">
             {skills.length} ITEMS
           </span>
-          <span className="pointer-events-none absolute bottom-3 right-4 mono text-[length:var(--text-2xs)] tracking-[0.28em] text-[color:var(--c-ink)]">
-            ⬇ GRAVITY ON
-          </span>
-        </div>
+            <span className="pointer-events-none absolute bottom-3 right-4 mono text-[length:var(--text-2xs)] tracking-[0.28em] text-[color:var(--c-ink)]">
+              ⬇ GRAVITY ON
+            </span>
+          </div>
+        )}
 
         {/* Static legend for reduced-motion / accessibility */}
         <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">

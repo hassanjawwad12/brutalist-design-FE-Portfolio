@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { profile } from "@/data/profile";
+import { ThemeSwitcher } from "@/components/ui/ThemeSwitcher";
 
 const NAV = [
   { label: "Work", href: "#work" },
@@ -31,11 +32,14 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <span className="inline-block size-1.5 rounded-full bg-[color:var(--c-acid-deep)] shadow-[0_0_0_3px_rgba(228,255,58,0.25)]" />
-          <span className="mono text-[length:var(--text-2xs)] tracking-[0.2em]">
-            SELECTIVELY AVAILABLE
-          </span>
+        <div className="flex items-center gap-3">
+          <ThemeSwitcher />
+          <div className="hidden lg:flex items-center gap-2">
+            <span className="inline-block size-1.5 rounded-full bg-[color:var(--c-acid-deep)] shadow-[0_0_0_3px_rgba(228,255,58,0.25)]" />
+            <span className="mono text-[length:var(--text-2xs)] tracking-[0.2em]">
+              SELECTIVELY AVAILABLE
+            </span>
+          </div>
         </div>
       </div>
     </header>

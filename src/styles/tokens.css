@@ -52,6 +52,48 @@
   --glass-blur: 18px;
 }
 
+/* ===========================================================
+   Theme — Swiss (monochrome + red)
+   =========================================================== */
+[data-theme="swiss"] {
+  --c-concrete: #ffffff;
+  --c-concrete-deep: #f4f4f4;
+  --c-ink: #000000;
+  --c-ink-soft: #1a1a1a;
+  --c-ink-muted: #666666;
+  --c-acid: #e11d2b;
+  --c-acid-deep: #b71722;
+  --c-glass-tint: #e0e0e0;
+  --c-rule: rgba(0, 0, 0, 0.2);
+  --c-rule-strong: rgba(0, 0, 0, 0.85);
+  --glass-bg: rgba(0, 0, 0, 0.04);
+  --glass-bg-strong: rgba(0, 0, 0, 0.06);
+  --glass-border: rgba(0, 0, 0, 0.2);
+  --glass-blur: 0px;
+  --rule-w: 1px;
+  --rule-w-bold: 3px;
+}
+
+/* ===========================================================
+   Theme — Editorial (cream + burgundy + serif)
+   =========================================================== */
+[data-theme="editorial"] {
+  --c-concrete: #f3ece0;
+  --c-concrete-deep: #e8dfd0;
+  --c-ink: #1c130d;
+  --c-ink-soft: #3a2a20;
+  --c-ink-muted: #8a7460;
+  --c-acid: #7b2d26;
+  --c-acid-deep: #5e1f1a;
+  --c-glass-tint: #d8c8b4;
+  --c-rule: rgba(28, 19, 13, 0.22);
+  --c-rule-strong: rgba(28, 19, 13, 0.6);
+  --glass-bg: rgba(232, 223, 208, 0.7);
+  --glass-bg-strong: rgba(232, 223, 208, 0.9);
+  --glass-border: rgba(28, 19, 13, 0.15);
+  --glass-blur: 0px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-fast: 0ms;

@@ -63,7 +63,7 @@ export function Hero() {
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <a
                 href="#work"
-                className="group relative inline-flex items-center gap-3 bg-[color:var(--c-acid)] text-[color:var(--c-ink)] px-5 py-3 mono text-[length:var(--text-xs)] tracking-[0.24em] font-semibold border border-[color:var(--c-ink)] shadow-[3px_3px_0_0_var(--c-ink)] hover:bg-[color:var(--c-ink)] hover:text-[color:var(--c-acid)] hover:shadow-[5px_5px_0_0_var(--c-ink)] hover:-translate-x-[2px] hover:-translate-y-[2px] transition-all"
+                className="group relative inline-flex items-center gap-3 bg-[color:var(--c-acid)] text-[color:var(--c-ink)] px-5 py-3 mono text-[length:var(--text-xs)] tracking-[0.24em] font-semibold border border-[color:var(--c-ink)] shadow-[3px_3px_0_0_var(--c-ink)] hover:bg-[color:var(--c-acid-deep)] hover:text-[color:var(--c-ink)] hover:shadow-[5px_5px_0_0_var(--c-ink)] hover:-translate-x-[2px] hover:-translate-y-[2px] transition-all"
               >
                 SEE THE WORK
                 <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
