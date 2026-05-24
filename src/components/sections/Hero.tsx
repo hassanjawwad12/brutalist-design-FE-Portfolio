@@ -70,7 +70,7 @@ export function Hero() {
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-3 px-5 py-3 mono text-[length:var(--text-xs)] tracking-[0.24em] border border-[color:var(--c-ink)] hover:bg-[color:var(--c-ink)] hover:text-[color:var(--c-concrete)] transition-colors"
+                className="inline-flex items-center gap-3 px-5 py-3 mono text-[length:var(--text-xs)] tracking-[0.24em] border border-[color:var(--c-ink)] hover:bg-[color:var(--c-acid)] hover:text-[color:var(--c-ink)] transition-colors"
               >
                 START A PROJECT
               </a>
