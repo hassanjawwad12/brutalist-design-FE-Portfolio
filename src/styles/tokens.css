@@ -1,97 +1,112 @@
 /* ===========================================================
-   Design Tokens — Brutalist-Glass Hybrid
-   Palette: Concrete + Acid Yellow
+   Design Tokens — Hacker Terminal (phosphor green on black)
    =========================================================== */
 
 :root {
-  /* ------ Color ------ */
-  --c-concrete: #edeae3;
-  --c-concrete-deep: #e2dfd6;
-  --c-ink: #141414;
-  --c-ink-soft: #2a2a2a;
-  --c-ink-muted: #6b6b6b;
-  --c-acid: #e4ff3a;
-  --c-acid-deep: #c7e116;
-  --c-glass-tint: #b8c4d6;
-  --c-rule: rgba(20, 20, 20, 0.18);
-  --c-rule-strong: rgba(20, 20, 20, 0.6);
+  /* ------ Base surfaces ------ */
+  --c-black: #000000;
+  --c-bg: #030503;
+  --c-bg-soft: #050a05;
+  --c-bg-elevated: #081108;
+  --c-panel: #050a05;
+  --c-sidebar: #030603;
+  --c-editor: #020402;
+  --c-gutter: #060c06;
+  --c-statusbar: #000000;
+  --c-titlebar: #000000;
 
-  /* ------ Type scale (fluid) — reduced ~2-3px ------ */
-  --text-2xs: clamp(0.5625rem, 0.54rem + 0.1vw, 0.625rem);
-  --text-xs: clamp(0.6875rem, 0.66rem + 0.15vw, 0.75rem);
-  --text-sm: clamp(0.75rem, 0.72rem + 0.2vw, 0.8125rem);
-  --text-base: clamp(0.875rem, 0.84rem + 0.25vw, 0.9375rem);
-  --text-lg: clamp(0.9375rem, 0.9rem + 0.3vw, 1.125rem);
-  --text-xl: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
-  --text-2xl: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
-  --text-3xl: clamp(2rem, 1.6rem + 1.7vw, 3rem);
-  --text-display: clamp(2.5rem, 1.7rem + 3.4vw, 4.75rem);
-  --text-mega: clamp(3.5rem, 1.8rem + 8.5vw, 10rem);
-  --text-giga: clamp(4.5rem, 1rem + 16vw, 17rem);
+  /* ------ Foreground (phosphor) ------ */
+  --c-fg: #33ff33;          /* main terminal green */
+  --c-fg-bright: #7dff7d;   /* highlights, hot text */
+  --c-fg-soft: #28c628;     /* paragraphs */
+  --c-fg-muted: #0e8a0e;    /* secondary */
+  --c-fg-dim: #0a4a0a;      /* dim labels */
+  --c-fg-faint: #053a05;    /* very subtle */
+
+  /* ------ Accents ------ */
+  --c-acid: #33ff33;        /* primary green */
+  --c-acid-bright: #7dff7d;
+  --c-acid-deep: #1fc91f;
+  --c-amber: #ffb000;       /* warm amber — warnings, emphasis */
+  --c-amber-bright: #ffd24d;
+  --c-amber-deep: #c78800;
+  --c-danger: #ff3838;
+  --c-danger-deep: #b81f1f;
+
+  /* ------ Borders / rules ------ */
+  --c-border: rgba(51, 255, 51, 0.16);
+  --c-border-soft: rgba(51, 255, 51, 0.08);
+  --c-border-strong: rgba(51, 255, 51, 0.5);
+
+  /* ------ Glow ------ */
+  --glow-acid: 0 0 8px rgba(51, 255, 51, 0.55), 0 0 22px rgba(51, 255, 51, 0.2);
+  --glow-amber: 0 0 8px rgba(255, 176, 0, 0.55), 0 0 22px rgba(255, 176, 0, 0.18);
+  --glow-soft: 0 0 24px rgba(51, 255, 51, 0.1);
+  --text-glow: 0 0 6px rgba(51, 255, 51, 0.55);
+  --text-glow-amber: 0 0 6px rgba(255, 176, 0, 0.55);
+
+  /* ------ Type scale ------ */
+  --text-2xs: 10px;
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-md: 14px;
+  --text-lg: 15px;
+  --text-xl: 17px;
+  --text-2xl: 22px;
+  --text-3xl: 30px;
+  --text-display: 48px;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.75;
 
   /* ------ Spacing ------ */
-  --gutter: clamp(1.25rem, 1rem + 1.5vw, 2.5rem);
-  --space-section: clamp(5rem, 4rem + 6vw, 10rem);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ------ Sizing ------ */
+  --h-titlebar: 32px;
+  --h-tabbar: 36px;
+  --h-statusbar: 24px;
+  --w-activitybar: 48px;
+  --w-sidebar-default: 280px;
+  --w-sidebar-min: 180px;
+  --w-sidebar-max: 460px;
+  --h-panel-default: 240px;
+  --h-panel-min: 120px;
+  --h-panel-max: 520px;
 
   /* ------ Motion ------ */
-  --dur-fast: 180ms;
-  --dur-base: 320ms;
-  --dur-slow: 640ms;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 400ms;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 
-  /* ------ Layout ------ */
-  --max-w: 1440px;
-  --rule-w: 1px;
-  --rule-w-bold: 2px;
+  /* ------ Z layers ------ */
+  --z-titlebar: 30;
+  --z-statusbar: 30;
+  --z-palette: 80;
+  --z-tooltip: 90;
+  --z-toast: 100;
 
-  /* ------ Glass ------ */
-  --glass-bg: rgba(184, 196, 214, 0.16);
-  --glass-bg-strong: rgba(184, 196, 214, 0.28);
-  --glass-border: rgba(20, 20, 20, 0.12);
-  --glass-blur: 18px;
-}
-
-/* ===========================================================
-   Theme — Swiss (monochrome + red)
-   =========================================================== */
-[data-theme="swiss"] {
-  --c-concrete: #ffffff;
-  --c-concrete-deep: #f4f4f4;
-  --c-ink: #000000;
-  --c-ink-soft: #1a1a1a;
-  --c-ink-muted: #666666;
-  --c-acid: #e11d2b;
-  --c-acid-deep: #b71722;
-  --c-glass-tint: #e0e0e0;
-  --c-rule: rgba(0, 0, 0, 0.2);
-  --c-rule-strong: rgba(0, 0, 0, 0.85);
-  --glass-bg: rgba(0, 0, 0, 0.04);
-  --glass-bg-strong: rgba(0, 0, 0, 0.06);
-  --glass-border: rgba(0, 0, 0, 0.2);
-  --glass-blur: 0px;
-  --rule-w: 1px;
-  --rule-w-bold: 3px;
-}
-
-/* ===========================================================
-   Theme — Editorial (cream + burgundy + serif)
-   =========================================================== */
-[data-theme="editorial"] {
-  --c-concrete: #f3ece0;
-  --c-concrete-deep: #e8dfd0;
-  --c-ink: #1c130d;
-  --c-ink-soft: #3a2a20;
-  --c-ink-muted: #8a7460;
-  --c-acid: #7b2d26;
-  --c-acid-deep: #5e1f1a;
-  --c-glass-tint: #d8c8b4;
-  --c-rule: rgba(28, 19, 13, 0.22);
-  --c-rule-strong: rgba(28, 19, 13, 0.6);
-  --glass-bg: rgba(232, 223, 208, 0.7);
-  --glass-bg-strong: rgba(232, 223, 208, 0.9);
-  --glass-border: rgba(28, 19, 13, 0.15);
-  --glass-blur: 0px;
+  /* ------ Syntax (terminal + markdown code) ------ */
+  --syntax-comment: #0e8a0e;
+  --syntax-keyword: var(--c-amber);
+  --syntax-string: var(--c-acid-bright);
+  --syntax-number: var(--c-amber-bright);
+  --syntax-fn: var(--c-acid);
+  --syntax-type: var(--c-amber);
+  --syntax-punct: var(--c-fg-soft);
+  --syntax-tag: var(--c-amber);
 }
 
 @media (prefers-reduced-motion: reduce) {
