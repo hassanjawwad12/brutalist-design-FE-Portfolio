@@ -92,7 +92,7 @@ A career as a commit log.
 
 ${experience
   .map(
-    (e) => `## ${e.title}${e.org ? ` — ${e.org}` : ""}
+    (e) => `## ${e.title}${e.org ? ` — ${e.orgHref ? `[${e.org}](${e.orgHref})` : e.org}` : ""}
 \`${e.period}\`
 
 ${e.summary}
@@ -460,7 +460,7 @@ ${profile.bio}
 
 ${experience
   .map(
-    (e) => `### ${e.title}${e.org ? ` — ${e.org}` : ""}
+    (e) => `### ${e.title}${e.org ? ` — ${e.orgHref ? `[${e.org}](${e.orgHref})` : e.org}` : ""}
 *${e.period}*
 
 ${e.summary}
