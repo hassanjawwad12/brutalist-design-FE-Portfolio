@@ -3,29 +3,29 @@
    =========================================================== */
 
 :root {
-  /* ------ Base surfaces ------ */
-  --c-black: #000000;
-  --c-bg: #030503;
-  --c-bg-soft: #050a05;
-  --c-bg-elevated: #081108;
-  --c-panel: #050a05;
-  --c-sidebar: #030603;
-  --c-editor: #020402;
-  --c-gutter: #060c06;
+  /* ------ Base surfaces — two-tone for pane separation ------ */
+  --c-black: #000000;        /* sidebar, activity bar, titlebar — pure black */
+  --c-bg: #060d09;           /* default app body */
+  --c-bg-soft: #0a1408;      /* dialogs, palette, faux page */
+  --c-bg-elevated: #0d1a0d;  /* hover states */
+  --c-panel: #060d09;        /* terminal panel */
+  --c-sidebar: #000000;      /* sidebar = pure black */
+  --c-editor: #060d09;       /* editor — lifted vs sidebar */
+  --c-gutter: #0a1408;
   --c-statusbar: #000000;
   --c-titlebar: #000000;
 
-  /* ------ Foreground (phosphor) ------ */
-  --c-fg: #33ff33;          /* main terminal green */
-  --c-fg-bright: #7dff7d;   /* highlights, hot text */
-  --c-fg-soft: #28c628;     /* paragraphs */
-  --c-fg-muted: #0e8a0e;    /* secondary */
-  --c-fg-dim: #0a4a0a;      /* dim labels */
-  --c-fg-faint: #053a05;    /* very subtle */
+  /* ------ Foreground — calm hierarchy so accents read as hot ------ */
+  --c-fg: #95d895;           /* base text — readable sage green */
+  --c-fg-bright: #e0ffe0;    /* focused input / active text — pale phosphor */
+  --c-fg-soft: #6fa86f;      /* prose, paragraphs */
+  --c-fg-muted: #3a6a3a;     /* secondary labels, inactive */
+  --c-fg-dim: #1f3f1f;       /* dim labels */
+  --c-fg-faint: #0d2a0d;     /* very subtle */
 
-  /* ------ Accents ------ */
-  --c-acid: #33ff33;        /* primary green */
-  --c-acid-bright: #7dff7d;
+  /* ------ Hot phosphor — reserved for emphasis ------ */
+  --c-acid: #33ff33;         /* prompt, links, focus, active items */
+  --c-acid-bright: #88ff88;  /* h1, strong, active explorer file */
   --c-acid-deep: #1fc91f;
   --c-amber: #ffb000;       /* warm amber — warnings, emphasis */
   --c-amber-bright: #ffd24d;

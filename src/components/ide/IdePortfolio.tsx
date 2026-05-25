@@ -13,11 +13,20 @@ import { CommandPalette } from "./CommandPalette";
 import { VimModal } from "./VimModal";
 import { useGlobalHotkeys } from "@/hooks/useHotkeys";
 
-function Layout() {
+function Layout({ initialPath }: { initialPath?: string }) {
   const { state, dispatch, showToast } = useEditor();
   useGlobalHotkeys();
 
   const rootRef = useRef<HTMLDivElement>(null);
+
+  // Open the requested file when arriving via a /p/<path> route.
+  const openedInitialRef = useRef(false);
+  useEffect(() => {
+    if (openedInitialRef.current) return;
+    if (!initialPath) return;
+    openedInitialRef.current = true;
+    dispatch({ type: "OPEN_TAB", path: initialPath });
+  }, [initialPath, dispatch]);
 
   // Resizing sidebar
   const sidebarDragRef = useRef<{ startX: number; startW: number } | null>(
@@ -125,7 +134,8 @@ function Layout() {
               style={{
                 width: state.sidebarWidth,
                 background: "var(--c-sidebar)",
-                borderRight: "1px solid var(--c-border-soft)",
+                borderRight: "1px solid rgba(51, 255, 51, 0.35)",
+                boxShadow: "inset -1px 0 0 rgba(51, 255, 51, 0.08)",
               }}
               className="sidebar-container flex flex-col min-h-0"
               data-mobile-open={state.mobileSidebarOpen ? "true" : "false"}
@@ -193,10 +203,10 @@ function Layout() {
   );
 }
 
-export function IdePortfolio() {
+export function IdePortfolio({ initialPath }: { initialPath?: string } = {}) {
   return (
     <EditorProvider>
-      <Layout />
+      <Layout initialPath={initialPath} />
     </EditorProvider>
   );
 }

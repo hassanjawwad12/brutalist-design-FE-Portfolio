@@ -14,8 +14,10 @@ function SectionHeader({ label }: { label: string }) {
         fontSize: "var(--text-2xs)",
         letterSpacing: "0.16em",
         textTransform: "uppercase",
-        color: "var(--c-fg-muted)",
-        borderBottom: "1px solid var(--c-border-soft)",
+        color: "var(--c-amber)",
+        textShadow: "var(--text-glow-amber)",
+        borderBottom: "1px solid rgba(255, 176, 0, 0.2)",
+        background: "rgba(255, 176, 0, 0.03)",
       }}
     >
       {label}

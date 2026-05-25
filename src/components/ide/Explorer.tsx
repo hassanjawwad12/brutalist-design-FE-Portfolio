@@ -39,9 +39,11 @@ function Row({ node, path, depth }: RowProps) {
           color: active
             ? "var(--c-acid-bright)"
             : node.kind === "dir"
-              ? "var(--c-fg-soft)"
+              ? expanded
+                ? "var(--c-amber)"
+                : "var(--c-amber-deep)"
               : "var(--c-fg-muted)",
-          background: active ? "var(--c-bg-elevated)" : "transparent",
+          background: active ? "rgba(51, 255, 51, 0.08)" : "transparent",
           borderLeft: active
             ? "2px solid var(--c-acid)"
             : "2px solid transparent",
@@ -51,7 +53,10 @@ function Row({ node, path, depth }: RowProps) {
         }}
         onMouseEnter={(e) => {
           if (!active)
-            e.currentTarget.style.background = "rgba(51, 255, 51, 0.04)";
+            e.currentTarget.style.background =
+              node.kind === "dir"
+                ? "rgba(255, 176, 0, 0.05)"
+                : "rgba(51, 255, 51, 0.04)";
         }}
         onMouseLeave={(e) => {
           if (!active) e.currentTarget.style.background = "transparent";
@@ -63,7 +68,7 @@ function Row({ node, path, depth }: RowProps) {
             style={{
               width: 14,
               textAlign: "center",
-              color: "var(--c-acid)",
+              color: expanded ? "var(--c-amber)" : "var(--c-amber-deep)",
               fontSize: 10,
               transform: expanded ? "rotate(90deg)" : "rotate(0deg)",
               transition: "transform var(--dur-fast)",

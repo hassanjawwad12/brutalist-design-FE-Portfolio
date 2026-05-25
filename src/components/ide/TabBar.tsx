@@ -14,12 +14,12 @@ function fileIcon(name: string): string {
 }
 
 function fileIconColor(name: string): string {
-  if (name.endsWith(".md")) return "var(--c-acid)";
-  if (name.endsWith(".json")) return "var(--c-amber)";
-  if (name.endsWith(".url")) return "var(--c-acid-bright)";
-  if (name.endsWith(".pdf")) return "var(--c-danger)";
+  if (name.endsWith(".md")) return "var(--c-acid-deep)";
+  if (name.endsWith(".json")) return "var(--c-amber-deep)";
+  if (name.endsWith(".url")) return "var(--c-fg-muted)";
+  if (name.endsWith(".pdf")) return "var(--c-danger-deep)";
   if (/\.(png|jpg|jpeg|gif|svg|webp)$/i.test(name))
-    return "var(--c-amber-bright)";
+    return "var(--c-amber-deep)";
   return "var(--c-fg-muted)";
 }
 

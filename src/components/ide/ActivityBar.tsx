@@ -59,7 +59,7 @@ export function ActivityBar() {
       style={{
         width: "var(--w-activitybar)",
         background: "var(--c-black)",
-        borderRight: "1px solid var(--c-border-soft)",
+        borderRight: "1px solid rgba(51, 255, 51, 0.18)",
         paddingBlock: "var(--space-2)",
       }}
       role="toolbar"
