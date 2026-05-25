@@ -42,7 +42,7 @@ function Row({ node, path, depth }: RowProps) {
               ? expanded
                 ? "var(--c-amber)"
                 : "var(--c-amber-deep)"
-              : "var(--c-fg-muted)",
+              : "var(--c-paper)",
           background: active ? "rgba(51, 255, 51, 0.08)" : "transparent",
           borderLeft: active
             ? "2px solid var(--c-acid)"

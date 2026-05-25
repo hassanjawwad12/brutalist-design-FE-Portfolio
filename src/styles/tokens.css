@@ -23,6 +23,11 @@
   --c-fg-dim: #1f3f1f;       /* dim labels */
   --c-fg-faint: #0d2a0d;     /* very subtle */
 
+  /* ------ Neutral paper — for content identifiers ------ */
+  --c-paper: #d8d8d8;        /* file names, body content text */
+  --c-paper-soft: #a8a8a8;   /* secondary neutral */
+  --c-paper-dim: #6a6a6a;    /* dim neutral */
+
   /* ------ Hot phosphor — reserved for emphasis ------ */
   --c-acid: #33ff33;         /* prompt, links, focus, active items */
   --c-acid-bright: #88ff88;  /* h1, strong, active explorer file */

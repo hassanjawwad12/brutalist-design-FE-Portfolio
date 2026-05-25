@@ -262,7 +262,7 @@ export function CommandPalette() {
                     ? "2px solid var(--c-acid)"
                     : "2px solid transparent",
                   fontSize: "var(--text-sm)",
-                  color: isActive ? "var(--c-acid-bright)" : "var(--c-fg-soft)",
+                  color: isActive ? "var(--c-acid-bright)" : "var(--c-paper)",
                   textShadow: isActive ? "var(--text-glow)" : "none",
                 }}
               >

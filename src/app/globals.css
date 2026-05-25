@@ -203,7 +203,7 @@ body::after {
 }
 .md p {
   margin: 0 0 var(--space-4);
-  color: var(--c-fg-soft);
+  color: var(--c-paper);
   line-height: var(--leading-relaxed);
   max-width: 78ch;
 }
@@ -211,7 +211,7 @@ body::after {
 .md ol {
   margin: 0 0 var(--space-4);
   padding-left: var(--space-6);
-  color: var(--c-fg-soft);
+  color: var(--c-paper);
 }
 .md li {
   margin: 0 0 var(--space-2);
@@ -272,6 +272,21 @@ body::after {
   color: var(--c-amber);
   font-style: normal;
 }
+.md img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: var(--space-4) 0 var(--space-6);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--glow-soft);
+  background: var(--c-bg);
+}
+
+.md p:has(> img) {
+  margin: 0 0 var(--space-2);
+}
+
 .md table {
   border-collapse: collapse;
   margin: 0 0 var(--space-4);

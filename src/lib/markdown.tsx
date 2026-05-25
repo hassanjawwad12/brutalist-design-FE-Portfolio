@@ -8,9 +8,10 @@ const escape = (s: string): string =>
     .replace(/"/g, "&quot;");
 
 interface InlineToken {
-  type: "text" | "code" | "link" | "bold" | "italic";
+  type: "text" | "code" | "link" | "bold" | "italic" | "image";
   value: string;
   href?: string;
+  alt?: string;
   children?: InlineToken[];
 }
 
@@ -68,6 +69,22 @@ const parseInline = (src: string): InlineToken[] => {
       }
     }
 
+    // image ![alt](src)
+    if (ch === "!" && src[i + 1] === "[") {
+      const closeBracket = src.indexOf("]", i + 2);
+      if (closeBracket !== -1 && src[closeBracket + 1] === "(") {
+        const closeParen = src.indexOf(")", closeBracket + 2);
+        if (closeParen !== -1) {
+          flush();
+          const alt = src.slice(i + 2, closeBracket);
+          const url = src.slice(closeBracket + 2, closeParen);
+          tokens.push({ type: "image", value: alt, href: url, alt });
+          i = closeParen + 1;
+          continue;
+        }
+      }
+    }
+
     // link [text](href)
     if (ch === "[") {
       const closeBracket = src.indexOf("]", i + 1);
@@ -118,6 +135,17 @@ const renderInline = (tokens: InlineToken[], keyPrefix = ""): ReactNode => {
         >
           {renderInline(tok.children ?? [], k)}
         </a>
+      );
+    }
+    if (tok.type === "image") {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          key={k}
+          src={tok.href}
+          alt={tok.alt ?? tok.value ?? ""}
+          loading="lazy"
+        />
       );
     }
     return null;

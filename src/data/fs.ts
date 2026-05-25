@@ -156,10 +156,12 @@ ${p.description}
   .join("\n---\n\n")}
 `;
 
-const projectReadme = (p: (typeof projects)[number]): string => `# ${p.title}
+const projectReadme = (p: (typeof projects)[number]): string => {
+  const img = PROJECT_IMAGES[p.id];
+  return `# ${p.title}
 
 \`${p.year}\` · \`${p.role}\` · \`${p.status}\`
-
+${img ? `\n![${p.title} screenshot](${img})\n` : ""}
 ${p.description}
 
 ## Stack
@@ -171,6 +173,7 @@ ${p.stack.map((s) => `- ${s}`).join("\n")}
 - **Live** → [${p.href}](${p.href})
 ${p.repo ? `- **Repo** → [${p.repo}](${p.repo})` : ""}
 `;
+};
 
 const projectStack = (p: (typeof projects)[number]): string => `# Stack — ${p.title}
 

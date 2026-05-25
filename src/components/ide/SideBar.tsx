@@ -93,7 +93,7 @@ function SearchView() {
             </div>
             <div
               style={{
-                color: "var(--c-fg-soft)",
+                color: "var(--c-paper-soft)",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
