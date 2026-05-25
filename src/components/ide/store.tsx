@@ -117,9 +117,6 @@ export type EditorAction =
   | { type: "SET_VIM_ACTIVE"; active: boolean }
   | { type: "HYDRATE"; partial: Partial<EditorState> };
 
-let lineId = 0;
-const nextLineId = () => ++lineId;
-
 const reducer = (state: EditorState, action: EditorAction): EditorState => {
   switch (action.type) {
     case "OPEN_TAB": {
@@ -209,7 +206,14 @@ const reducer = (state: EditorState, action: EditorAction): EditorState => {
     case "SET_PANEL_HEIGHT":
       return { ...state, panelHeight: action.height };
     case "TERMINAL_APPEND": {
-      const lines = action.lines.map((l) => ({ ...l, id: nextLineId() }));
+      const startId = state.terminalLines.reduce(
+        (max, l) => (l.id > max ? l.id : max),
+        0,
+      );
+      const lines = action.lines.map((l, i) => ({
+        ...l,
+        id: startId + i + 1,
+      }));
       return { ...state, terminalLines: [...state.terminalLines, ...lines] };
     }
     case "TERMINAL_CLEAR":

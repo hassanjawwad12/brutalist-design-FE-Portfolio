@@ -197,12 +197,18 @@ export function Terminal() {
       <div
         ref={containerRef}
         className="flex-1 min-h-0 overflow-auto"
-        style={{ fontSize: "var(--text-xs)" }}
+        style={{
+          fontSize: "var(--text-xs)",
+          paddingBottom: "var(--space-4)",
+        }}
       >
         {renderedLines}
         <div
           className="flex items-baseline"
-          style={{ marginTop: state.terminalLines.length ? 2 : 0 }}
+          style={{
+            marginTop: state.terminalLines.length ? 4 : 0,
+            paddingBlock: 2,
+          }}
         >
           <span
             style={{

@@ -602,7 +602,7 @@ export const FS: FsDir = {
       kind: "file",
       name: "photo.png",
       view: "image",
-      source: avatarSvg,
+      source: "/hassan-pic.png",
       language: "Image",
     },
     {

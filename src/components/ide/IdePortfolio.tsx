@@ -82,10 +82,15 @@ function Layout({ initialPath }: { initialPath?: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
-  // Welcome boot lines (run once)
+  // Welcome boot lines — emit only when scrollback is empty
   const bootedRef = useRef(false);
+  const terminalEmpty = state.terminalLines.length === 0;
   useEffect(() => {
     if (bootedRef.current) return;
+    if (!terminalEmpty) {
+      bootedRef.current = true;
+      return;
+    }
     bootedRef.current = true;
     dispatch({
       type: "TERMINAL_APPEND",
@@ -97,7 +102,7 @@ function Layout({ initialPath }: { initialPath?: string }) {
         },
       ],
     });
-  }, [dispatch]);
+  }, [dispatch, terminalEmpty]);
 
   // Internal markdown link interception → open as tab
   useEffect(() => {
