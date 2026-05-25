@@ -24,8 +24,10 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
-    id: "golang",
+    id: "datumbrain",
     title: "Golang Developer",
+    org: "Datumbrain",
+    orgHref: "https://datumbrain.com/",
     period: "2024",
     summary:
       "Designed and shipped backend services in Go with Postgres and Docker.",
@@ -36,8 +38,10 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
-    id: "software-engineer",
+    id: "exergy",
     title: "Software Engineer",
+    org: "Exergy Systems",
+    orgHref: "https://exergysystems.com/",
     period: "2023 — 2024",
     summary:
       "End-to-end product engineer on a React + TypeScript web platform.",
@@ -48,8 +52,10 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
-    id: "frontend",
+    id: "texagon",
     title: "Frontend Developer",
+    org: "Texagon",
+    orgHref: "https://texagon.io/",
     period: "2023",
     summary:
       "Built a React + TypeScript + Tailwind product, focused on interactivity.",
@@ -57,17 +63,6 @@ export const experience: ExperienceItem[] = [
       "Shipped the public marketing pages",
       "Wrote the motion + scroll system",
       "Established the component review process",
-    ],
-  },
-  {
-    id: "data-science",
-    title: "Data Science Intern",
-    period: "2022",
-    summary:
-      "Built predictive models and visualisations to support business decisions.",
-    highlights: [
-      "Trained and evaluated a churn model end-to-end",
-      "Shipped weekly dashboards used by the leadership team",
     ],
   },
 ];
