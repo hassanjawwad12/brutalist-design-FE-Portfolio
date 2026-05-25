@@ -336,7 +336,7 @@ export function TitleBar() {
         />
         <span
           style={{
-            fontSize: "var(--text-xs)",
+            fontSize: 12,
             color: "var(--c-fg-soft)",
             letterSpacing: "0.06em",
             textTransform: "uppercase",
@@ -364,7 +364,7 @@ export function TitleBar() {
                 aria-haspopup="menu"
                 aria-expanded={isOpen}
                 style={{
-                  fontSize: "var(--text-xs)",
+                  fontSize: 12,
                   color: isOpen ? "var(--c-acid)" : "var(--c-fg-muted)",
                   textShadow: isOpen ? "var(--text-glow)" : "none",
                   padding: "4px 10px",
@@ -455,7 +455,7 @@ export function TitleBar() {
         <div
           className="titlebar-role"
           style={{
-            fontSize: "var(--text-2xs)",
+            fontSize: 11,
             color: "var(--c-fg-dim)",
             letterSpacing: "0.1em",
             textTransform: "uppercase",
@@ -467,7 +467,7 @@ export function TitleBar() {
           href="/simple"
           title="Plain accessible version"
           style={{
-            fontSize: "var(--text-2xs)",
+            fontSize: 11,
             color: "var(--c-fg-muted)",
             letterSpacing: "0.1em",
             textTransform: "uppercase",
