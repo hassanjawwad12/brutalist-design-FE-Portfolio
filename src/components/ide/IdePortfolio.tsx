@@ -12,6 +12,8 @@ import { StatusBar } from "./StatusBar";
 import { CommandPalette } from "./CommandPalette";
 import { VimModal } from "./VimModal";
 import { useGlobalHotkeys } from "@/hooks/useHotkeys";
+import { README_PATH } from "@/data/fs";
+import { BootScreen } from "./BootScreen";
 
 function Layout({ initialPath }: { initialPath?: string }) {
   const { state, dispatch, showToast } = useEditor();
@@ -103,6 +105,34 @@ function Layout({ initialPath }: { initialPath?: string }) {
       ],
     });
   }, [dispatch, terminalEmpty]);
+
+  // Keep the URL in sync with the active tab so any file is shareable / deep-linkable.
+  // README is treated as "home" (/), everything else maps to /p/<path>.
+  useEffect(() => {
+    const url =
+      state.activeTab && state.activeTab !== README_PATH
+        ? `/p${state.activeTab}`
+        : "/";
+    if (window.location.pathname !== url) {
+      window.history.replaceState(null, "", url);
+    }
+  }, [state.activeTab]);
+
+  // Browser back/forward → open the file encoded in the URL.
+  useEffect(() => {
+    const onPop = () => {
+      const path = window.location.pathname;
+      if (path === "/" || path === "") {
+        dispatch({ type: "SET_ACTIVE", path: README_PATH });
+        return;
+      }
+      if (path.startsWith("/p/")) {
+        dispatch({ type: "OPEN_TAB", path: path.slice(2) });
+      }
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [dispatch]);
 
   // Internal markdown link interception → open as tab
   useEffect(() => {
@@ -204,6 +234,8 @@ function Layout({ initialPath }: { initialPath?: string }) {
           {state.toast.text}
         </div>
       )}
+
+      <BootScreen />
     </div>
   );
 }

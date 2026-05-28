@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { HOME_PATH, README_PATH } from "@/data/fs";
+import { resolveNode } from "@/lib/fs";
 
 export type TerminalLineKind = "in" | "out" | "err" | "info";
 
@@ -296,6 +297,8 @@ interface PersistedState {
   sidebarWidth: number;
   panelHeight: number;
   expandedDirs: Record<string, boolean>;
+  openTabs: Tab[];
+  activeTab: string | null;
 }
 
 const loadPersisted = (): Partial<PersistedState> | null => {
@@ -317,6 +320,8 @@ const persist = (state: EditorState) => {
       sidebarWidth: state.sidebarWidth,
       panelHeight: state.panelHeight,
       expandedDirs: state.expandedDirs,
+      openTabs: state.openTabs,
+      activeTab: state.activeTab,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch {
@@ -324,12 +329,57 @@ const persist = (state: EditorState) => {
   }
 };
 
+// Restore only tabs that still resolve to real files, always keep README pinned,
+// and ensure the active tab is one of the restored tabs.
+const sanitizeTabs = (
+  persisted: Partial<PersistedState>,
+): { openTabs: Tab[]; activeTab: string } | null => {
+  if (!Array.isArray(persisted.openTabs)) return null;
+  const valid: Tab[] = persisted.openTabs
+    .filter((t): t is Tab => {
+      if (!t || typeof t.path !== "string") return false;
+      const node = resolveNode(t.path);
+      return !!node && node.kind === "file";
+    })
+    .map((t) => ({
+      path: t.path,
+      dirty: false,
+      pinned: t.path === README_PATH ? true : !!t.pinned,
+    }));
+
+  if (!valid.some((t) => t.path === README_PATH)) {
+    valid.unshift({ path: README_PATH, dirty: false, pinned: true });
+  }
+
+  const activeTab =
+    typeof persisted.activeTab === "string" &&
+    valid.some((t) => t.path === persisted.activeTab)
+      ? persisted.activeTab
+      : README_PATH;
+
+  return { openTabs: valid, activeTab };
+};
+
 export function EditorProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const persisted = loadPersisted();
-    if (persisted) dispatch({ type: "HYDRATE", partial: persisted });
+    if (!persisted) return;
+    const partial: Partial<EditorState> = {};
+    if (Array.isArray(persisted.commandHistory))
+      partial.commandHistory = persisted.commandHistory;
+    if (typeof persisted.sidebarWidth === "number")
+      partial.sidebarWidth = persisted.sidebarWidth;
+    if (typeof persisted.panelHeight === "number")
+      partial.panelHeight = persisted.panelHeight;
+    if (persisted.expandedDirs) partial.expandedDirs = persisted.expandedDirs;
+    const tabs = sanitizeTabs(persisted);
+    if (tabs) {
+      partial.openTabs = tabs.openTabs;
+      partial.activeTab = tabs.activeTab;
+    }
+    dispatch({ type: "HYDRATE", partial });
   }, []);
 
   useEffect(() => {
@@ -339,6 +389,8 @@ export function EditorProvider({ children }: { children: ReactNode }) {
     state.sidebarWidth,
     state.panelHeight,
     state.expandedDirs,
+    state.openTabs,
+    state.activeTab,
   ]);
 
   const showToast = useCallback((text: string, durationMs = 2200) => {

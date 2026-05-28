@@ -424,6 +424,69 @@ body::after {
   user-select: none;
 }
 
+/* ---------- Boot / POST screen ---------- */
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--c-black);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(var(--space-6), 8vw, 14vw);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity var(--dur-slow) var(--ease-out-expo);
+}
+.boot[data-fading="true"] {
+  opacity: 0;
+}
+.boot__inner {
+  max-width: 60ch;
+}
+.boot__line {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--c-fg-soft);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.boot__line[data-kind="dim"] {
+  color: var(--c-fg-muted);
+  margin-bottom: var(--space-2);
+}
+.boot__line[data-kind="ok"] {
+  color: var(--c-acid);
+  text-shadow: var(--text-glow);
+}
+.boot__line[data-kind="accent"] {
+  color: var(--c-amber);
+  text-shadow: var(--text-glow-amber);
+  margin-top: var(--space-2);
+}
+.boot__cursor {
+  display: inline-block;
+  width: 9px;
+  height: 1em;
+  background: var(--c-acid);
+  box-shadow: var(--glow-acid);
+  vertical-align: text-bottom;
+  margin-top: var(--space-2);
+  animation: term-blink 1s steps(2, end) infinite;
+}
+.boot__hint {
+  margin-top: var(--space-6);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-fg-dim);
+}
+@media (prefers-reduced-motion: reduce) {
+  .boot {
+    display: none;
+  }
+}
+
 /* ---------- Skills playground ---------- */
 .playground {
   position: relative;
