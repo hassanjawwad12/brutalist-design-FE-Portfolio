@@ -18,6 +18,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Prose typeface — proportional for comfortable long-form reading, while the
+   app chrome, headings, and code stay monospaced for the terminal feel.
+   To go fully monospaced again, set: --font-prose: var(--font-mono); */
+:root {
+  --font-prose: var(--font-geist-sans, ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif);
+}
+
 *,
 *::before,
 *::after {
@@ -37,10 +45,12 @@ body {
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
   font-family: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: var(--text-base);
   line-height: var(--leading-normal);
+  /* Firefox scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(51, 255, 51, 0.3) transparent;
 }
 
 body {
@@ -92,11 +102,11 @@ canvas {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgba(51, 255, 51, 0.18);
+  background: rgba(51, 255, 51, 0.28);
   border-radius: 0;
 }
 *::-webkit-scrollbar-thumb:hover {
-  background: rgba(51, 255, 51, 0.45);
+  background: rgba(51, 255, 51, 0.5);
 }
 
 /* CRT backdrop — subtle green wash + faint grid */
@@ -126,14 +136,38 @@ body::after {
     rgba(0, 0, 0, 0) 4px
   );
   z-index: 70;
-  opacity: 0.45;
+  opacity: 0.4;
   mix-blend-mode: multiply;
 }
 
+/* Scanlines are a static distraction for some readers — soften under
+   reduced-motion and high-contrast preferences. */
 @media (prefers-reduced-motion: reduce) {
   body::after {
     opacity: 0.2;
   }
+}
+@media (prefers-contrast: more) {
+  body::after {
+    opacity: 0.12;
+  }
+}
+
+/* ---------- Reduce-effects escape hatch ----------
+   Set <body data-effects="off"> to drop scanlines and neutralize glow
+   for maximum legibility, without changing the green/amber palette. */
+body[data-effects="off"] {
+  --text-glow: none;
+  --text-glow-amber: none;
+  --glow-soft: none;
+  --glow-acid: none;
+  --glow-amber: none;
+}
+body[data-effects="off"]::after {
+  display: none;
+}
+body[data-effects="off"]::before {
+  opacity: 0.4;
 }
 
 /* ---------- Utility classes ---------- */
@@ -202,6 +236,7 @@ body::after {
   color: var(--c-fg-soft);
 }
 .md p {
+  font-family: var(--font-prose);
   margin: 0 0 var(--space-4);
   color: var(--c-paper);
   line-height: var(--leading-relaxed);
@@ -209,8 +244,10 @@ body::after {
 }
 .md ul,
 .md ol {
+  font-family: var(--font-prose);
   margin: 0 0 var(--space-4);
   padding-left: var(--space-6);
+  max-width: 78ch;
   color: var(--c-paper);
 }
 .md li {
@@ -229,7 +266,7 @@ body::after {
   text-shadow: var(--text-glow);
 }
 .md code {
-  font-family: inherit;
+  font-family: var(--font-mono);
   background: rgba(51, 255, 51, 0.08);
   color: var(--c-amber);
   padding: 1px 6px;
@@ -253,9 +290,11 @@ body::after {
   color: var(--c-fg);
 }
 .md blockquote {
+  font-family: var(--font-prose);
   border-left: 2px solid var(--c-amber);
   padding: var(--space-2) var(--space-4);
   margin: 0 0 var(--space-4);
+  max-width: 78ch;
   color: var(--c-fg-soft);
   background: rgba(255, 176, 0, 0.04);
 }
@@ -268,13 +307,15 @@ body::after {
   color: var(--c-acid-bright);
   font-weight: 600;
 }
+/* Keep italic so emphasis survives for colorblind / low-vision readers
+   rather than being signalled by colour alone. */
 .md em {
   color: var(--c-amber);
-  font-style: normal;
+  font-style: italic;
 }
 .md img {
   display: block;
-  width: 100%;
+  width: auto;
   max-width: 100%;
   height: auto;
   margin: var(--space-4) 0 var(--space-6);
@@ -422,147 +463,6 @@ body::after {
   text-align: right;
   color: var(--c-fg-dim);
   user-select: none;
-}
-
-/* ---------- Skills playground ---------- */
-.playground {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: var(--c-editor);
-}
-.playground__canvas {
-  position: absolute;
-  inset: 0;
-}
-.playground__loading {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--c-acid);
-  text-shadow: var(--text-glow);
-  font-size: var(--text-sm);
-  letter-spacing: 0.1em;
-}
-.playground__hud {
-  position: absolute;
-  inset-block-start: var(--space-4);
-  inset-inline: var(--space-4);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-3);
-  pointer-events: none;
-}
-.playground__hud > * {
-  pointer-events: auto;
-}
-.playground__title {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.playground__title-main {
-  color: var(--c-acid-bright);
-  text-shadow: var(--text-glow);
-  font-size: var(--text-lg);
-  letter-spacing: 0.04em;
-}
-.playground__title-sub {
-  color: var(--c-fg-muted);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.04em;
-}
-.playground__legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  padding: var(--space-2) var(--space-3);
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid var(--c-border-soft);
-}
-.playground__legend-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  font-size: var(--text-2xs);
-  color: var(--c-fg-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-.playground__swatch {
-  width: 9px;
-  height: 9px;
-  display: inline-block;
-}
-.playground__controls {
-  display: flex;
-  gap: var(--space-2);
-}
-.playground__controls button {
-  border: 1px solid var(--c-acid);
-  color: var(--c-acid);
-  background: rgba(0, 0, 0, 0.5);
-  text-shadow: var(--text-glow);
-  padding: 4px 12px;
-  font-size: var(--text-2xs);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  transition: background var(--dur-fast);
-}
-.playground__controls button:hover {
-  background: rgba(51, 255, 51, 0.16);
-}
-.chip-label {
-  color: var(--c-bg);
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  user-select: none;
-}
-
-/* Static fallback (reduced motion) */
-.playground--static {
-  overflow: auto;
-  padding: var(--space-8);
-}
-.playground__header h1 {
-  color: var(--c-acid-bright);
-  text-shadow: var(--text-glow);
-  font-size: var(--text-3xl);
-  margin: 0 0 var(--space-2);
-}
-.playground__header p {
-  color: var(--c-fg-soft);
-  max-width: 60ch;
-  margin: 0 0 var(--space-8);
-}
-.playground__group {
-  margin-bottom: var(--space-6);
-}
-.playground__group h2 {
-  font-size: var(--text-sm);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin: 0 0 var(--space-3);
-}
-.playground__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-.playground__chip {
-  border: 1px solid;
-  padding: var(--space-1) var(--space-3);
-  background: rgba(0, 0, 0, 0.3);
-  letter-spacing: 0.02em;
 }
 
 /* Tab close hover */
@@ -814,16 +714,18 @@ body:has(.simple-page) {
   margin-top: var(--space-10);
   padding-block: var(--space-4);
   border-top: 1px solid var(--c-border);
-  color: var(--c-fg-muted);
+  color: var(--c-fg-soft);
   font-size: var(--text-xs);
 }
 .simple-page p {
+  font-family: var(--font-prose);
   color: var(--c-fg-soft);
   line-height: var(--leading-relaxed);
   max-width: 70ch;
   margin: 0 0 var(--space-3);
 }
 .simple-page ul {
+  font-family: var(--font-prose);
   padding-left: var(--space-5);
   color: var(--c-fg-soft);
 }

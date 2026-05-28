@@ -3,12 +3,14 @@
 import { useEditor } from "./store";
 import { basename, pathForDisplay, resolveNode } from "@/lib/fs";
 import { profile } from "@/data/profile";
+import { diagnosticCounts } from "@/data/diagnostics";
 
 export function StatusBar() {
   const { state, dispatch, showToast } = useEditor();
   const active = state.activeTab ? resolveNode(state.activeTab) : null;
   const language =
     active && active.kind === "file" ? active.language ?? "Plain" : "—";
+  const { errors, warnings, infos } = diagnosticCounts();
 
   const copyEmail = async () => {
     try {
@@ -48,7 +50,19 @@ export function StatusBar() {
       >
         ⎇ main
       </button>
-      <span style={{ color: "var(--c-fg-muted)" }}>● 0 ⚠ 0</span>
+      <button
+        onClick={() => dispatch({ type: "SET_PANEL_TAB", tab: "problems" })}
+        title="Open Problems"
+        style={{ color: "var(--c-fg-muted)", display: "flex", gap: "var(--space-2)" }}
+      >
+        <span style={{ color: errors ? "var(--c-danger)" : "var(--c-fg-muted)" }}>
+          ⊘ {errors}
+        </span>
+        <span style={{ color: warnings ? "var(--c-amber)" : "var(--c-fg-muted)" }}>
+          ⚠ {warnings}
+        </span>
+        <span style={{ color: "var(--c-fg-muted)" }}>ⓘ {infos}</span>
+      </button>
 
       <button
         onClick={() => dispatch({ type: "TOGGLE_SIDEBAR" })}
@@ -67,24 +81,34 @@ export function StatusBar() {
 
       <div style={{ flex: 1 }} />
 
-      <span style={{ color: "var(--c-fg-muted)" }}>cwd</span>
-      <span style={{ color: "var(--c-acid)" }}>{pathForDisplay(state.cwd)}</span>
-      <span style={{ color: "var(--c-fg-muted)" }}>·</span>
-      <span style={{ color: "var(--c-fg-muted)" }}>
-        {state.activeTab ? basename(state.activeTab) : "no file"}
-      </span>
-      <span style={{ color: "var(--c-fg-muted)" }}>·</span>
-      <span style={{ color: "var(--c-fg-muted)" }}>UTF-8</span>
-      <span style={{ color: "var(--c-fg-muted)" }}>·</span>
-      <span style={{ color: "var(--c-fg-muted)" }}>{language}</span>
-      <span style={{ color: "var(--c-fg-muted)" }}>·</span>
+      {/* Dev-flavour metadata — hidden on narrow screens so the email CTA stays visible */}
+      <div
+        className="statusbar-meta items-center"
+        style={{ display: "flex", gap: "var(--space-3)" }}
+      >
+        <span style={{ color: "var(--c-fg-muted)" }}>cwd</span>
+        <span style={{ color: "var(--c-acid)" }}>{pathForDisplay(state.cwd)}</span>
+        <span style={{ color: "var(--c-fg-muted)" }}>·</span>
+        <span style={{ color: "var(--c-fg-muted)" }}>
+          {state.activeTab ? basename(state.activeTab) : "no file"}
+        </span>
+        <span style={{ color: "var(--c-fg-muted)" }}>·</span>
+        <span style={{ color: "var(--c-fg-muted)" }}>UTF-8</span>
+        <span style={{ color: "var(--c-fg-muted)" }}>·</span>
+        <span style={{ color: "var(--c-fg-muted)" }}>{language}</span>
+      </div>
 
       <button
         onClick={copyEmail}
         title="Copy email"
+        className="statusbar-email"
         style={{
           color: "var(--c-amber)",
           textShadow: "var(--text-glow-amber)",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          maxWidth: "60vw",
         }}
       >
         ✉ {profile.email}

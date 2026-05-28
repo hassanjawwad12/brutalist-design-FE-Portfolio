@@ -231,6 +231,7 @@ export function Terminal() {
             aria-label="Terminal input"
             style={{
               flex: 1,
+              minWidth: 0,
               color: "var(--c-fg-bright)",
               fontSize: "var(--text-base)",
               padding: 0,

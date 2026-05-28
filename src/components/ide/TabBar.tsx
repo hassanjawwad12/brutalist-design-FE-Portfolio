@@ -9,6 +9,7 @@ function fileIcon(name: string): string {
   if (name.endsWith(".json")) return "{}";
   if (name.endsWith(".url")) return "↗";
   if (name.endsWith(".pdf")) return "P";
+  if (name.endsWith(".playground")) return "▶";
   if (/\.(png|jpg|jpeg|gif|svg|webp)$/i.test(name)) return "▣";
   return "·";
 }
@@ -18,6 +19,7 @@ function fileIconColor(name: string): string {
   if (name.endsWith(".json")) return "var(--c-amber-deep)";
   if (name.endsWith(".url")) return "var(--c-fg-muted)";
   if (name.endsWith(".pdf")) return "var(--c-danger-deep)";
+  if (name.endsWith(".playground")) return "var(--c-acid)";
   if (/\.(png|jpg|jpeg|gif|svg|webp)$/i.test(name))
     return "var(--c-amber-deep)";
   return "var(--c-fg-muted)";

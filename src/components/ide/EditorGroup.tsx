@@ -8,6 +8,39 @@ import { UrlView } from "./views/UrlView";
 import { FormView } from "./views/FormView";
 import { ImageView } from "./views/ImageView";
 import { PdfView } from "./views/PdfView";
+import { SourceView } from "./views/SourceView";
+import { SkillsPlayground } from "../playground/SkillsPlayground";
+
+function EditorToolbar({
+  showSource,
+  onToggle,
+}: {
+  showSource: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="editor-toolbar" role="toolbar" aria-label="Editor view mode">
+      <div className="editor-toolbar__segment">
+        <button
+          onClick={() => showSource && onToggle()}
+          aria-pressed={!showSource}
+          data-active={!showSource}
+          title="Rendered preview"
+        >
+          ▤ preview
+        </button>
+        <button
+          onClick={() => !showSource && onToggle()}
+          aria-pressed={showSource}
+          data-active={showSource}
+          title="Raw source (syntax highlighted)"
+        >
+          {"</>"} source
+        </button>
+      </div>
+    </div>
+  );
+}
 
 function NoFile() {
   return (
@@ -64,29 +97,60 @@ function NotFound({ path }: { path: string }) {
 }
 
 function Pane({ path }: { path: string | null }) {
+  const { state, dispatch } = useEditor();
+
   if (!path) return <NoFile />;
   const node = resolveNode(path);
   if (!node || node.kind !== "file") return <NotFound path={path} />;
 
+  if (node.view === "playground") {
+    return (
+      <div className="h-full w-full" style={{ background: "var(--c-editor)" }}>
+        <SkillsPlayground />
+      </div>
+    );
+  }
+
+  const canToggle = node.view === "markdown" || node.view === "json";
+  const showSource = canToggle && !!state.sourceMode[path];
+
   return (
     <div
-      className="h-full w-full overflow-auto"
+      className="h-full w-full flex flex-col min-h-0"
       style={{ background: "var(--c-editor)" }}
     >
-      {node.view === "markdown" && (
-        <MarkdownView source={node.source} title={basename(path)} />
+      {canToggle && (
+        <EditorToolbar
+          showSource={showSource}
+          onToggle={() => dispatch({ type: "TOGGLE_SOURCE", path })}
+        />
       )}
-      {node.view === "json" && <JsonView source={node.source} />}
-      {node.view === "url" && (
-        <UrlView href={node.source} name={basename(path)} />
-      )}
-      {node.view === "form" && <FormView />}
-      {node.view === "image" && (
-        <ImageView source={node.source} name={basename(path)} />
-      )}
-      {node.view === "pdf" && (
-        <PdfView source={node.source} name={basename(path)} />
-      )}
+      <div className="flex-1 min-h-0 overflow-auto">
+        {showSource ? (
+          <SourceView
+            source={node.source}
+            language={node.language}
+            name={basename(path)}
+          />
+        ) : (
+          <>
+            {node.view === "markdown" && (
+              <MarkdownView source={node.source} title={basename(path)} />
+            )}
+            {node.view === "json" && <JsonView source={node.source} />}
+            {node.view === "url" && (
+              <UrlView href={node.source} name={basename(path)} />
+            )}
+            {node.view === "form" && <FormView />}
+            {node.view === "image" && (
+              <ImageView source={node.source} name={basename(path)} />
+            )}
+            {node.view === "pdf" && (
+              <PdfView source={node.source} name={basename(path)} />
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

@@ -77,6 +77,13 @@ export function CommandPalette() {
         run: () => dispatch({ type: "OPEN_TAB", path: "/contact.md" }),
       },
       {
+        id: "open-playground",
+        label: "View: Skills Playground (physics)",
+        detail: "rapier",
+        run: () =>
+          dispatch({ type: "OPEN_TAB", path: "/about/skills.playground" }),
+      },
+      {
         id: "open-settings",
         label: "Preferences: Open Settings (JSON)",
         run: () =>

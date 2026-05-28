@@ -11,7 +11,8 @@ export type FsFileView =
   | "url"
   | "form"
   | "pdf"
-  | "ascii";
+  | "ascii"
+  | "playground";
 
 export interface FsFile {
   kind: "file";
@@ -106,6 +107,8 @@ ${e.highlights.map((h) => `- ${h}`).join("\n")}
 const skillsContent = `# Skills
 
 A rough weighting of what I reach for.
+
+> Prefer it interactive? Open [\`skills.playground\`](/about/skills.playground) — a rapier physics sandbox of these chips.
 
 ${(["frontend", "backend", "data", "tooling"] as const)
   .map((group) => {
@@ -443,77 +446,6 @@ const projectsChildren: FsNode[] = [
   })),
 ];
 
-const resumeMd = `# ${profile.name}
-
-**${profile.role}** · ${profile.location}
-${profile.email} · ${profile.socials.map((s) => `[${s.label}](${s.href})`).join(" · ")}
-
----
-
-## Summary
-
-${profile.bio}
-
----
-
-## Experience
-
-${experience
-  .map(
-    (e) => `### ${e.title}${e.org ? ` — ${e.orgHref ? `[${e.org}](${e.orgHref})` : e.org}` : ""}
-*${e.period}*
-
-${e.summary}
-
-${e.highlights.map((h) => `- ${h}`).join("\n")}
-`,
-  )
-  .join("\n")}
-
----
-
-## Selected Work
-
-${projects
-  .map(
-    (p) => `### ${p.title} — ${p.year}
-**${p.role}** · ${p.stack.join(" · ")}
-
-${p.description}
-
-→ ${p.href}
-`,
-  )
-  .join("\n")}
-
----
-
-## Skills
-
-${(["frontend", "backend", "data", "tooling"] as const)
-  .map((group) => {
-    const items = skills.filter((s) => s.group === group);
-    if (!items.length) return "";
-    const label = group.charAt(0).toUpperCase() + group.slice(1);
-    return `**${label}** — ${items
-      .sort((a, b) => b.weight - a.weight)
-      .map((s) => s.label)
-      .join(", ")}`;
-  })
-  .filter(Boolean)
-  .join("\n\n")}
-`;
-
-const avatarSvg = `data:image/svg+xml;utf8,${encodeURIComponent(
-  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' width='400' height='400'>
-  <rect width='400' height='400' fill='#030503'/>
-  <circle cx='200' cy='200' r='120' fill='none' stroke='#33ff33' stroke-opacity='0.8'/>
-  <circle cx='200' cy='200' r='150' fill='none' stroke='#33ff33' stroke-opacity='0.3'/>
-  <text x='200' y='210' font-family='monospace' font-size='48' fill='#33ff33' text-anchor='middle'>${profile.shortName[0]}${profile.name.split(" ").slice(-1)[0][0]}</text>
-  <text x='200' y='370' font-family='monospace' font-size='12' fill='#0e8a0e' text-anchor='middle' letter-spacing='3'>${profile.shortName.toUpperCase()}</text>
-</svg>`,
-)}`;
-
 export const FS: FsDir = {
   kind: "dir",
   name: "portfolio",
@@ -557,6 +489,14 @@ export const FS: FsDir = {
           view: "markdown",
           source: testimonialsContent,
           language: "Markdown",
+        },
+        {
+          kind: "file",
+          name: "skills.playground",
+          view: "playground",
+          source:
+            "Interactive skill chips — a rapier physics sandbox. Click a chip to poke it; chip width maps to how often I reach for that tool.",
+          language: "Playground",
         },
       ],
     },

@@ -30,6 +30,7 @@ export interface ContactForm {
 
 export type SidebarView = "explorer" | "search" | "settings";
 export type PaletteMode = "closed" | "files" | "commands";
+export type PanelTab = "terminal" | "problems" | "output";
 export type Toast = { id: number; text: string } | null;
 
 export interface Tab {
@@ -45,6 +46,7 @@ export interface EditorState {
   splitTab: string | null;
   splitFocused: boolean;
   terminalOpen: boolean;
+  panelTab: PanelTab;
   sidebarOpen: boolean;
   sidebarView: SidebarView;
   sidebarWidth: number;
@@ -59,6 +61,7 @@ export interface EditorState {
   konamiActive: boolean;
   vimActive: boolean;
   mobileSidebarOpen: boolean;
+  sourceMode: Record<string, boolean>;
 }
 
 const initialState: EditorState = {
@@ -68,6 +71,7 @@ const initialState: EditorState = {
   splitTab: null,
   splitFocused: false,
   terminalOpen: true,
+  panelTab: "terminal",
   sidebarOpen: true,
   sidebarView: "explorer",
   sidebarWidth: 280,
@@ -82,6 +86,7 @@ const initialState: EditorState = {
   konamiActive: false,
   vimActive: false,
   mobileSidebarOpen: false,
+  sourceMode: {},
 };
 
 export type EditorAction =
@@ -96,6 +101,7 @@ export type EditorAction =
   | { type: "SET_SPLIT_FOCUSED"; focused: boolean }
   | { type: "TOGGLE_TERMINAL" }
   | { type: "SET_TERMINAL_OPEN"; open: boolean }
+  | { type: "SET_PANEL_TAB"; tab: PanelTab }
   | { type: "TOGGLE_SIDEBAR" }
   | { type: "SET_SIDEBAR_OPEN"; open: boolean }
   | { type: "TOGGLE_MOBILE_SIDEBAR" }
@@ -115,6 +121,7 @@ export type EditorAction =
   | { type: "SET_SEARCH_QUERY"; query: string }
   | { type: "SET_KONAMI"; active: boolean }
   | { type: "SET_VIM_ACTIVE"; active: boolean }
+  | { type: "TOGGLE_SOURCE"; path: string }
   | { type: "HYDRATE"; partial: Partial<EditorState> };
 
 const reducer = (state: EditorState, action: EditorAction): EditorState => {
@@ -187,6 +194,8 @@ const reducer = (state: EditorState, action: EditorAction): EditorState => {
       return { ...state, terminalOpen: !state.terminalOpen };
     case "SET_TERMINAL_OPEN":
       return { ...state, terminalOpen: action.open };
+    case "SET_PANEL_TAB":
+      return { ...state, panelTab: action.tab, terminalOpen: true };
     case "TOGGLE_SIDEBAR":
       return { ...state, sidebarOpen: !state.sidebarOpen };
     case "SET_SIDEBAR_OPEN":
@@ -257,6 +266,14 @@ const reducer = (state: EditorState, action: EditorAction): EditorState => {
       return { ...state, konamiActive: action.active };
     case "SET_VIM_ACTIVE":
       return { ...state, vimActive: action.active };
+    case "TOGGLE_SOURCE":
+      return {
+        ...state,
+        sourceMode: {
+          ...state.sourceMode,
+          [action.path]: !state.sourceMode[action.path],
+        },
+      };
     case "HYDRATE":
       return { ...state, ...action.partial };
     default:

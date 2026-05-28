@@ -1,28 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { useEditor } from "./store";
 import { Terminal } from "../terminal/Terminal";
+import { diagnostics } from "@/data/diagnostics";
 
-type PanelTab = "terminal" | "problems" | "output";
-
-const PROBLEMS = [
-  {
-    severity: "warn",
-    text: "Side project debt at >2 (limit: 2). Consider closing some PRs.",
-    file: "life.ts:12",
-  },
-  {
-    severity: "info",
-    text: "Coffee budget nearing daily threshold.",
-    file: "habits.ts:3",
-  },
-  {
-    severity: "info",
-    text: "Untested hot take: 'CSS-in-JS is fine for small teams'.",
-    file: "opinions.ts:42",
-  },
-];
+const PROBLEMS = diagnostics;
 
 const BUILD_LOG = [
   "▲ next build",
@@ -119,8 +101,9 @@ function Output() {
 }
 
 export function Panel() {
-  const { dispatch } = useEditor();
-  const [tab, setTab] = useState<PanelTab>("terminal");
+  const { state, dispatch } = useEditor();
+  const tab = state.panelTab;
+  const setTab = (t: typeof tab) => dispatch({ type: "SET_PANEL_TAB", tab: t });
 
   return (
     <div className="flex flex-col min-h-0 flex-1">

@@ -294,6 +294,15 @@ const vimCmd: CmdDef = {
   },
 };
 
+const playCmd: CmdDef = {
+  name: "play",
+  desc: "open the interactive skills playground",
+  run: ({ dispatch }) => {
+    dispatch({ type: "OPEN_TAB", path: "/about/skills.playground" });
+    return { output: info("→ launching skills.playground (rapier physics)") };
+  },
+};
+
 const gitCmd: CmdDef = {
   name: "git",
   desc: "fake git for vibes",
@@ -348,6 +357,7 @@ const REGISTRY: Record<string, CmdDef> = Object.fromEntries(
     themeCmd,
     sudoCmd,
     vimCmd,
+    playCmd,
     gitCmd,
   ].map((c) => [c.name, c]),
 );
