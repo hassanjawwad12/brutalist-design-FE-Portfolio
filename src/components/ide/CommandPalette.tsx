@@ -84,6 +84,33 @@ export function CommandPalette() {
           dispatch({ type: "OPEN_TAB", path: "/about/skills.playground" }),
       },
       {
+        id: "open-github-stats",
+        label: "Go to GitHub Stats",
+        detail: "live",
+        run: () => dispatch({ type: "OPEN_TAB", path: "/github/stats.md" }),
+      },
+      {
+        id: "help-shortcuts",
+        label: "Help: Keyboard Shortcuts",
+        detail: "?",
+        run: () => dispatch({ type: "SET_HELP", open: true }),
+      },
+      {
+        id: "theme-green",
+        label: "Theme: Green Phosphor",
+        run: () => dispatch({ type: "SET_THEME", theme: "green" }),
+      },
+      {
+        id: "theme-amber",
+        label: "Theme: Amber Phosphor",
+        run: () => dispatch({ type: "SET_THEME", theme: "amber" }),
+      },
+      {
+        id: "theme-blue",
+        label: "Theme: Blue Phosphor",
+        run: () => dispatch({ type: "SET_THEME", theme: "blue" }),
+      },
+      {
         id: "open-settings",
         label: "Preferences: Open Settings (JSON)",
         run: () =>

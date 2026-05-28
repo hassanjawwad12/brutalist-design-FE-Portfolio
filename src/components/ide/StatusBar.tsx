@@ -78,6 +78,13 @@ export function StatusBar() {
       >
         {state.terminalOpen ? "▼" : "▲"} terminal
       </button>
+      <button
+        onClick={() => dispatch({ type: "SET_HELP", open: true })}
+        title="Keyboard shortcuts (?)"
+        style={{ color: "var(--c-acid)", textShadow: "var(--text-glow)" }}
+      >
+        ? shortcuts
+      </button>
 
       <div style={{ flex: 1 }} />
 

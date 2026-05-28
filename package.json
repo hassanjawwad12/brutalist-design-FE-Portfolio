@@ -4,8 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/fetch-github.mjs",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "sync:github": "node scripts/fetch-github.mjs",
+    "build:wasm": "cd go && GOOS=js GOARCH=wasm go build -ldflags=\"-s -w\" -o ../public/go/portfolio.wasm . && (cp \"$(go env GOROOT)/lib/wasm/wasm_exec.js\" ../public/go/wasm_exec.js 2>/dev/null || cp \"$(go env GOROOT)/misc/wasm/wasm_exec.js\" ../public/go/wasm_exec.js)"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

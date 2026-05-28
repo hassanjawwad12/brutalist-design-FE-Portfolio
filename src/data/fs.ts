@@ -3,6 +3,7 @@ import { projects } from "./projects";
 import { experience } from "./experience";
 import { skills } from "./skills";
 import { testimonials } from "./testimonials";
+import { computeKpis, topRepos } from "@/lib/github-stats";
 
 export type FsFileView =
   | "markdown"
@@ -219,6 +220,56 @@ Notes I keep returning to. Open one to read it.
 - [\`on-shipping.md\`](/writing/posts/on-shipping.md) — what shipping actually costs.
 
 More posts go here when they earn their keep.
+`;
+
+const githubKpis = computeKpis();
+
+const githubStatsContent = `# GitHub — live stats
+
+> Aggregated across **all ${githubKpis.totalRepos}** public repositories.${
+  githubKpis.fetchedAt ? ` Last synced \`${githubKpis.fetchedAt.slice(0, 10)}\`.` : ""
+}
+
+| Metric | Value |
+| --- | --- |
+| Public repos | **${githubKpis.totalRepos}** |
+| Total stars | **${githubKpis.totalStars}** |
+| Total forks | **${githubKpis.totalForks}** |
+| Top repo | ${githubKpis.topRepo ? `[${githubKpis.topRepo.name}](${githubKpis.topRepo.url}) (${githubKpis.topRepo.stars}★)` : "—"} |
+
+## Languages
+
+${(() => {
+  const max = githubKpis.languages[0]?.count ?? 1;
+  return githubKpis.languages
+    .map((l) => {
+      const bars = Math.max(1, Math.round((l.count / max) * 14));
+      return `- \`${l.lang.padEnd(16, " ")}\` ${"▮".repeat(bars)} ${l.count}`;
+    })
+    .join("\n");
+})()}
+
+---
+
+Want these computed in front of you? Run \`stats\` in the terminal — it crunches the
+numbers in **Go, compiled to WebAssembly**, right in your browser.
+`;
+
+const githubReposContent = `# GitHub — selected repos
+
+A few highlights (sorted by stars). The full list lives on
+[github.com/${githubKpis.username}](${profile.socials.find((s) => s.label === "GitHub")?.href ?? `https://github.com/${githubKpis.username}`}).
+
+${topRepos(8)
+  .map(
+    (r) =>
+      `## [${r.name}](${r.url})
+\`${r.stars}★\` · \`${r.language ?? "—"}\` · updated \`${r.updated.slice(0, 10)}\`
+
+${r.description || "_No description._"}
+`,
+  )
+  .join("\n")}
 `;
 
 const contactContent = `# Contact
@@ -528,6 +579,26 @@ export const FS: FsDir = {
               language: "Markdown",
             },
           ],
+        },
+      ],
+    },
+    {
+      kind: "dir",
+      name: "github",
+      children: [
+        {
+          kind: "file",
+          name: "stats.md",
+          view: "markdown",
+          source: githubStatsContent,
+          language: "Markdown",
+        },
+        {
+          kind: "file",
+          name: "repos.md",
+          view: "markdown",
+          source: githubReposContent,
+          language: "Markdown",
         },
       ],
     },

@@ -254,6 +254,11 @@ export function TitleBar() {
     ],
     Help: [
       {
+        label: "Keyboard Shortcuts",
+        detail: "?",
+        run: () => dispatch({ type: "SET_HELP", open: true }),
+      },
+      {
         label: "Keybindings (JSON)",
         detail: "/.config/keybindings.json",
         run: () => openFile("/.config/keybindings.json"),

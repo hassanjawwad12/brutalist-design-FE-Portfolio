@@ -32,6 +32,8 @@ export interface ContactForm {
 export type SidebarView = "explorer" | "search" | "settings";
 export type PaletteMode = "closed" | "files" | "commands";
 export type PanelTab = "terminal" | "problems" | "output";
+export type ThemeName = "green" | "amber" | "blue";
+export const THEMES: ThemeName[] = ["green", "amber", "blue"];
 export type Toast = { id: number; text: string } | null;
 
 export interface Tab {
@@ -63,6 +65,8 @@ export interface EditorState {
   vimActive: boolean;
   mobileSidebarOpen: boolean;
   sourceMode: Record<string, boolean>;
+  theme: ThemeName;
+  helpOpen: boolean;
 }
 
 const initialState: EditorState = {
@@ -82,12 +86,14 @@ const initialState: EditorState = {
   paletteMode: "closed",
   contactForm: { name: "", email: "", message: "", submittedAt: null },
   toast: null,
-  expandedDirs: { "/": true, "/projects": true, "/about": true },
+  expandedDirs: { "/": true, "/projects": true, "/about": true, "/github": true },
   searchQuery: "",
   konamiActive: false,
   vimActive: false,
   mobileSidebarOpen: false,
   sourceMode: {},
+  theme: "green",
+  helpOpen: false,
 };
 
 export type EditorAction =
@@ -123,6 +129,9 @@ export type EditorAction =
   | { type: "SET_KONAMI"; active: boolean }
   | { type: "SET_VIM_ACTIVE"; active: boolean }
   | { type: "TOGGLE_SOURCE"; path: string }
+  | { type: "SET_THEME"; theme: ThemeName }
+  | { type: "SET_HELP"; open: boolean }
+  | { type: "TOGGLE_HELP" }
   | { type: "HYDRATE"; partial: Partial<EditorState> };
 
 const reducer = (state: EditorState, action: EditorAction): EditorState => {
@@ -275,6 +284,12 @@ const reducer = (state: EditorState, action: EditorAction): EditorState => {
           [action.path]: !state.sourceMode[action.path],
         },
       };
+    case "SET_THEME":
+      return { ...state, theme: action.theme };
+    case "SET_HELP":
+      return { ...state, helpOpen: action.open };
+    case "TOGGLE_HELP":
+      return { ...state, helpOpen: !state.helpOpen };
     case "HYDRATE":
       return { ...state, ...action.partial };
     default:
@@ -299,6 +314,7 @@ interface PersistedState {
   expandedDirs: Record<string, boolean>;
   openTabs: Tab[];
   activeTab: string | null;
+  theme: ThemeName;
 }
 
 const loadPersisted = (): Partial<PersistedState> | null => {
@@ -322,6 +338,7 @@ const persist = (state: EditorState) => {
       expandedDirs: state.expandedDirs,
       openTabs: state.openTabs,
       activeTab: state.activeTab,
+      theme: state.theme,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch {
@@ -374,6 +391,12 @@ export function EditorProvider({ children }: { children: ReactNode }) {
     if (typeof persisted.panelHeight === "number")
       partial.panelHeight = persisted.panelHeight;
     if (persisted.expandedDirs) partial.expandedDirs = persisted.expandedDirs;
+    if (
+      persisted.theme === "green" ||
+      persisted.theme === "amber" ||
+      persisted.theme === "blue"
+    )
+      partial.theme = persisted.theme;
     const tabs = sanitizeTabs(persisted);
     if (tabs) {
       partial.openTabs = tabs.openTabs;
@@ -391,6 +414,7 @@ export function EditorProvider({ children }: { children: ReactNode }) {
     state.expandedDirs,
     state.openTabs,
     state.activeTab,
+    state.theme,
   ]);
 
   const showToast = useCallback((text: string, durationMs = 2200) => {

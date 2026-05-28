@@ -14,6 +14,7 @@ import { VimModal } from "./VimModal";
 import { useGlobalHotkeys } from "@/hooks/useHotkeys";
 import { README_PATH } from "@/data/fs";
 import { BootScreen } from "./BootScreen";
+import { ShortcutsOverlay } from "./ShortcutsOverlay";
 
 function Layout({ initialPath }: { initialPath?: string }) {
   const { state, dispatch, showToast } = useEditor();
@@ -35,9 +36,13 @@ function Layout({ initialPath }: { initialPath?: string }) {
     null,
   );
   const startSidebarResize = (e: React.MouseEvent) => {
+    e.preventDefault();
     sidebarDragRef.current = { startX: e.clientX, startW: state.sidebarWidth };
+    document.body.style.userSelect = "none";
+    document.body.style.cursor = "col-resize";
     const onMove = (ev: MouseEvent) => {
       if (!sidebarDragRef.current) return;
+      ev.preventDefault();
       const delta = ev.clientX - sidebarDragRef.current.startX;
       const next = Math.max(
         180,
@@ -47,6 +52,8 @@ function Layout({ initialPath }: { initialPath?: string }) {
     };
     const onUp = () => {
       sidebarDragRef.current = null;
+      document.body.style.userSelect = "";
+      document.body.style.cursor = "";
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseup", onUp);
     };
@@ -57,9 +64,13 @@ function Layout({ initialPath }: { initialPath?: string }) {
   // Resizing panel
   const panelDragRef = useRef<{ startY: number; startH: number } | null>(null);
   const startPanelResize = (e: React.MouseEvent) => {
+    e.preventDefault();
     panelDragRef.current = { startY: e.clientY, startH: state.panelHeight };
+    document.body.style.userSelect = "none";
+    document.body.style.cursor = "row-resize";
     const onMove = (ev: MouseEvent) => {
       if (!panelDragRef.current) return;
+      ev.preventDefault();
       const delta = panelDragRef.current.startY - ev.clientY;
       const next = Math.max(
         120,
@@ -69,6 +80,8 @@ function Layout({ initialPath }: { initialPath?: string }) {
     };
     const onUp = () => {
       panelDragRef.current = null;
+      document.body.style.userSelect = "";
+      document.body.style.cursor = "";
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseup", onUp);
     };
@@ -105,6 +118,31 @@ function Layout({ initialPath }: { initialPath?: string }) {
       ],
     });
   }, [dispatch, terminalEmpty]);
+
+  // Apply the selected phosphor theme to <html data-theme>.
+  useEffect(() => {
+    document.documentElement.dataset.theme = state.theme;
+  }, [state.theme]);
+
+  // First-visit discoverability nudge (once per browser).
+  useEffect(() => {
+    let hinted = true;
+    try {
+      hinted = localStorage.getItem("ide-portfolio:hinted") === "1";
+    } catch {
+      /* ignore */
+    }
+    if (hinted) return;
+    const id = window.setTimeout(() => {
+      showToast("tip: press ? for shortcuts · type `help` in the terminal", 5000);
+      try {
+        localStorage.setItem("ide-portfolio:hinted", "1");
+      } catch {
+        /* ignore */
+      }
+    }, 2600);
+    return () => window.clearTimeout(id);
+  }, [showToast]);
 
   // Keep the URL in sync with the active tab so any file is shareable / deep-linkable.
   // README is treated as "home" (/), everything else maps to /p/<path>.
@@ -228,6 +266,7 @@ function Layout({ initialPath }: { initialPath?: string }) {
 
       <CommandPalette />
       <VimModal />
+      <ShortcutsOverlay />
 
       {state.toast && (
         <div className="toast" role="status">

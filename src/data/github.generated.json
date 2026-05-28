@@ -1,0 +1,996 @@
+{
+  "username": "hassanjawwad12",
+  "fetchedAt": "2026-05-28T23:11:33.357Z",
+  "repos": [
+    {
+      "name": "Nutrify.AI",
+      "description": "AI based nutrition and cost optimized cattle feed generator",
+      "language": "JavaScript",
+      "stars": 6,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Nutrify.AI",
+      "updated": "2025-12-11T16:57:28Z",
+      "topics": []
+    },
+    {
+      "name": "text-to-image-search",
+      "description": "Text to Image Search AI App using Haystack and CLIP",
+      "language": "Python",
+      "stars": 3,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/text-to-image-search",
+      "updated": "2025-12-11T16:58:56Z",
+      "topics": []
+    },
+    {
+      "name": "concurrency-patterns",
+      "description": "All the concurrency patterns in go",
+      "language": "Go",
+      "stars": 3,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/concurrency-patterns",
+      "updated": "2025-12-11T16:58:51Z",
+      "topics": []
+    },
+    {
+      "name": "Human-Resource-Management-System",
+      "description": "A comprehensive HRMS with you can accomplish variety of tasks such as: ",
+      "language": "JavaScript",
+      "stars": 3,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Human-Resource-Management-System",
+      "updated": "2025-12-11T16:57:28Z",
+      "topics": []
+    },
+    {
+      "name": "text-search-engine",
+      "description": "A text search engine built using GO",
+      "language": "Go",
+      "stars": 3,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/text-search-engine",
+      "updated": "2025-10-31T23:14:20Z",
+      "topics": []
+    },
+    {
+      "name": "blockchain-from-scratch",
+      "description": "A blockchain from scratch",
+      "language": "Go",
+      "stars": 3,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/blockchain-from-scratch",
+      "updated": "2025-05-17T11:40:17Z",
+      "topics": []
+    },
+    {
+      "name": "dev-portfolio",
+      "description": "The portfolio is built with with Next.js for handling the user interface, Three.js for rendering 3D elements, Framer motion for beautiful animations, and styled with TailwindCSS.",
+      "language": "TypeScript",
+      "stars": 2,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/dev-portfolio",
+      "updated": "2025-12-11T16:58:58Z",
+      "topics": []
+    },
+    {
+      "name": "file-system-monitor",
+      "description": "A robust and efficient file system monitoring tool written in Go that tracks and logs file system events in real-time. This project demonstrates the use of concurrent programming patterns and system-level programming in Go.",
+      "language": "Go",
+      "stars": 2,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/file-system-monitor",
+      "updated": "2025-12-11T16:58:56Z",
+      "topics": []
+    },
+    {
+      "name": "sql",
+      "description": "An Introduction to Databases and Queries",
+      "language": "PLpgSQL",
+      "stars": 2,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/sql",
+      "updated": "2025-12-11T16:58:54Z",
+      "topics": []
+    },
+    {
+      "name": "Chat-Box",
+      "description": "A simple chat page ",
+      "language": "HTML",
+      "stars": 2,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Chat-Box",
+      "updated": "2025-05-17T11:40:18Z",
+      "topics": []
+    },
+    {
+      "name": "golang-from-ground-up",
+      "description": "Complete golang guide",
+      "language": "Go",
+      "stars": 2,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/golang-from-ground-up",
+      "updated": "2025-03-06T09:10:01Z",
+      "topics": []
+    },
+    {
+      "name": "hassanjawwad12",
+      "description": "",
+      "language": null,
+      "stars": 2,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/hassanjawwad12",
+      "updated": "2025-01-31T12:19:29Z",
+      "topics": []
+    },
+    {
+      "name": "vector-store-from-scratch",
+      "description": " A Vector Store using Python.",
+      "language": "Python",
+      "stars": 2,
+      "forks": 1,
+      "url": "https://github.com/hassanjawwad12/vector-store-from-scratch",
+      "updated": "2025-01-29T12:21:43Z",
+      "topics": []
+    },
+    {
+      "name": "brutalist-design-FE-Portfolio",
+      "description": "A brutalist portfolio for a front end developer",
+      "language": "TypeScript",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/brutalist-design-FE-Portfolio",
+      "updated": "2026-05-25T07:29:58Z",
+      "topics": []
+    },
+    {
+      "name": "event-management-system",
+      "description": "A GO Powered event booking REST API",
+      "language": "Go",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/event-management-system",
+      "updated": "2025-12-11T16:58:52Z",
+      "topics": []
+    },
+    {
+      "name": "rate-limiting",
+      "description": "Rate limit with go to prevent the app from dos attack.",
+      "language": "Go",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/rate-limiting",
+      "updated": "2025-12-11T16:58:11Z",
+      "topics": []
+    },
+    {
+      "name": "go-fiber-postgres",
+      "description": "golang with postgresQL REST API (go-fiber) ",
+      "language": "Go",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/go-fiber-postgres",
+      "updated": "2025-12-11T16:58:03Z",
+      "topics": []
+    },
+    {
+      "name": "shadcn-app",
+      "description": "Basic working of shadcn",
+      "language": "TypeScript",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/shadcn-app",
+      "updated": "2025-12-11T16:58:03Z",
+      "topics": []
+    },
+    {
+      "name": "shadcn-dashboard",
+      "description": "A dashboard built using Nextjs and Shadcn",
+      "language": "TypeScript",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/shadcn-dashboard",
+      "updated": "2025-12-11T16:58:03Z",
+      "topics": []
+    },
+    {
+      "name": "bash-tasks",
+      "description": "Bash tasks",
+      "language": "Shell",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/bash-tasks",
+      "updated": "2025-05-17T11:40:19Z",
+      "topics": []
+    },
+    {
+      "name": "sentiment-analysis-DL",
+      "description": "Used 3 different techniques ( RNN, CNN, LSTM ) for sentiment analysis on clothing review dataset from Kaggle.",
+      "language": "Jupyter Notebook",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/sentiment-analysis-DL",
+      "updated": "2025-01-08T12:10:20Z",
+      "topics": []
+    },
+    {
+      "name": "capstone-shell-project",
+      "description": "Build a practical and reusable Zsh-based task management utility, TaskMan, that allows users to create, manage, and track their tasks directly from the terminal. ",
+      "language": "Shell",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/capstone-shell-project",
+      "updated": "2024-12-26T11:22:23Z",
+      "topics": []
+    },
+    {
+      "name": "generate-grayscale-image-matrix",
+      "description": "Generate a Grayscale Image Matrix Using Mathematical Functions in Go",
+      "language": "Go",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/generate-grayscale-image-matrix",
+      "updated": "2024-12-19T08:14:33Z",
+      "topics": []
+    },
+    {
+      "name": "git-commands",
+      "description": "All the git commands with their purpose to streamline your workflow.",
+      "language": "Shell",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/git-commands",
+      "updated": "2024-12-18T10:00:58Z",
+      "topics": []
+    },
+    {
+      "name": "Rotating-earth-on-starry-sky",
+      "description": "A rotating earth on a starry sky made using 3js.",
+      "language": "JavaScript",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Rotating-earth-on-starry-sky",
+      "updated": "2024-12-18T07:52:58Z",
+      "topics": []
+    },
+    {
+      "name": "Wormhole-Travel",
+      "description": "A wormhole with squares and you travel through it. Made using 3js.",
+      "language": "JavaScript",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Wormhole-Travel",
+      "updated": "2024-12-18T07:52:56Z",
+      "topics": []
+    },
+    {
+      "name": "AI-Yoga-Generator",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/AI-Yoga-Generator",
+      "updated": "2024-12-18T07:52:52Z",
+      "topics": []
+    },
+    {
+      "name": "Shirt-design-3js-website",
+      "description": "A website made using 3js, react, tailwind css and framer motion. You can customize shirt, add logo, add print. use your own logo/print.",
+      "language": "JavaScript",
+      "stars": 1,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Shirt-design-3js-website",
+      "updated": "2024-07-25T17:51:31Z",
+      "topics": []
+    },
+    {
+      "name": "price-calculator",
+      "description": "A project which includes all the go concepts",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/price-calculator",
+      "updated": "2025-03-04T09:34:41Z",
+      "topics": []
+    },
+    {
+      "name": "cv-web",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/cv-web",
+      "updated": "2025-02-11T17:07:12Z",
+      "topics": []
+    },
+    {
+      "name": "bash-scripting",
+      "description": "Sample code for learning bash scripting complete",
+      "language": "Shell",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/bash-scripting",
+      "updated": "2025-01-29T12:06:57Z",
+      "topics": []
+    },
+    {
+      "name": "testing-commit",
+      "description": "",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/testing-commit",
+      "updated": "2025-01-27T10:57:15Z",
+      "topics": []
+    },
+    {
+      "name": "rsa-sign-xml",
+      "description": "Sample code to sign a xml document using sha-1 and RSA.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/rsa-sign-xml",
+      "updated": "2025-01-22T07:29:35Z",
+      "topics": []
+    },
+    {
+      "name": "front-end-task",
+      "description": "",
+      "language": "TypeScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/front-end-task",
+      "updated": "2025-01-13T16:06:12Z",
+      "topics": []
+    },
+    {
+      "name": "Sentiment-Analysis-using-Deep-Learning",
+      "description": "Performed binary text classification on Urdu Dataset using 1)RNN 2)GRU 3)LSTM 4)BiLSTM",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Sentiment-Analysis-using-Deep-Learning",
+      "updated": "2025-01-08T12:09:21Z",
+      "topics": []
+    },
+    {
+      "name": "contact-app-backend",
+      "description": "Backend for a contacts app using Node, express and MongoDB ",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/contact-app-backend",
+      "updated": "2025-01-08T12:09:11Z",
+      "topics": []
+    },
+    {
+      "name": "todo-go",
+      "description": "To-do list Rest API in go",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/todo-go",
+      "updated": "2025-01-02T10:00:27Z",
+      "topics": []
+    },
+    {
+      "name": "hello-world-get-api",
+      "description": "A simple hello world GET API made using go-chi.",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/hello-world-get-api",
+      "updated": "2025-01-02T09:57:15Z",
+      "topics": []
+    },
+    {
+      "name": "gin-golang",
+      "description": "Gin golang API Development",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/gin-golang",
+      "updated": "2025-01-02T09:36:34Z",
+      "topics": []
+    },
+    {
+      "name": "weather-tracker",
+      "description": "Weather Tracker project using go",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/weather-tracker",
+      "updated": "2025-01-02T08:20:47Z",
+      "topics": []
+    },
+    {
+      "name": "go-movies-crud",
+      "description": "CRUD API for movies built using go",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/go-movies-crud",
+      "updated": "2025-01-02T07:19:28Z",
+      "topics": []
+    },
+    {
+      "name": "anagram-checker",
+      "description": "Check if 2 strings are anagrams using go",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/anagram-checker",
+      "updated": "2025-01-01T07:43:21Z",
+      "topics": []
+    },
+    {
+      "name": "go-practice",
+      "description": "A repo with all the basic and advanced concepts of go.",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/go-practice",
+      "updated": "2025-01-01T06:59:38Z",
+      "topics": []
+    },
+    {
+      "name": "lru-cache",
+      "description": "A custom cache built using go",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/lru-cache",
+      "updated": "2025-01-01T06:11:31Z",
+      "topics": []
+    },
+    {
+      "name": "betterj-module-use",
+      "description": "Using the created betterj module",
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/betterj-module-use",
+      "updated": "2025-01-01T05:19:15Z",
+      "topics": []
+    },
+    {
+      "name": "betterj",
+      "description": "A go-lang module to make a JSON minimized and beautify it ",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/betterj",
+      "updated": "2025-01-01T05:13:27Z",
+      "topics": []
+    },
+    {
+      "name": "go-server",
+      "description": "Simple go-server",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/go-server",
+      "updated": "2024-12-31T10:24:23Z",
+      "topics": []
+    },
+    {
+      "name": "json-encoding-and-decoding-with-golang",
+      "description": "Utilities offered by Go to work with JSON data.",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/json-encoding-and-decoding-with-golang",
+      "updated": "2024-12-30T10:24:35Z",
+      "topics": []
+    },
+    {
+      "name": "DatosBiblioInc",
+      "description": "Website to enhance business by data driven insights.",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/DatosBiblioInc",
+      "updated": "2024-12-29T06:46:33Z",
+      "topics": []
+    },
+    {
+      "name": "student-api",
+      "description": "Beginner-level Rest API ",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/student-api",
+      "updated": "2024-12-27T10:43:57Z",
+      "topics": []
+    },
+    {
+      "name": "Job-Davis",
+      "description": "Complete Front-End of the project Job Davis. Including landing page.,sign-up,sign-in, and rest of the functonality pages.",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Job-Davis",
+      "updated": "2024-12-26T10:30:23Z",
+      "topics": []
+    },
+    {
+      "name": "cv-builder",
+      "description": "A website to build ATS friendly resume. ",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/cv-builder",
+      "updated": "2024-12-26T10:24:56Z",
+      "topics": []
+    },
+    {
+      "name": "AI-TUTOR",
+      "description": "AI based learning platform for kids",
+      "language": "TypeScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/AI-TUTOR",
+      "updated": "2024-12-26T10:24:34Z",
+      "topics": []
+    },
+    {
+      "name": "hebrew-chatbot",
+      "description": "",
+      "language": "TypeScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/hebrew-chatbot",
+      "updated": "2024-12-26T10:23:35Z",
+      "topics": []
+    },
+    {
+      "name": "count-words-in-string",
+      "description": "Implement WordCount. It should return a map of the counts of each “word” in the string s. The wc.Test function runs a test suite against the provided function and prints success or failure.",
+      "language": "Go",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/count-words-in-string",
+      "updated": "2024-12-19T06:42:37Z",
+      "topics": []
+    },
+    {
+      "name": "Image-downloader-shell-project",
+      "description": "Shell project to download image from link and save with your directory, filename and resolution preference.",
+      "language": "Shell",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Image-downloader-shell-project",
+      "updated": "2024-12-18T12:07:21Z",
+      "topics": []
+    },
+    {
+      "name": "docker-practice",
+      "description": "",
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/docker-practice",
+      "updated": "2024-12-18T09:31:37Z",
+      "topics": []
+    },
+    {
+      "name": "animal-tracking-EDA",
+      "description": "Extensive exploratory Data Analysis on animal-tracking dataset from kaggle.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/animal-tracking-EDA",
+      "updated": "2024-12-18T07:53:14Z",
+      "topics": []
+    },
+    {
+      "name": "World-Risk-Classification",
+      "description": "Final Semester Project of Environmental Data Science. Basically used Random Forest to predict the risk index of a certain country.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/World-Risk-Classification",
+      "updated": "2024-12-18T07:53:12Z",
+      "topics": []
+    },
+    {
+      "name": "test-repository",
+      "description": "First training task",
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/test-repository",
+      "updated": "2024-12-16T11:13:45Z",
+      "topics": []
+    },
+    {
+      "name": "multi-AI-agent",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/multi-AI-agent",
+      "updated": "2024-12-15T07:05:59Z",
+      "topics": []
+    },
+    {
+      "name": "Vue-Job-Finder-Website",
+      "description": "A simple website built using VueJs ,Tailwind CSS and Rest api ( JSON Server) where u can view, add and delete jobs.",
+      "language": "Vue",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Vue-Job-Finder-Website",
+      "updated": "2024-12-12T14:45:38Z",
+      "topics": []
+    },
+    {
+      "name": "seo-website",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/seo-website",
+      "updated": "2024-09-14T06:32:16Z",
+      "topics": []
+    },
+    {
+      "name": "Layout-sandbox",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Layout-sandbox",
+      "updated": "2024-09-14T06:16:26Z",
+      "topics": []
+    },
+    {
+      "name": "HRMS",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/HRMS",
+      "updated": "2024-09-14T06:14:08Z",
+      "topics": []
+    },
+    {
+      "name": "Admin-Module",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Admin-Module",
+      "updated": "2024-09-14T06:10:44Z",
+      "topics": []
+    },
+    {
+      "name": "PDF-chatbot",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/PDF-chatbot",
+      "updated": "2024-09-14T06:07:06Z",
+      "topics": []
+    },
+    {
+      "name": "Task-rise",
+      "description": "Landing page of website using React, chakra UI and Framer Motion",
+      "language": "TypeScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Task-rise",
+      "updated": "2024-09-14T06:03:29Z",
+      "topics": []
+    },
+    {
+      "name": "Rotating-ball-3js",
+      "description": "A rotating ball with texture. Made using 3js.",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Rotating-ball-3js",
+      "updated": "2024-07-29T15:19:05Z",
+      "topics": []
+    },
+    {
+      "name": "Transition-effect",
+      "description": "Transition effect using 3js.",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Transition-effect",
+      "updated": "2024-07-29T15:14:22Z",
+      "topics": []
+    },
+    {
+      "name": "Sentiment-Analysis-on-Image-",
+      "description": "Sentiment Analysis on Image using YOLOv5",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Sentiment-Analysis-on-Image-",
+      "updated": "2024-07-25T17:48:12Z",
+      "topics": []
+    },
+    {
+      "name": "Dashboard-using-Plotly",
+      "description": "Interactive Visualization and Dashboard using Plotly ",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Dashboard-using-Plotly",
+      "updated": "2024-07-25T17:48:07Z",
+      "topics": []
+    },
+    {
+      "name": "PayScalePredictor",
+      "description": "Performed initial data cleaning, one hot encoding, standardization , dimensionality reduction and data validation",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/PayScalePredictor",
+      "updated": "2024-07-25T17:48:05Z",
+      "topics": []
+    },
+    {
+      "name": "Generative-PreTrained-Transformer",
+      "description": "Built a GPT from scratch and then used the model to make a chat bot.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Generative-PreTrained-Transformer",
+      "updated": "2024-07-25T17:47:59Z",
+      "topics": []
+    },
+    {
+      "name": "Bigram-generator",
+      "description": "A dive into pytorch and its functions along with a custom bigram generator neural network.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Bigram-generator",
+      "updated": "2024-07-25T17:47:57Z",
+      "topics": []
+    },
+    {
+      "name": "Prediction-on-Bird-GPS-Data",
+      "description": "Made 2 models using the GPS data of the bird",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Prediction-on-Bird-GPS-Data",
+      "updated": "2024-07-24T04:01:49Z",
+      "topics": []
+    },
+    {
+      "name": "MLP-for-GPS",
+      "description": "",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/MLP-for-GPS",
+      "updated": "2024-07-24T03:54:52Z",
+      "topics": []
+    },
+    {
+      "name": "Count-Vectorizer",
+      "description": "Effect of different pre-processing techniques on Naive Bayes accuracy on BBC text.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Count-Vectorizer",
+      "updated": "2024-07-21T08:04:43Z",
+      "topics": []
+    },
+    {
+      "name": "Connect-4-",
+      "description": "A connect 4 game built using REACT ",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Connect-4-",
+      "updated": "2024-07-17T07:51:14Z",
+      "topics": []
+    },
+    {
+      "name": "sayIt",
+      "description": "A unified platform for customer reviews on clothing.",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/sayIt",
+      "updated": "2024-07-17T07:51:06Z",
+      "topics": []
+    },
+    {
+      "name": "neural-prophet",
+      "description": "Weather forecast prediction using neural prophet",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/neural-prophet",
+      "updated": "2024-07-16T06:47:55Z",
+      "topics": []
+    },
+    {
+      "name": "aspectbased-sentiment-analysis",
+      "description": "",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/aspectbased-sentiment-analysis",
+      "updated": "2024-07-07T15:22:42Z",
+      "topics": []
+    },
+    {
+      "name": "zustand-practice",
+      "description": "project to practice zustand, jsonplaceholder and nested dynamic routing ",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/zustand-practice",
+      "updated": "2024-06-24T11:48:21Z",
+      "topics": []
+    },
+    {
+      "name": "auti-venture",
+      "description": "",
+      "language": null,
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/auti-venture",
+      "updated": "2024-06-13T14:07:34Z",
+      "topics": []
+    },
+    {
+      "name": "auti-venturee",
+      "description": "Games for kids with autism",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/auti-venturee",
+      "updated": "2024-06-11T16:35:05Z",
+      "topics": []
+    },
+    {
+      "name": "Image-Processing",
+      "description": "All the work done during the semester course of DIGITAL IMAGE PROCESSING",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Image-Processing",
+      "updated": "2024-05-26T09:05:52Z",
+      "topics": []
+    },
+    {
+      "name": "PSO-pseudo-coloring",
+      "description": "Performed pseudo coloring using Particle Swamp Optimization.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/PSO-pseudo-coloring",
+      "updated": "2024-05-07T14:27:09Z",
+      "topics": []
+    },
+    {
+      "name": "StarWars",
+      "description": "Simple project for learning and testing use query using SWAPI: A star wars API ",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/StarWars",
+      "updated": "2024-05-07T14:25:23Z",
+      "topics": []
+    },
+    {
+      "name": "ACE-filtering",
+      "description": "Applied ACE filter 1 and histogram equilization on image",
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/ACE-filtering",
+      "updated": "2024-03-29T16:28:38Z",
+      "topics": []
+    },
+    {
+      "name": "ap-assignment",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/ap-assignment",
+      "updated": "2024-03-25T16:19:48Z",
+      "topics": []
+    },
+    {
+      "name": "sugarcane-disease-pred",
+      "description": "CNN to predict sugarcane disease",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/sugarcane-disease-pred",
+      "updated": "2024-03-23T07:12:28Z",
+      "topics": []
+    },
+    {
+      "name": "Digital-Image-Processing",
+      "description": "1. Mapping Equations (Linear and Non-linear), user should be given choice to select ranges for input; 2. Digital negative; 3. Histogram Stretch and Shrink.",
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Digital-Image-Processing",
+      "updated": "2024-03-17T16:48:30Z",
+      "topics": []
+    },
+    {
+      "name": "Sentiment-Analysis-ML",
+      "description": "Using 4 different Machine Learning techniques for sentiment analysis. Used the dataset from Kaggle.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Sentiment-Analysis-ML",
+      "updated": "2024-03-17T05:36:00Z",
+      "topics": []
+    },
+    {
+      "name": "Environmental-DataScience",
+      "description": "Linear Regression and KNN on a 5 metal oxides dataset from Kaggle.",
+      "language": "Jupyter Notebook",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Environmental-DataScience",
+      "updated": "2024-03-12T12:58:34Z",
+      "topics": []
+    },
+    {
+      "name": "Advanced-Programming-",
+      "description": "React practice as part of the course AP.",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Advanced-Programming-",
+      "updated": "2024-03-07T09:05:08Z",
+      "topics": []
+    },
+    {
+      "name": "Feedback-app",
+      "description": "Svelte app to add and remove feedback with ratings ranging from 0 to 10",
+      "language": "Svelte",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Feedback-app",
+      "updated": "2024-02-23T11:53:14Z",
+      "topics": []
+    },
+    {
+      "name": "Javascript-Practice",
+      "description": "Advanced Programming course Assignment which deals with JS. ",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/Javascript-Practice",
+      "updated": "2024-02-17T12:13:09Z",
+      "topics": []
+    },
+    {
+      "name": "react-dashboard",
+      "description": "",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/react-dashboard",
+      "updated": "2024-01-21T10:16:00Z",
+      "topics": []
+    },
+    {
+      "name": "node-cli",
+      "description": "A CLI (command line interface) for a quiz game app.",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/node-cli",
+      "updated": "2023-12-31T12:03:00Z",
+      "topics": []
+    }
+  ]
+}

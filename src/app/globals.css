@@ -424,6 +424,115 @@ body::after {
   user-select: none;
 }
 
+/* ---------- Phosphor themes (CRT P1 green / P3 amber / blue) ---------- */
+/* Default = green. Amber & blue recolor the whole CRT uniformly via a hue shift,
+   which also catches the hardcoded phosphor-green accents. */
+body {
+  transition: filter var(--dur-base) var(--ease-out-expo);
+}
+html[data-theme="amber"] body {
+  filter: hue-rotate(-92deg) saturate(1.05);
+}
+html[data-theme="blue"] body {
+  filter: hue-rotate(78deg) saturate(0.95);
+}
+
+/* ---------- Keyboard shortcuts overlay ---------- */
+.shortcuts {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-tooltip);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+.shortcuts__panel {
+  width: 100%;
+  max-width: 720px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-acid);
+  box-shadow: var(--glow-acid);
+}
+.shortcuts__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--c-border-soft);
+}
+.shortcuts__heading {
+  font-size: var(--text-2xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-acid);
+  text-shadow: var(--text-glow);
+}
+.shortcuts__close {
+  font-size: var(--text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-fg-muted);
+  border: 1px solid var(--c-border);
+  padding: 2px 8px;
+}
+.shortcuts__close:hover {
+  color: var(--c-danger);
+  border-color: var(--c-danger);
+}
+.shortcuts__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  padding: var(--space-5);
+}
+.shortcuts__title {
+  font-size: var(--text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-amber);
+  text-shadow: var(--text-glow-amber);
+  margin: 0 0 var(--space-3);
+}
+.shortcuts__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.shortcuts__row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+.shortcuts__keys {
+  flex-shrink: 0;
+  min-width: 96px;
+  font-family: inherit;
+  font-size: var(--text-2xs);
+  color: var(--c-acid);
+  border: 1px solid var(--c-border);
+  padding: 2px 6px;
+  background: rgba(51, 255, 51, 0.06);
+}
+.shortcuts__label {
+  font-size: var(--text-xs);
+  color: var(--c-fg-soft);
+}
+@media (max-width: 640px) {
+  .shortcuts__cols {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  .shortcuts__keys {
+    min-width: 84px;
+  }
+}
+
 /* ---------- Boot / POST screen ---------- */
 .boot {
   position: fixed;

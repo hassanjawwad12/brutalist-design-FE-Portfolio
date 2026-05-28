@@ -50,11 +50,16 @@ export function useGlobalHotkeys() {
         );
       }
 
-      // Escape closes palette / vim modal
+      // Escape closes palette / vim modal / help overlay
       if (key === "escape") {
         if (state.paletteMode !== "closed") {
           e.preventDefault();
           dispatch({ type: "SET_PALETTE", mode: "closed" });
+          return;
+        }
+        if (state.helpOpen) {
+          e.preventDefault();
+          dispatch({ type: "SET_HELP", open: false });
           return;
         }
         if (state.vimActive) {
@@ -67,6 +72,13 @@ export function useGlobalHotkeys() {
           dispatch({ type: "SET_MOBILE_SIDEBAR_OPEN", open: false });
           return;
         }
+        return;
+      }
+
+      // ? → toggle the shortcuts overlay (ignore while typing)
+      if (e.key === "?" && !mod && !isEditableTarget(e.target)) {
+        e.preventDefault();
+        dispatch({ type: "TOGGLE_HELP" });
         return;
       }
 
@@ -136,6 +148,7 @@ export function useGlobalHotkeys() {
     state.splitFocused,
     state.vimActive,
     state.mobileSidebarOpen,
+    state.helpOpen,
     dispatch,
     showToast,
   ]);

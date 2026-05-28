@@ -16,6 +16,9 @@ import { suggestSimilar } from "@/lib/fuzzy";
 import type { Dispatch } from "react";
 import type { EditorAction, EditorState, TerminalLineKind } from "../ide/store";
 import { profile } from "@/data/profile";
+import { github } from "@/data/github";
+import { computeKpis, formatKpiLines } from "@/lib/github-stats";
+import { loadGo } from "@/lib/gowasm";
 
 export interface CmdOutputLine {
   kind: TerminalLineKind;
@@ -254,12 +257,29 @@ const contactCmd: CmdDef = {
 
 const themeCmd: CmdDef = {
   name: "theme",
-  desc: "(single theme: hacker-green)",
-  run: () => ({
-    output: info(
-      "only one theme: hacker-green. no switcher in this build.",
-    ),
-  }),
+  desc: "switch phosphor theme: green | amber | blue",
+  usage: "theme <green|amber|blue>",
+  run: ({ args, state, dispatch, showToast }) => {
+    const valid = ["green", "amber", "blue"] as const;
+    if (args.length === 0) {
+      return {
+        output: ok([
+          `current theme: ${state.theme} phosphor`,
+          `available: ${valid.join(" · ")}`,
+          "usage: theme <name>",
+        ]),
+      };
+    }
+    const name = args[0].toLowerCase();
+    if (!(valid as readonly string[]).includes(name)) {
+      return {
+        output: err(`theme: unknown "${args[0]}". try: ${valid.join(", ")}`),
+      };
+    }
+    dispatch({ type: "SET_THEME", theme: name as (typeof valid)[number] });
+    showToast(`theme → ${name} phosphor`);
+    return { output: info(`→ switched to ${name} phosphor`) };
+  },
 };
 
 const sudoCmd: CmdDef = {
@@ -302,6 +322,55 @@ const playCmd: CmdDef = {
     return { output: info("→ launching skills.playground (rapier physics)") };
   },
 };
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+const statsCmd: CmdDef = {
+  name: "stats",
+  desc: "compute live GitHub KPIs (Go→WASM)",
+  run: async ({ dispatch }) => {
+    dispatch({
+      type: "TERMINAL_APPEND",
+      lines: [{ kind: "info", text: `[ fetching github/${github.username} … ]` }],
+    });
+    await sleep(450);
+    dispatch({
+      type: "TERMINAL_APPEND",
+      lines: [{ kind: "info", text: "[ computing KPIs … ]" }],
+    });
+    await sleep(450);
+
+    let lines: string[];
+    let label: string;
+    try {
+      const go = await loadGo();
+      if (go) {
+        const out = go.stats(
+          JSON.stringify({ username: github.username, repos: github.repos }),
+        );
+        lines = out.split("\n");
+        label = `— computed in Go, compiled to WebAssembly (${go.version()})`;
+      } else {
+        lines = formatKpiLines(computeKpis());
+        label =
+          "— live GitHub stats (computed in JS; `npm run build:wasm` enables the Go path)";
+      }
+    } catch {
+      lines = formatKpiLines(computeKpis());
+      label = "— live GitHub stats (js fallback)";
+    }
+
+    return {
+      output: [
+        ...lines.map((text) => ({ kind: "out" as const, text })),
+        { kind: "info" as const, text: label },
+        { kind: "info" as const, text: "→ open github/stats.md for the full breakdown" },
+      ],
+    };
+  },
+};
+
+const gostatsCmd: CmdDef = { ...statsCmd, name: "gostats", desc: "alias for stats" };
 
 const gitCmd: CmdDef = {
   name: "git",
@@ -358,6 +427,8 @@ const REGISTRY: Record<string, CmdDef> = Object.fromEntries(
     sudoCmd,
     vimCmd,
     playCmd,
+    statsCmd,
+    gostatsCmd,
     gitCmd,
   ].map((c) => [c.name, c]),
 );
