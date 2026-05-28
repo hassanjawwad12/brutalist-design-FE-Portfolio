@@ -48,7 +48,7 @@ function Problems() {
       className="flex-1 min-h-0 overflow-auto"
       style={{
         padding: "var(--space-3)",
-        fontSize: "var(--text-xs)",
+        fontSize: "var(--text-base)",
       }}
     >
       {PROBLEMS.map((p, i) => (
@@ -93,7 +93,7 @@ function Output() {
       className="flex-1 min-h-0 overflow-auto"
       style={{
         padding: "var(--space-3)",
-        fontSize: "var(--text-xs)",
+        fontSize: "var(--text-base)",
         color: "var(--c-fg-soft)",
       }}
     >
@@ -130,10 +130,10 @@ export function Panel() {
           borderBottom: "1px solid var(--c-border-soft)",
           paddingInline: "var(--space-3)",
           gap: "var(--space-4)",
-          fontSize: "var(--text-2xs)",
+          fontSize: "var(--text-sm)",
           letterSpacing: "0.1em",
           textTransform: "uppercase",
-          height: 28,
+          height: 32,
         }}
         role="tablist"
         aria-label="Panel"
@@ -160,10 +160,10 @@ export function Panel() {
                 <span
                   style={{
                     marginLeft: 6,
-                    padding: "0 5px",
+                    padding: "0 6px",
                     background: "var(--c-amber)",
                     color: "var(--c-black)",
-                    fontSize: 9,
+                    fontSize: 11,
                     borderRadius: 999,
                   }}
                 >

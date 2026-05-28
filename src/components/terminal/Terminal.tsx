@@ -170,7 +170,7 @@ export function Terminal() {
           style={{
             color: lineColor(l.kind),
             whiteSpace: "pre-wrap",
-            fontSize: "var(--text-xs)",
+            fontSize: "var(--text-base)",
             lineHeight: 1.55,
             textShadow:
               l.kind === "in" || l.kind === "info" ? "var(--text-glow)" : "none",
@@ -198,7 +198,7 @@ export function Terminal() {
         ref={containerRef}
         className="flex-1 min-h-0 overflow-auto"
         style={{
-          fontSize: "var(--text-xs)",
+          fontSize: "var(--text-base)",
           paddingBottom: "var(--space-4)",
         }}
       >
@@ -232,7 +232,7 @@ export function Terminal() {
             style={{
               flex: 1,
               color: "var(--c-fg-bright)",
-              fontSize: "var(--text-xs)",
+              fontSize: "var(--text-base)",
               padding: 0,
               caretColor: "transparent",
             }}

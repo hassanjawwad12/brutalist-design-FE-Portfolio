@@ -33,9 +33,9 @@ function Row({ node, path, depth }: RowProps) {
         className="w-full text-left flex items-center group"
         style={{
           paddingInline: "var(--space-2)",
-          paddingBlock: 3,
+          paddingBlock: 4,
           paddingLeft: `calc(var(--space-2) + ${depth * 14}px)`,
-          fontSize: "var(--text-xs)",
+          fontSize: "var(--text-base)",
           color: active
             ? "var(--c-acid-bright)"
             : node.kind === "dir"
@@ -69,7 +69,7 @@ function Row({ node, path, depth }: RowProps) {
               width: 14,
               textAlign: "center",
               color: expanded ? "var(--c-amber)" : "var(--c-amber-deep)",
-              fontSize: 10,
+              fontSize: 11,
               transform: expanded ? "rotate(90deg)" : "rotate(0deg)",
               transition: "transform var(--dur-fast)",
               display: "inline-block",
@@ -84,7 +84,7 @@ function Row({ node, path, depth }: RowProps) {
               width: 14,
               textAlign: "center",
               color: "var(--c-fg-dim)",
-              fontSize: 10,
+              fontSize: 11,
             }}
           >
             ·
@@ -95,7 +95,7 @@ function Row({ node, path, depth }: RowProps) {
           <span
             style={{
               marginLeft: "var(--space-2)",
-              fontSize: 9,
+              fontSize: 10,
               color: "var(--c-fg-dim)",
               letterSpacing: "0.1em",
             }}
