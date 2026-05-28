@@ -95,9 +95,14 @@ function Row({ node, path, depth }: RowProps) {
           <span
             style={{
               marginLeft: "var(--space-2)",
-              fontSize: 10,
-              color: "var(--c-fg-dim)",
-              letterSpacing: "0.1em",
+              fontSize: 9,
+              color: "var(--c-fg-muted)",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              border: "1px solid var(--c-border)",
+              borderRadius: 2,
+              padding: "0 4px",
+              lineHeight: 1.5,
             }}
           >
             hidden

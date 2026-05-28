@@ -8,10 +8,8 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"runtime"
 	"sort"
-	"strings"
 	"syscall/js"
 )
 
@@ -29,17 +27,28 @@ type data struct {
 }
 
 type langCount struct {
-	Lang  string
-	Count int
+	Lang  string `json:"lang"`
+	Count int    `json:"count"`
+}
+
+// card mirrors the TS CardData shape so JS can render it directly.
+type card struct {
+	Username   string      `json:"username"`
+	TotalRepos int         `json:"totalRepos"`
+	TotalStars int         `json:"totalStars"`
+	TotalForks int         `json:"totalForks"`
+	Languages  []langCount `json:"languages"`
+	TopName    string      `json:"topName"`
+	TopStars   int         `json:"topStars"`
+	TopLang    string      `json:"topLang"`
+	RecentName string      `json:"recentName"`
+	RecentDate string      `json:"recentDate"`
 }
 
 func computeStats(jsonStr string) string {
 	var d data
 	if err := json.Unmarshal([]byte(jsonStr), &d); err != nil {
-		return "error: could not parse repo data: " + err.Error()
-	}
-	if len(d.Repos) == 0 {
-		return "no repository data available."
+		return `{"error":"could not parse repo data"}`
 	}
 
 	totalStars, totalForks := 0, 0
@@ -70,27 +79,28 @@ func computeStats(jsonStr string) string {
 		return ranked[i].Lang < ranked[j].Lang
 	})
 
-	langParts := make([]string, 0, 6)
-	for i, lc := range ranked {
-		if i >= 6 {
-			break
-		}
-		langParts = append(langParts, fmt.Sprintf("%s %d", lc.Lang, lc.Count))
-	}
-
 	recentDate := recent.Updated
 	if len(recentDate) >= 10 {
 		recentDate = recentDate[:10]
 	}
 
-	lines := []string{
-		fmt.Sprintf("@%s — public repos: %d · stars: %d · forks: %d",
-			d.Username, len(d.Repos), totalStars, totalForks),
-		"languages: " + strings.Join(langParts, " · "),
-		fmt.Sprintf("top repo:    %s (%d★, %s)", top.Name, top.Stars, dash(top.Language)),
-		fmt.Sprintf("most recent: %s (%s)", recent.Name, recentDate),
+	out := card{
+		Username:   d.Username,
+		TotalRepos: len(d.Repos),
+		TotalStars: totalStars,
+		TotalForks: totalForks,
+		Languages:  ranked,
+		TopName:    dash(top.Name),
+		TopStars:   top.Stars,
+		TopLang:    dash(top.Language),
+		RecentName: dash(recent.Name),
+		RecentDate: dash(recentDate),
 	}
-	return strings.Join(lines, "\n")
+	b, err := json.Marshal(out)
+	if err != nil {
+		return `{"error":"marshal failed"}`
+	}
+	return string(b)
 }
 
 func dash(s string) string {

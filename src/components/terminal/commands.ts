@@ -17,7 +17,13 @@ import type { Dispatch } from "react";
 import type { EditorAction, EditorState, TerminalLineKind } from "../ide/store";
 import { profile } from "@/data/profile";
 import { github } from "@/data/github";
-import { computeKpis, formatKpiLines } from "@/lib/github-stats";
+import {
+  computeKpis,
+  kpisToCard,
+  renderKpiCard,
+  fetchLiveRepos,
+  type CardData,
+} from "@/lib/github-stats";
 import { loadGo } from "@/lib/gowasm";
 
 export interface CmdOutputLine {
@@ -324,48 +330,72 @@ const playCmd: CmdDef = {
 };
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const SPIN = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 
 const statsCmd: CmdDef = {
   name: "stats",
   desc: "compute live GitHub KPIs (Go→WASM)",
   run: async ({ dispatch }) => {
-    dispatch({
-      type: "TERMINAL_APPEND",
-      lines: [{ kind: "info", text: `[ fetching github/${github.username} … ]` }],
-    });
-    await sleep(450);
-    dispatch({
-      type: "TERMINAL_APPEND",
-      lines: [{ kind: "info", text: "[ computing KPIs … ]" }],
-    });
-    await sleep(450);
+    const append = (text: string, kind: TerminalLineKind = "out") =>
+      dispatch({ type: "TERMINAL_APPEND", lines: [{ kind, text }] });
+    const replace = (text: string, kind: TerminalLineKind) =>
+      dispatch({ type: "TERMINAL_REPLACE_LAST", text, kind });
 
-    let lines: string[];
-    let label: string;
+    // 1) Live fetch (animated) with snapshot fallback.
+    append("", "info");
+    const fetchPromise = fetchLiveRepos();
+    for (let i = 0; i < 10; i++) {
+      replace(`${SPIN[i % SPIN.length]} querying api.github.com/${github.username} …`, "info");
+      await sleep(80);
+    }
+    const live = await fetchPromise;
+    const repos = live ?? github.repos;
+    replace(
+      `✓ ${repos.length} repositories ${live ? "fetched live" : "(cached snapshot)"}`,
+      "out",
+    );
+
+    // 2) Compute (animated) — real Go→WASM, with a one-shot retry so a slow
+    //    first load never drops to the JS path.
+    append("", "info");
+    const goPromise = (async () => {
+      let g = await loadGo();
+      if (!g) {
+        await sleep(250);
+        g = await loadGo();
+      }
+      return g;
+    })();
+    for (let i = 0; i < 8; i++) {
+      replace(`${SPIN[i % SPIN.length]} running stats via WebAssembly …`, "info");
+      await sleep(80);
+    }
+    const go = await goPromise;
+    let card: CardData;
+    let source: string;
     try {
-      const go = await loadGo();
       if (go) {
-        const out = go.stats(
-          JSON.stringify({ username: github.username, repos: github.repos }),
-        );
-        lines = out.split("\n");
-        label = `— computed in Go, compiled to WebAssembly (${go.version()})`;
+        card = JSON.parse(
+          go.stats(JSON.stringify({ username: github.username, repos })),
+        ) as CardData;
+        source = `computed via Go → WASM (${go.version()})`;
       } else {
-        lines = formatKpiLines(computeKpis());
-        label =
-          "— live GitHub stats (computed in JS; `npm run build:wasm` enables the Go path)";
+        card = kpisToCard(computeKpis(repos));
+        source = "github · live stats";
       }
     } catch {
-      lines = formatKpiLines(computeKpis());
-      label = "— live GitHub stats (js fallback)";
+      card = kpisToCard(computeKpis(repos));
+      source = "github · live stats";
     }
+    replace(`✓ ${source}`, "out");
 
+    // 3) Render the framed report card.
+    const cardLines = renderKpiCard(card, { source, live: !!live });
     return {
-      output: [
-        ...lines.map((text) => ({ kind: "out" as const, text })),
-        { kind: "info" as const, text: label },
-        { kind: "info" as const, text: "→ open github/stats.md for the full breakdown" },
-      ],
+      output: cardLines.map((l) => ({
+        kind: (l.accent ? "info" : "out") as TerminalLineKind,
+        text: l.text,
+      })),
     };
   },
 };

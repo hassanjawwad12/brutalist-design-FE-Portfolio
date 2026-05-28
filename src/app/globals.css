@@ -612,12 +612,40 @@ html[data-theme="blue"] body {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--space-2);
   color: var(--c-acid);
   text-shadow: var(--text-glow);
   font-size: var(--text-sm);
   letter-spacing: 0.1em;
+}
+.playground__loading-sub {
+  color: var(--c-fg-muted);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: none;
+}
+.playground__spinner {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--c-border);
+  border-top-color: var(--c-acid);
+  border-radius: 50%;
+  box-shadow: var(--glow-soft);
+  animation: playground-spin 0.8s linear infinite;
+}
+@keyframes playground-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .playground__spinner {
+    animation: none;
+  }
 }
 .playground__hud {
   position: absolute;

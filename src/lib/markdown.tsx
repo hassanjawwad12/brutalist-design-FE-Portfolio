@@ -7,6 +7,20 @@ const escape = (s: string): string =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
+// Split a GFM table row into trimmed cells, tolerating optional edge pipes.
+const splitTableRow = (line: string): string[] => {
+  let s = line.trim();
+  if (s.startsWith("|")) s = s.slice(1);
+  if (s.endsWith("|")) s = s.slice(0, -1);
+  return s.split("|").map((c) => c.trim());
+};
+
+// A separator row is only pipes/colons/dashes/spaces and contains at least one dash.
+const isTableSeparator = (line: string): boolean => {
+  const s = line.trim();
+  return s.length > 0 && /^[|:\-\s]+$/.test(s) && s.includes("-");
+};
+
 interface InlineToken {
   type: "text" | "code" | "link" | "bold" | "italic" | "image";
   value: string;
@@ -251,6 +265,43 @@ export const renderMarkdown = (src: string): ReactNode => {
       else if (tag === "h3") blocks.push(<h3 key={key}>{content}</h3>);
       else blocks.push(<h4 key={key}>{content}</h4>);
       i += 1;
+      continue;
+    }
+
+    // table (GFM): header row followed by a separator row
+    if (
+      line.trim().startsWith("|") &&
+      i + 1 < lines.length &&
+      isTableSeparator(lines[i + 1])
+    ) {
+      flushAll();
+      const header = splitTableRow(line);
+      i += 2;
+      const rows: string[][] = [];
+      while (i < lines.length && lines[i].trim() && lines[i].includes("|")) {
+        rows.push(splitTableRow(lines[i]));
+        i += 1;
+      }
+      blocks.push(
+        <table key={`tbl-${blocks.length}`}>
+          <thead>
+            <tr>
+              {header.map((h, hi) => (
+                <th key={hi}>{renderInline(parseInline(h))}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, ri) => (
+              <tr key={ri}>
+                {r.map((c, ci) => (
+                  <td key={ci}>{renderInline(parseInline(c))}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>,
+      );
       continue;
     }
 

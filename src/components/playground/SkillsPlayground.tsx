@@ -12,7 +12,11 @@ const makeApi = (): ChipApi => new Map();
 const SkillsScene = dynamic(() => import("./SkillsScene"), {
   ssr: false,
   loading: () => (
-    <div className="playground__loading">booting physics engine…</div>
+    <div className="playground__loading">
+      <span className="playground__spinner" aria-hidden />
+      <span>booting physics engine</span>
+      <span className="playground__loading-sub">three.js · rapier (wasm)</span>
+    </div>
   ),
 });
 

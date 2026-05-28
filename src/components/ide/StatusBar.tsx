@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor } from "./store";
+import { useEditor, THEMES } from "./store";
 import { basename, pathForDisplay, resolveNode } from "@/lib/fs";
 import { profile } from "@/data/profile";
 import { diagnosticCounts } from "@/data/diagnostics";
@@ -84,6 +84,26 @@ export function StatusBar() {
         style={{ color: "var(--c-acid)", textShadow: "var(--text-glow)" }}
       >
         ? shortcuts
+      </button>
+      <button
+        onClick={() => {
+          const idx = THEMES.indexOf(state.theme);
+          dispatch({ type: "SET_THEME", theme: THEMES[(idx + 1) % THEMES.length] });
+        }}
+        title="Switch phosphor theme (green · amber · blue)"
+        style={{ color: "var(--c-acid)", display: "flex", alignItems: "center", gap: "4px" }}
+      >
+        <span
+          aria-hidden
+          style={{
+            width: 8,
+            height: 8,
+            display: "inline-block",
+            background: "var(--c-acid)",
+            boxShadow: "var(--glow-acid)",
+          }}
+        />
+        {state.theme}
       </button>
 
       <div style={{ flex: 1 }} />

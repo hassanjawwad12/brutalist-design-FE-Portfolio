@@ -206,7 +206,7 @@ export function Terminal() {
         <div
           className="flex items-baseline"
           style={{
-            marginTop: state.terminalLines.length ? 4 : 0,
+            marginTop: state.terminalLines.length ? 4 : 8,
             paddingBlock: 2,
           }}
         >

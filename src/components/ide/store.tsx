@@ -117,6 +117,7 @@ export type EditorAction =
   | { type: "SET_SIDEBAR_WIDTH"; width: number }
   | { type: "SET_PANEL_HEIGHT"; height: number }
   | { type: "TERMINAL_APPEND"; lines: Omit<TerminalLine, "id">[] }
+  | { type: "TERMINAL_REPLACE_LAST"; text: string; kind?: TerminalLineKind }
   | { type: "TERMINAL_CLEAR" }
   | { type: "COMMAND_PUSH"; cmd: string }
   | { type: "SET_PALETTE"; mode: PaletteMode }
@@ -234,6 +235,17 @@ const reducer = (state: EditorState, action: EditorAction): EditorState => {
         id: startId + i + 1,
       }));
       return { ...state, terminalLines: [...state.terminalLines, ...lines] };
+    }
+    case "TERMINAL_REPLACE_LAST": {
+      if (state.terminalLines.length === 0) return state;
+      const lines = state.terminalLines.slice();
+      const last = lines[lines.length - 1];
+      lines[lines.length - 1] = {
+        ...last,
+        text: action.text,
+        kind: action.kind ?? last.kind,
+      };
+      return { ...state, terminalLines: lines };
     }
     case "TERMINAL_CLEAR":
       return { ...state, terminalLines: [] };

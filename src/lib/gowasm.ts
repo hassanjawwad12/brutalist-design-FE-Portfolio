@@ -70,6 +70,17 @@ async function init(): Promise<GoApi | null> {
 }
 
 export function loadGo(): Promise<GoApi | null> {
-  if (!loadPromise) loadPromise = init().catch(() => null);
+  if (!loadPromise) {
+    loadPromise = init()
+      .then((api) => {
+        // Don't cache a failed attempt — allow the next call to retry.
+        if (!api) loadPromise = null;
+        return api;
+      })
+      .catch(() => {
+        loadPromise = null;
+        return null;
+      });
+  }
   return loadPromise;
 }
