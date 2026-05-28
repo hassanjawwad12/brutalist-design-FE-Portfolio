@@ -103,7 +103,7 @@ export function TabBar() {
                 : "2px solid transparent",
               boxShadow: isActive ? "0 0 12px rgba(51,255,51,0.15)" : "none",
               color: isActive ? "var(--c-fg-bright)" : "var(--c-fg-muted)",
-              fontSize: "var(--text-xs)",
+              fontSize: "var(--text-base)",
               opacity: dragIndex === i ? 0.4 : 1,
               transition:
                 "background var(--dur-fast), border-color var(--dur-fast), opacity var(--dur-fast)",
@@ -141,7 +141,7 @@ export function TabBar() {
                   dispatch({ type: "CLOSE_TAB", path: tab.path });
                 }}
                 className="tab-close"
-                style={{ marginLeft: 6, fontSize: 12 }}
+                style={{ marginLeft: 6, fontSize: 14 }}
               >
                 ×
               </button>

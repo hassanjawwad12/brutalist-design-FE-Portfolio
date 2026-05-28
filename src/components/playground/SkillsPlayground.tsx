@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { skills } from "@/data/skills";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { GROUP_META, GROUP_ORDER } from "./groups";
@@ -81,6 +81,24 @@ export function SkillsPlayground() {
   const reduced = useReducedMotion();
   const apiRef = useRef<ChipApi>(makeApi());
   const [sceneKey, setSceneKey] = useState(0);
+  // Gate the <Canvas> mount on a confirmed non-zero container size. The r3f
+  // Canvas auto-measures on mount; if it mounts mid-layout (tab/pane still
+  // settling) it reads 0×0, and since the box never changes afterward the
+  // ResizeObserver never corrects it — leaving a permanently blank buffer.
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (reduced) return;
+    const el = canvasRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const { width, height } = entries[0].contentRect;
+      if (width > 0 && height > 0) setReady(true);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [reduced]);
 
   if (reduced) return <FallbackGrid />;
 
@@ -109,8 +127,8 @@ export function SkillsPlayground() {
 
   return (
     <div className="playground">
-      <div className="playground__canvas">
-        <SkillsScene key={sceneKey} apiRef={apiRef} />
+      <div className="playground__canvas" ref={canvasRef}>
+        {ready && <SkillsScene key={sceneKey} apiRef={apiRef} />}
       </div>
 
       <div className="playground__hud">

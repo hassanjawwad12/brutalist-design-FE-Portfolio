@@ -17,13 +17,13 @@ export interface Profile {
 export const profile: Profile = {
   name: "Muhammad Hassan Jawwad",
   shortName: "Hassan",
-  role: "Frontend & Golang Engineer",
+  role: "Software Engineer",
   location: "Pakistan · Remote",
   availability: "selective",
   tagline:
-    "Building fast, opinionated interfaces and high-performance backends.",
+    "Building fast, opinionated interfaces in React, Next.js, and TypeScript.",
   bio:
-    "I design and engineer products end-to-end — refractive, motion-rich web experiences on the front, and quiet, fast Go services on the back. I care about typography, latency budgets, and the small details that make software feel intentional.",
+    "I'm a software engineer focused on the frontend — I build fast, motion-rich web interfaces in React, Next.js, and TypeScript. I care about typography, latency budgets, and the small details that make software feel intentional. Backend work, when I reach for it, lives in Go.",
   email: "hassanjawwad12@gmail.com",
   socials: [
     {

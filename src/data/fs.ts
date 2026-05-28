@@ -1,5 +1,5 @@
 import { profile } from "./profile";
-import { projects } from "./projects";
+import { projects, type Project } from "./projects";
 import { experience } from "./experience";
 import { skills } from "./skills";
 import { testimonials } from "./testimonials";
@@ -380,18 +380,62 @@ const PROJECT_IMAGES: Record<string, string> = {
   "event-mgmt": "/project-pics/eventManagement.png",
 };
 
-const screenshotSvg = (
-  title: string,
-  subtitle: string,
-  hue: "acid" | "amber" = "acid",
-): string => {
+const escapeXml = (s: string): string =>
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/'/g, "&apos;");
+
+// Footer line is derived from real status so a "case study" project never
+// claims it was "shipped to production".
+const STATUS_FOOTER: Record<Project["status"], { cmd: string; done: string }> = {
+  live: { cmd: "$ build && deploy", done: "✓ shipped to production" },
+  "case study": { cmd: "$ git log --stat", done: "✓ documented case study" },
+  archived: { cmd: "$ git checkout main", done: "• archived" },
+};
+
+/**
+ * Generates the "card" preview SVG for a project. The four panels are filled
+ * with real facts pulled from the project record (role / year / primary tech /
+ * status) — no fabricated metrics, no empty placeholder boxes.
+ */
+const projectCardSvg = (p: Project, hue: "acid" | "amber" = "amber"): string => {
   const accent = hue === "acid" ? "#33ff33" : "#ffb000";
   const dim = hue === "acid" ? "#0e8a0e" : "#c78800";
+  const foot = STATUS_FOOTER[p.status];
+  const extra = p.stack.length - 1;
+
+  const panel = (
+    x: number,
+    w: number,
+    label: string,
+    lines: string[],
+    active = false,
+  ): string => {
+    const rect = active
+      ? `<rect x='${x}' y='240' width='${w}' height='90' rx='2' fill='${accent}' fill-opacity='0.06' stroke='${accent}' stroke-opacity='0.7'/>`
+      : `<rect x='${x}' y='240' width='${w}' height='90' rx='2' fill='none' stroke='${accent}' stroke-opacity='0.4'/>`;
+    const head = `<text x='${x + 14}' y='266' font-family='monospace' font-size='10' fill='${dim}' letter-spacing='1.5'>${escapeXml(label)}</text>`;
+    const body = lines
+      .map(
+        (ln, i) =>
+          `<text x='${x + 14}' y='${298 + i * 20}' font-family='monospace' font-size='15' fill='${accent}'>${escapeXml(ln)}</text>`,
+      )
+      .join("");
+    const dot = active ? `<circle cx='${x + w - 18}' cy='258' r='4' fill='${accent}'/>` : "";
+    return rect + head + body + dot;
+  };
+
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500' width='800' height='500'>
   <defs>
     <pattern id='grid' width='40' height='40' patternUnits='userSpaceOnUse'>
       <path d='M40 0H0V40' fill='none' stroke='${accent}' stroke-opacity='0.08'/>
     </pattern>
+    <filter id='glow' x='-20%' y='-20%' width='140%' height='140%'>
+      <feGaussianBlur stdDeviation='2.5' result='b'/>
+      <feMerge><feMergeNode in='b'/><feMergeNode in='SourceGraphic'/></feMerge>
+    </filter>
   </defs>
   <rect width='800' height='500' fill='#030503'/>
   <rect width='800' height='500' fill='url(#grid)'/>
@@ -399,19 +443,16 @@ const screenshotSvg = (
   <circle cx='20' cy='20' r='5' fill='${accent}' opacity='0.8'/>
   <circle cx='38' cy='20' r='5' fill='${accent}' opacity='0.4'/>
   <circle cx='56' cy='20' r='5' fill='${accent}' opacity='0.2'/>
-  <text x='80' y='25' font-family='monospace' font-size='11' fill='${dim}' letter-spacing='2'>${title.toUpperCase()}</text>
-  <text x='40' y='140' font-family='monospace' font-size='38' font-weight='bold' fill='${accent}' filter='url(#glow)'>${title}</text>
-  <text x='40' y='180' font-family='monospace' font-size='13' fill='${dim}'>// ${subtitle}</text>
+  <text x='80' y='25' font-family='monospace' font-size='11' fill='${dim}' letter-spacing='2'>${escapeXml(p.title.toUpperCase())}</text>
+  <text x='40' y='140' font-family='monospace' font-size='38' font-weight='bold' fill='${accent}' filter='url(#glow)'>${escapeXml(p.title)}</text>
+  <text x='40' y='180' font-family='monospace' font-size='13' fill='${dim}'>// ${escapeXml(p.stack.join(" · "))}</text>
   <rect x='40' y='220' width='720' height='1' fill='${accent}' opacity='0.3'/>
-  <rect x='40' y='240' width='160' height='90' fill='none' stroke='${accent}' stroke-opacity='0.4'/>
-  <rect x='220' y='240' width='160' height='90' fill='none' stroke='${accent}' stroke-opacity='0.4'/>
-  <rect x='400' y='240' width='160' height='90' fill='none' stroke='${accent}' stroke-opacity='0.4'/>
-  <rect x='580' y='240' width='180' height='90' fill='${accent}' fill-opacity='0.06' stroke='${accent}' stroke-opacity='0.7'/>
-  <text x='590' y='268' font-family='monospace' font-size='10' fill='${accent}'>ACTIVE</text>
-  <text x='590' y='292' font-family='monospace' font-size='9' fill='${dim}'>load: 0.42ms</text>
-  <text x='590' y='308' font-family='monospace' font-size='9' fill='${dim}'>lcp: 1.1s</text>
-  <text x='40' y='380' font-family='monospace' font-size='11' fill='${dim}'>$ build &amp;&amp; deploy</text>
-  <text x='40' y='400' font-family='monospace' font-size='11' fill='${accent}'>✓ shipped to production</text>
+  ${panel(40, 160, "ROLE", p.role.split(" "))}
+  ${panel(220, 160, "YEAR", [p.year])}
+  ${panel(400, 160, "STACK", [p.stack[0], extra > 0 ? `+${extra} more` : ""].filter(Boolean))}
+  ${panel(580, 180, "STATUS", [p.status.toUpperCase()], true)}
+  <text x='40' y='380' font-family='monospace' font-size='11' fill='${dim}'>${escapeXml(foot.cmd)}</text>
+  <text x='40' y='400' font-family='monospace' font-size='11' fill='${accent}'>${escapeXml(foot.done)}</text>
   <text x='40' y='470' font-family='monospace' font-size='9' fill='${dim}' letter-spacing='3'>HASSAN.PORTFOLIO/PROJECT</text>
 </svg>`;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
@@ -462,7 +503,7 @@ const projectsChildren: FsNode[] = [
                   kind: "file" as const,
                   name: "home.svg",
                   view: "image" as const,
-                  source: screenshotSvg(p.title, "landing view", "acid"),
+                  source: projectCardSvg(p, "acid"),
                   language: "SVG",
                 },
               ]),
@@ -470,7 +511,7 @@ const projectsChildren: FsNode[] = [
             kind: "file",
             name: "flow.svg",
             view: "image",
-            source: screenshotSvg(p.title, p.stack.join(" · "), "amber"),
+            source: projectCardSvg(p, "amber"),
             language: "SVG",
           },
         ],
