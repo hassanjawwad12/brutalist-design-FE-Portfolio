@@ -17,4 +17,20 @@ export interface GithubData {
   repos: Repo[];
 }
 
-export const github: GithubData = generated as GithubData;
+// Validate the build-time snapshot at module load rather than trusting a blind
+// cast — a malformed github.generated.json then fails loudly instead of NPEing
+// deep inside KPI computation.
+function assertGithubData(v: unknown): asserts v is GithubData {
+  if (
+    typeof v !== "object" ||
+    v === null ||
+    typeof (v as GithubData).username !== "string" ||
+    !Array.isArray((v as GithubData).repos)
+  ) {
+    throw new Error("github.generated.json has an unexpected shape");
+  }
+}
+
+const raw: unknown = generated;
+assertGithubData(raw);
+export const github: GithubData = raw;

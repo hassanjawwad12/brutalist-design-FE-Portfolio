@@ -7,6 +7,19 @@ const escape = (s: string): string =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
+// Block injection-capable URL schemes (javascript:, data:, vbscript:, …) from
+// link hrefs and image srcs. Allows http(s), mailto, anchors, and relative or
+// internal paths (which carry no scheme). Returns undefined for anything unsafe.
+const safeHref = (href: string | undefined): string | undefined => {
+  if (!href) return undefined;
+  const trimmed = href.trim();
+  const scheme = /^([a-z][a-z0-9+.-]*):/i.exec(trimmed);
+  if (scheme && !["http", "https", "mailto"].includes(scheme[1].toLowerCase())) {
+    return undefined;
+  }
+  return trimmed;
+};
+
 // Split a GFM table row into trimmed cells, tolerating optional edge pipes.
 const splitTableRow = (line: string): string[] => {
   let s = line.trim();
@@ -137,12 +150,13 @@ const renderInline = (tokens: InlineToken[], keyPrefix = ""): ReactNode => {
     if (tok.type === "italic")
       return <em key={k}>{renderInline(tok.children ?? [], k)}</em>;
     if (tok.type === "link") {
-      const isExternal = /^https?:\/\//.test(tok.href ?? "");
-      const isMail = (tok.href ?? "").startsWith("mailto:");
+      const href = safeHref(tok.href);
+      const isExternal = /^https?:\/\//.test(href ?? "");
+      const isMail = (href ?? "").startsWith("mailto:");
       return (
         <a
           key={k}
-          href={tok.href}
+          href={href}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noreferrer noopener" : undefined}
           data-internal={!isExternal && !isMail ? "true" : undefined}
@@ -156,7 +170,7 @@ const renderInline = (tokens: InlineToken[], keyPrefix = ""): ReactNode => {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           key={k}
-          src={tok.href}
+          src={safeHref(tok.href)}
           alt={tok.alt ?? tok.value ?? ""}
           loading="lazy"
         />

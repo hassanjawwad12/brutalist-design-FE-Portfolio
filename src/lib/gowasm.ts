@@ -26,6 +26,7 @@ export interface GoApi {
 }
 
 let loadPromise: Promise<GoApi | null> | null = null;
+let failed = false;
 
 const loadScript = (src: string): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -70,14 +71,21 @@ async function init(): Promise<GoApi | null> {
 }
 
 export function loadGo(): Promise<GoApi | null> {
+  // Once an attempt has failed, latch it: re-running init() would instantiate a
+  // SECOND Go runtime (each blocks on select{} forever and overwrites the global
+  // __goStats), so callers short-circuit to the JS fallback instead.
+  if (failed) return Promise.resolve(null);
   if (!loadPromise) {
     loadPromise = init()
       .then((api) => {
-        // Don't cache a failed attempt — allow the next call to retry.
-        if (!api) loadPromise = null;
+        if (!api) {
+          failed = true;
+          loadPromise = null;
+        }
         return api;
       })
       .catch(() => {
+        failed = true;
         loadPromise = null;
         return null;
       });

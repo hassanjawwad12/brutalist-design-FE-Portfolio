@@ -56,18 +56,11 @@ npm run build:wasm                # rebuild portfolio.wasm (requires Go)
 
 ## Features & things you can do
 
-- **BIOS boot screen** — phosphor POST sequence on first visit (sessionStorage-gated, respects `prefers-reduced-motion`).
-- **Explorer + tabs** — browse the file tree; drag to reorder tabs, split editor (`◧`), pin tabs. Live grep search in the sidebar.
-- **Terminal** — persistent state machine with `localStorage` history and `Tab` autocomplete:
-  `ls · cd · pwd · cat · open/code · tree · grep · whoami · contact · echo · date · history · clear · theme · git · vim · sudo`
-  - `stats` / `gostats` — compute **live GitHub KPIs via Go→WASM**.
-  - `play` — open the **interactive 3D skills playground** (three.js + Rapier physics).
-  - `sudo hire-me`, `rm -rf /` and other easter eggs; unknown commands get a Levenshtein "did you mean…?".
-- **Hotkeys** — `Cmd+P` quick-open, `Cmd+Shift+P` command palette, `Cmd+B` sidebar, `Cmd+J` panel, `Cmd+\` split, `Cmd+W` close, `Esc` dismiss. Press `?` for the shortcuts overlay.
-- **File views** — markdown (Shiki-highlighted code), JSON tree, image viewer, PDF (resume) viewer, external `.url` confirm page, and an inline contact form.
-- **Every file is a real URL** under `/p/…`, each with its own `<title>` + OpenGraph tags. `sitemap.xml` / `robots.txt` generated at build.
-- **Accessibility** — full keyboard nav, ARIA tree/tablist/dialog/log roles, a JS-free `/simple` route, and reduced-motion support.
-- **Responsive** — full IDE on desktop; the sidebar becomes a slide-over drawer on mobile.
+- A fully themed, terminal-style code editor that boots with a retro BIOS sequence and renders my whole portfolio, bio, projects, experience, resume, and contact , as files you can open in tabs.
+- Real GitHub data with live repository KPIs (stars, forks, top languages, most-recent activity), computed by a Go program compiled to WebAssembly that runs right in your browser.
+- A built-in terminal that behaves like a real shell — list and change directories, read and open files, search across content, replay command history, and tab-complete commands and paths.
+- Full keyboard control — quick-open, a command palette, sidebar and panel toggles, editor splits, and a shortcuts overlay let you drive the entire experience without a mouse.
+- Extras: an interactive, physics-driven 3D skills playground, hidden terminal easter eggs, syntax-highlighted file previews, and a plain, accessible, JavaScript-free version of the site at `/simple`.
 
 ## Link
 

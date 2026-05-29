@@ -112,7 +112,12 @@ func dash(s string) string {
 
 func goStats(_ js.Value, args []js.Value) any {
 	if len(args) == 0 {
-		return "error: no input"
+		return `{"error":"no input"}`
+	}
+	// args[0].String() panics if the JS value isn't a string; that panic would
+	// escape the callback and crash the module. Guard the type and return JSON.
+	if args[0].Type() != js.TypeString {
+		return `{"error":"argument must be a string"}`
 	}
 	return computeStats(args[0].String())
 }
@@ -122,6 +127,9 @@ func goVersion(_ js.Value, _ []js.Value) any {
 }
 
 func main() {
+	// These js.Func handles are intentionally never Released: they must stay
+	// callable for the lifetime of the page, and select{} below blocks forever,
+	// so there is no teardown point at which releasing them would be correct.
 	js.Global().Set("__goStats", js.FuncOf(goStats))
 	js.Global().Set("__goVersion", js.FuncOf(goVersion))
 	// Keep the Go runtime alive so the exported functions remain callable.

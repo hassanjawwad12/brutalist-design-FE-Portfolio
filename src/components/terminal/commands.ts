@@ -22,6 +22,7 @@ import {
   kpisToCard,
   renderKpiCard,
   fetchLiveRepos,
+  isCardData,
   type CardData,
 } from "@/lib/github-stats";
 import { loadGo } from "@/lib/gowasm";
@@ -373,9 +374,11 @@ const statsCmd: CmdDef = {
     let source: string;
     try {
       if (go) {
-        card = JSON.parse(
+        const parsed: unknown = JSON.parse(
           go.stats(JSON.stringify({ username: github.username, repos })),
-        ) as CardData;
+        );
+        if (!isCardData(parsed)) throw new Error("unexpected WASM response");
+        card = parsed;
         source = `computed via Go → WASM (${go.version()})`;
       } else {
         card = kpisToCard(computeKpis(repos));

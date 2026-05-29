@@ -71,6 +71,26 @@ export interface CardData {
   recentDate: string;
 }
 
+// Validates output crossing the WASM trust boundary (go.stats(...)) before it is
+// treated as CardData — guards against a panic payload or schema drift in the Go
+// module rendering as garbage.
+export function isCardData(v: unknown): v is CardData {
+  if (typeof v !== "object" || v === null) return false;
+  const c = v as Record<string, unknown>;
+  return (
+    typeof c.username === "string" &&
+    typeof c.totalRepos === "number" &&
+    typeof c.totalStars === "number" &&
+    typeof c.totalForks === "number" &&
+    Array.isArray(c.languages) &&
+    typeof c.topName === "string" &&
+    typeof c.topStars === "number" &&
+    typeof c.topLang === "string" &&
+    typeof c.recentName === "string" &&
+    typeof c.recentDate === "string"
+  );
+}
+
 export function kpisToCard(k: GithubKpis): CardData {
   return {
     username: k.username,
@@ -151,9 +171,10 @@ export async function fetchLiveRepos(): Promise<Repo[] | null> {
       { headers: { Accept: "application/vnd.github+json" } },
     );
     if (!res.ok) return null;
-    const raw = (await res.json()) as GhApiRepo[];
+    const raw: unknown = await res.json();
     if (!Array.isArray(raw)) return null;
     return raw
+      .filter((r): r is GhApiRepo => typeof r === "object" && r !== null)
       .filter((r) => !r.fork && !r.private)
       .map((r) => ({
         name: String(r.name ?? ""),
