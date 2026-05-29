@@ -25,6 +25,10 @@
     inset 0 1px 0 0 oklch(100% 0 0 / 0.75),
     inset 0 0 0 1px oklch(100% 0 0 / 0.22);
 
+  /* Hairline dividers (shared across chrome + /simple) */
+  --hairline: oklch(50% 0.03 285 / 0.14);
+  --hairline-strong: oklch(50% 0.03 285 / 0.2);
+
   /* ------ Elevation shadows (cool-tinted, soft) ------ */
   --shadow-low:
     0 1px 2px oklch(30% 0.05 285 / 0.08),
@@ -46,15 +50,14 @@
   --accent: oklch(56% 0.20 285);
   --accent-bright: oklch(64% 0.22 285);
   --accent-soft: oklch(56% 0.20 285 / 0.14);
-  --accent-ring: oklch(56% 0.20 285 / 0.45);
 
   /* ------ Status (availability dot + traffic lights) ------ */
   --ok: oklch(70% 0.17 150);
   --warn: oklch(80% 0.15 85);
   --danger: oklch(64% 0.21 25);
-  --tl-close: oklch(64% 0.21 25);
-  --tl-min: oklch(80% 0.15 85);
-  --tl-max: oklch(70% 0.17 150);
+  --tl-close: var(--danger);
+  --tl-min: var(--warn);
+  --tl-max: var(--ok);
 
   /* ------ Type scale (fluid via clamp) ------ */
   --text-2xs: 0.6875rem;   /* 11px */
@@ -95,7 +98,6 @@
 
   /* ------ Chrome sizing ------ */
   --h-menubar: 38px;
-  --h-dock: 64px;
   --h-window-titlebar: 40px;
 
   /* ------ Motion ------ */
@@ -108,9 +110,8 @@
 
   /* ------ Z layers ------ */
   --z-wallpaper: 0;
-  --z-window-base: 10;
   --z-chrome: 1000;     /* menubar + dock */
-  --z-palette: 2000;
+  --z-palette: 2000;    /* command palette (Phase 4) */
   --z-toast: 3000;
 }
 

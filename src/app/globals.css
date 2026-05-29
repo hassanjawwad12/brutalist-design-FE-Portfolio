@@ -167,82 +167,6 @@ canvas {
 }
 
 /* ===========================================================
-   Wallpaper — animated gradient mesh + grain (CSS only)
-   =========================================================== */
-.wallpaper {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-wallpaper);
-  overflow: hidden;
-  background: var(--wall-base);
-}
-
-.wallpaper__blob {
-  position: absolute;
-  width: 65vmax;
-  height: 65vmax;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.72;
-  will-change: transform;
-}
-.wallpaper__blob--1 {
-  top: -18vmax;
-  left: -12vmax;
-  background: radial-gradient(circle at 50% 50%, var(--wall-1), transparent 65%);
-  animation: drift-1 24s var(--ease-in-out-quart) infinite alternate;
-}
-.wallpaper__blob--2 {
-  top: -10vmax;
-  right: -16vmax;
-  background: radial-gradient(circle at 50% 50%, var(--wall-2), transparent 65%);
-  animation: drift-2 28s var(--ease-in-out-quart) infinite alternate;
-}
-.wallpaper__blob--3 {
-  bottom: -20vmax;
-  left: -8vmax;
-  background: radial-gradient(circle at 50% 50%, var(--wall-3), transparent 65%);
-  animation: drift-3 26s var(--ease-in-out-quart) infinite alternate;
-}
-.wallpaper__blob--4 {
-  bottom: -22vmax;
-  right: -10vmax;
-  background: radial-gradient(circle at 50% 50%, var(--wall-4), transparent 65%);
-  animation: drift-1 30s var(--ease-in-out-quart) infinite alternate-reverse;
-}
-
-@keyframes drift-1 {
-  to {
-    transform: translate3d(8vmax, 6vmax, 0) scale(1.12);
-  }
-}
-@keyframes drift-2 {
-  to {
-    transform: translate3d(-7vmax, 8vmax, 0) scale(1.08);
-  }
-}
-@keyframes drift-3 {
-  to {
-    transform: translate3d(6vmax, -7vmax, 0) scale(1.14);
-  }
-}
-
-.wallpaper__grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wallpaper__blob {
-    animation: none !important;
-  }
-}
-
-/* ===========================================================
    Availability dot
    =========================================================== */
 .avail {
@@ -318,7 +242,7 @@ canvas {
 }
 .simple-page header {
   padding-bottom: var(--space-6);
-  border-bottom: 1px solid oklch(50% 0.03 285 / 0.18);
+  border-bottom: 1px solid var(--hairline-strong);
   margin-bottom: var(--space-8);
 }
 .simple-page main {
@@ -361,14 +285,14 @@ canvas {
   line-height: var(--leading-relaxed);
 }
 .simple-page article + article {
-  border-top: 1px solid oklch(50% 0.03 285 / 0.12);
+  border-top: 1px solid var(--hairline);
   padding-top: var(--space-4);
   margin-top: var(--space-4);
 }
 .simple-page footer {
   margin-top: var(--space-12);
   padding-top: var(--space-4);
-  border-top: 1px solid oklch(50% 0.03 285 / 0.18);
+  border-top: 1px solid var(--hairline-strong);
   color: var(--text-faint);
   font-size: var(--text-sm);
 }
