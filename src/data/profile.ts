@@ -7,6 +7,7 @@ export interface Profile {
   tagline: string;
   bio: string;
   email: string;
+  resumeHref: string;
   socials: {
     label: string;
     href: string;
@@ -25,6 +26,7 @@ export const profile: Profile = {
   bio:
     "I'm a software engineer focused on the frontend — I build fast, motion-rich web interfaces in React, Next.js, and TypeScript. I care about typography, latency budgets, and the small details that make software feel intentional. Backend work, when I reach for it, lives in Go.",
   email: "hassanjawwad12@gmail.com",
+  resumeHref: "/resume/Muhammad-Hassan-Jawwad.pdf",
   socials: [
     {
       label: "GitHub",

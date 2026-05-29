@@ -25,7 +25,8 @@ type Action =
   | { type: "FOCUS"; id: AppId }
   | { type: "MINIMIZE"; id: AppId }
   | { type: "MOVE"; id: AppId; x: number; y: number }
-  | { type: "RESET"; id: AppId };
+  | { type: "RESET"; id: AppId }
+  | { type: "CLOSE_ALL" };
 
 // Window stacking floor. Stays well below --z-chrome (1000) so windows never
 // climb over the menu bar / dock.
@@ -81,6 +82,13 @@ function reducer(state: State, action: Action): State {
       const topZ = state.topZ + 1;
       return { ...patch(state, action.id, { x: g.x, y: g.y, z: topZ }), topZ };
     }
+    case "CLOSE_ALL": {
+      const windows = {} as Record<AppId, WindowState>;
+      for (const id of Object.keys(state.windows) as AppId[]) {
+        windows[id] = { ...state.windows[id], open: false, minimized: false };
+      }
+      return { ...state, windows };
+    }
     default:
       return state;
   }
@@ -99,6 +107,7 @@ interface WindowActions {
   minimizeApp: (id: AppId) => void;
   moveApp: (id: AppId, x: number, y: number) => void;
   resetApp: (id: AppId) => void;
+  closeAll: () => void;
 }
 
 // State and actions are separate contexts: actions never change identity, so
@@ -117,6 +126,7 @@ export function WindowProvider({ children }: { children: ReactNode }) {
       minimizeApp: (id) => dispatch({ type: "MINIMIZE", id }),
       moveApp: (id, x, y) => dispatch({ type: "MOVE", id, x, y }),
       resetApp: (id) => dispatch({ type: "RESET", id }),
+      closeAll: () => dispatch({ type: "CLOSE_ALL" }),
     }),
     [],
   );

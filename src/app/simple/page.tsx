@@ -162,7 +162,7 @@ export default function SimplePage() {
         <section aria-labelledby="resume-heading">
           <h2 id="resume-heading">Resume</h2>
           <p>
-            <a href="/resume/Muhammad-Hassan-Jawwad.pdf" target="_blank" rel="noreferrer">
+            <a href={profile.resumeHref} target="_blank" rel="noreferrer">
               Download resume (PDF) →
             </a>
           </p>

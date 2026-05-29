@@ -4,7 +4,11 @@ import { profile } from "@/data/profile";
 import { AvailabilityDot } from "@/components/ui/AvailabilityDot";
 import { useClock } from "@/hooks/useClock";
 
-export function MenuBar() {
+interface MenuBarProps {
+  onOpenPalette: () => void;
+}
+
+export function MenuBar({ onOpenPalette }: MenuBarProps) {
   const time = useClock();
 
   return (
@@ -19,9 +23,14 @@ export function MenuBar() {
 
       <div className="menubar__right">
         <AvailabilityDot status={profile.availability} />
-        <kbd className="menubar__kbd" title="Command palette (Phase 4)">
+        <button
+          type="button"
+          className="menubar__cmdk"
+          onClick={onOpenPalette}
+          aria-label="Open command palette"
+        >
           &#8984;K
-        </kbd>
+        </button>
         <time className="menubar__clock" suppressHydrationWarning>
           {time}
         </time>
