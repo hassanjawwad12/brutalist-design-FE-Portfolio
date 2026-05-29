@@ -27,7 +27,7 @@ function Row({ node, path, depth }: RowProps) {
       <button
         onClick={click}
         aria-expanded={node.kind === "dir" ? expanded : undefined}
-        role={node.kind === "dir" ? "treeitem" : "treeitem"}
+        role="treeitem"
         aria-level={depth + 1}
         title={path}
         className="w-full text-left flex items-center group"

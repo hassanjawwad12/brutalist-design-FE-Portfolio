@@ -226,14 +226,8 @@ const reducer = (state: EditorState, action: EditorAction): EditorState => {
     case "SET_PANEL_HEIGHT":
       return { ...state, panelHeight: action.height };
     case "TERMINAL_APPEND": {
-      const startId = state.terminalLines.reduce(
-        (max, l) => (l.id > max ? l.id : max),
-        0,
-      );
-      const lines = action.lines.map((l, i) => ({
-        ...l,
-        id: startId + i + 1,
-      }));
+      const lastId = state.terminalLines.at(-1)?.id ?? 0;
+      const lines = action.lines.map((l, i) => ({ ...l, id: lastId + i + 1 }));
       return { ...state, terminalLines: [...state.terminalLines, ...lines] };
     }
     case "TERMINAL_REPLACE_LAST": {

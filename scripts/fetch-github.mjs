@@ -1,7 +1,7 @@
 // Build-time fetch of the owner's public GitHub repos -> src/data/github.generated.json
 // Runs in `prebuild`. On any failure (offline, rate-limited) it keeps the existing
 // committed snapshot so the build never breaks.
-import { writeFileSync, existsSync, readFileSync } from "node:fs";
+import { writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -60,8 +60,5 @@ main().catch((err) => {
       JSON.stringify({ username: USERNAME, fetchedAt: null, repos: [] }, null, 2) +
         "\n",
     );
-  } else {
-    // touch nothing — keep committed data
-    readFileSync(OUT);
   }
 });

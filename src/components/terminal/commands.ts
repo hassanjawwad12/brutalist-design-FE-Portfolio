@@ -59,8 +59,6 @@ const err = (text: string): CmdOutputLine[] => [{ kind: "err", text }];
 
 const info = (text: string): CmdOutputLine[] => [{ kind: "info", text }];
 
-const allCommandNames = (): string[] => Object.keys(REGISTRY);
-
 const cdCmd: CmdDef = {
   name: "cd",
   desc: "change directory",
@@ -166,7 +164,7 @@ const helpCmd: CmdDef = {
     const lines = [
       "available commands:",
       "",
-      ...allCommandNames()
+      ...Object.keys(REGISTRY)
         .sort()
         .map((n) => `  ${n.padEnd(10, " ")}  ${REGISTRY[n].desc}`),
       "",
@@ -480,7 +478,7 @@ export const runCommand = (
     };
   }
 
-  const suggestion = suggestSimilar(name, allCommandNames());
+  const suggestion = suggestSimilar(name, Object.keys(REGISTRY));
   const lines: CmdOutputLine[] = [
     { kind: "err", text: `zsh: command not found: ${name}` },
   ];

@@ -57,10 +57,7 @@ export function Terminal() {
       }
 
       if (result.output.length > 0) {
-        dispatch({
-          type: "TERMINAL_APPEND",
-          lines: result.output.map((l) => ({ kind: l.kind, text: l.text })),
-        });
+        dispatch({ type: "TERMINAL_APPEND", lines: result.output });
       }
       if (result.newCwd && result.newCwd !== state.cwd) {
         dispatch({ type: "SET_CWD", cwd: result.newCwd });
