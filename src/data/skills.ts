@@ -2,8 +2,17 @@ export interface Skill {
   id: string;
   label: string;
   group: "frontend" | "backend" | "data" | "tooling";
-  weight: number; // 1..5 — drives the physics chip size
+  weight: number; // 1..5 — drives the chip size
 }
+
+// Display order + labels for the skill groups, kept beside the union it mirrors
+// so adding a group is a single-file change.
+export const skillGroups: { key: Skill["group"]; label: string }[] = [
+  { key: "frontend", label: "Frontend" },
+  { key: "backend", label: "Backend" },
+  { key: "data", label: "Data" },
+  { key: "tooling", label: "Tooling" },
+];
 
 export const skills: Skill[] = [
   // frontend

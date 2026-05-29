@@ -1,16 +1,29 @@
-import { getApp, type AppId } from "./apps";
+import "../apps/apps.css";
+import type { AppId } from "./apps";
+import { AboutApp } from "@/components/apps/AboutApp";
+import { ProjectsApp } from "@/components/apps/ProjectsApp";
+import { ExperienceApp } from "@/components/apps/ExperienceApp";
+import { SkillsApp } from "@/components/apps/SkillsApp";
+import { GithubApp } from "@/components/apps/GithubApp";
+import { TestimonialsApp } from "@/components/apps/TestimonialsApp";
+import { ContactApp } from "@/components/apps/ContactApp";
 
-/**
- * Resolves a window's body by app id. Phase 3 renders a placeholder; Phase 5
- * swaps in the real app components (About, Projects, GitHub, …).
- */
+/** Resolves a window's body component by app id. */
 export function AppContent({ id }: { id: AppId }) {
-  const app = getApp(id);
-  return (
-    <div className="app-stub">
-      <span className="app-stub__icon">{app.icon}</span>
-      <h3 className="app-stub__title">{app.title}</h3>
-      <p className="app-stub__note">This window&rsquo;s content arrives in Phase 5.</p>
-    </div>
-  );
+  switch (id) {
+    case "about":
+      return <AboutApp />;
+    case "projects":
+      return <ProjectsApp />;
+    case "experience":
+      return <ExperienceApp />;
+    case "skills":
+      return <SkillsApp />;
+    case "github":
+      return <GithubApp />;
+    case "testimonials":
+      return <TestimonialsApp />;
+    case "contact":
+      return <ContactApp />;
+  }
 }

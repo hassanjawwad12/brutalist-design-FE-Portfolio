@@ -11,9 +11,6 @@ export interface GithubKpis {
   totalStars: number;
   totalForks: number;
   languages: LangCount[];
-  topRepo: Repo | null;
-  mostRecent: Repo | null;
-  fetchedAt: string | null;
 }
 
 // Aggregates are computed across ALL repos so the totals are honest, even though
@@ -30,24 +27,12 @@ export function computeKpis(repos: Repo[] = github.repos): GithubKpis {
     .map(([lang, count]) => ({ lang, count }))
     .sort((a, b) => b.count - a.count);
 
-  const topRepo = repos.reduce<Repo | null>(
-    (best, r) => (!best || r.stars > best.stars ? r : best),
-    null,
-  );
-  const mostRecent = repos.reduce<Repo | null>(
-    (best, r) => (!best || r.updated > best.updated ? r : best),
-    null,
-  );
-
   return {
     username: github.username,
     totalRepos: repos.length,
     totalStars,
     totalForks,
     languages,
-    topRepo,
-    mostRecent,
-    fetchedAt: github.fetchedAt,
   };
 }
 
@@ -55,98 +40,6 @@ export function topRepos(n = 8, repos: Repo[] = github.repos): Repo[] {
   return [...repos]
     .sort((a, b) => b.stars - a.stars || b.updated.localeCompare(a.updated))
     .slice(0, n);
-}
-
-// Flat shape shared by the Go (WASM) and JS paths — Go marshals exactly this.
-export interface CardData {
-  username: string;
-  totalRepos: number;
-  totalStars: number;
-  totalForks: number;
-  languages: LangCount[];
-  topName: string;
-  topStars: number;
-  topLang: string;
-  recentName: string;
-  recentDate: string;
-}
-
-// Validates output crossing the WASM trust boundary (go.stats(...)) before it is
-// treated as CardData — guards against a panic payload or schema drift in the Go
-// module rendering as garbage.
-export function isCardData(v: unknown): v is CardData {
-  if (typeof v !== "object" || v === null) return false;
-  const c = v as Record<string, unknown>;
-  return (
-    typeof c.username === "string" &&
-    typeof c.totalRepos === "number" &&
-    typeof c.totalStars === "number" &&
-    typeof c.totalForks === "number" &&
-    Array.isArray(c.languages) &&
-    typeof c.topName === "string" &&
-    typeof c.topStars === "number" &&
-    typeof c.topLang === "string" &&
-    typeof c.recentName === "string" &&
-    typeof c.recentDate === "string"
-  );
-}
-
-export function kpisToCard(k: GithubKpis): CardData {
-  return {
-    username: k.username,
-    totalRepos: k.totalRepos,
-    totalStars: k.totalStars,
-    totalForks: k.totalForks,
-    languages: k.languages,
-    topName: k.topRepo?.name ?? "—",
-    topStars: k.topRepo?.stars ?? 0,
-    topLang: k.topRepo?.language ?? "—",
-    recentName: k.mostRecent?.name ?? "—",
-    recentDate: k.mostRecent?.updated?.slice(0, 10) ?? "—",
-  };
-}
-
-export interface KpiCardLine {
-  text: string;
-  accent: boolean; // amber frame vs green content
-}
-
-const RULE = 52;
-const LANG_PAD = 18;
-const BAR_W = 12;
-
-const rule = (corner: string, label: string): string => {
-  const head = label ? `${corner}─ ${label} ` : corner;
-  return head + "─".repeat(Math.max(0, RULE - head.length));
-};
-
-// A framed, left-rail "report card" for the terminal.
-export function renderKpiCard(
-  c: CardData,
-  opts: { source: string; live: boolean },
-): KpiCardLine[] {
-  const lines: KpiCardLine[] = [];
-  const A = (text: string) => lines.push({ text, accent: true });
-  const G = (text: string) => lines.push({ text, accent: false });
-
-  A(rule("┌", `github.com/${c.username} · ${opts.live ? "live" : "cached"}`));
-  G("│");
-  G(`│  repos ${c.totalRepos}    ·    stars ${c.totalStars}    ·    forks ${c.totalForks}`);
-  G("│");
-
-  const max = c.languages[0]?.count ?? 1;
-  for (const l of c.languages.slice(0, 6)) {
-    const filled = Math.max(1, Math.round((l.count / max) * BAR_W));
-    const bar = "▮".repeat(filled) + "▯".repeat(BAR_W - filled);
-    G(`│  ${l.lang.padEnd(LANG_PAD)}${bar} ${l.count}`);
-  }
-
-  G("│");
-  G(`│  ★ top     ${c.topName} (${c.topStars}★, ${c.topLang})`);
-  G(`│  ⟳ recent  ${c.recentName} · ${c.recentDate}`);
-  G("│");
-  A(rule("└", opts.source));
-  return lines;
 }
 
 interface GhApiRepo {

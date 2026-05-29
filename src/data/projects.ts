@@ -8,6 +8,7 @@ export interface Project {
   stack: string[];
   href: string;
   repo?: string;
+  image?: string;
   status: "live" | "case study" | "archived";
 }
 
@@ -22,6 +23,7 @@ export const projects: Project[] = [
     year: "2024",
     stack: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"],
     href: "https://hassan.task-rise.pages.dev/",
+    image: "/project-pics/taskrise.png",
     status: "live",
   },
   {
@@ -34,6 +36,7 @@ export const projects: Project[] = [
     year: "2024",
     stack: ["React", "TypeScript", "Vite", "Tailwind"],
     href: "https://www.sudha.app/",
+    image: "/project-pics/sudha.png",
     status: "live",
   },
   {
@@ -46,6 +49,7 @@ export const projects: Project[] = [
     year: "2024",
     stack: ["React", "Vite", "Tailwind"],
     href: "https://www.kassoma.net/",
+    image: "/project-pics/kasoma.png",
     status: "live",
   },
   {
@@ -58,6 +62,7 @@ export const projects: Project[] = [
     year: "2023",
     stack: ["Go", "Postgres", "Docker"],
     href: "https://github.com/hassanjawwad12/event-management-system",
+    image: "/project-pics/eventManagement.png",
     repo: "https://github.com/hassanjawwad12/event-management-system",
     status: "case study",
   },
