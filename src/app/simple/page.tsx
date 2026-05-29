@@ -21,7 +21,7 @@ export default function SimplePage() {
         <p
           style={{
             fontSize: "var(--text-2xs)",
-            color: "var(--c-fg-muted)",
+            color: "var(--text-faint)",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             marginBottom: "var(--space-2)",
@@ -65,7 +65,7 @@ export default function SimplePage() {
               <p
                 style={{
                   fontSize: "var(--text-xs)",
-                  color: "var(--c-fg-muted)",
+                  color: "var(--text-faint)",
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   marginBottom: "var(--space-2)",
@@ -92,7 +92,7 @@ export default function SimplePage() {
                 <span
                   style={{
                     fontSize: "var(--text-xs)",
-                    color: "var(--c-fg-muted)",
+                    color: "var(--text-faint)",
                     marginLeft: 8,
                   }}
                 >
@@ -103,10 +103,10 @@ export default function SimplePage() {
               <p
                 style={{
                   fontSize: "var(--text-xs)",
-                  color: "var(--c-fg-muted)",
+                  color: "var(--text-faint)",
                 }}
               >
-                <strong style={{ color: "var(--c-fg-soft)" }}>Stack:</strong>{" "}
+                <strong style={{ color: "var(--text)" }}>Stack:</strong>{" "}
                 {p.stack.join(" · ")}
               </p>
               <p>
@@ -150,10 +150,10 @@ export default function SimplePage() {
               <p
                 style={{
                   fontSize: "var(--text-xs)",
-                  color: "var(--c-fg-muted)",
+                  color: "var(--text-faint)",
                 }}
               >
-                — <strong style={{ color: "var(--c-fg-soft)" }}>{t.author}</strong>, {t.role}
+                — <strong style={{ color: "var(--text)" }}>{t.author}</strong>, {t.role}
               </p>
             </article>
           ))}

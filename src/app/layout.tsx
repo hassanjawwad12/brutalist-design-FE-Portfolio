@@ -1,8 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data/profile";
 import { SITE_URL } from "@/lib/site";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -10,17 +16,17 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const title = `${profile.shortName}@portfolio — ${profile.role}`;
-const description = `${profile.bio} An IDE-in-the-browser portfolio with a working terminal: type \`help\` to begin.`;
+const title = `${profile.name} — ${profile.role}`;
+const description = `${profile.bio} Explore it as a desktop: open windows for work, experience, skills, and live GitHub stats.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: title,
-    template: `%s · ${profile.shortName}@portfolio`,
+    template: `%s · ${profile.shortName}`,
   },
   description,
-  applicationName: `${profile.shortName} portfolio`,
+  applicationName: `${profile.shortName} · portfolio`,
   authors: [{ name: profile.name }],
   generator: "Next.js",
   keywords: [
@@ -28,14 +34,13 @@ export const metadata: Metadata = {
     profile.shortName,
     profile.role,
     "frontend engineer",
-    "golang engineer",
-    "portfolio",
     "react",
     "next.js",
     "typescript",
-    "ide portfolio",
-    "terminal portfolio",
-    "hacker theme",
+    "golang",
+    "portfolio",
+    "liquid glass",
+    "os desktop portfolio",
   ],
   creator: profile.name,
   publisher: profile.name,
@@ -47,7 +52,7 @@ export const metadata: Metadata = {
     url: "/",
     title,
     description,
-    siteName: `${profile.shortName}@portfolio`,
+    siteName: `${profile.shortName} · portfolio`,
     locale: "en_US",
   },
   twitter: {
@@ -70,8 +75,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
-  colorScheme: "dark",
+  themeColor: "#e9e6f5",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -82,7 +87,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={geistMono.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>{children}</body>
     </html>
   );

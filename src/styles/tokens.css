@@ -1,72 +1,80 @@
 /* ===========================================================
-   Design Tokens — Hacker Terminal (phosphor green on black)
+   Design Tokens — Liquid Glass (light, iOS 26 inspired)
+   Frosted near-white surfaces floating over a vivid gradient mesh.
+   Palette in oklch; motion on compositor-friendly properties only.
    =========================================================== */
 
 :root {
-  /* ------ Base surfaces — two-tone for pane separation ------ */
-  --c-black: #000000;        /* sidebar, activity bar, titlebar — pure black */
-  --c-bg: #060d09;           /* default app body */
-  --c-bg-soft: #0a1408;      /* dialogs, palette, faux page */
-  --c-bg-elevated: #0d1a0d;  /* hover states */
-  --c-panel: #060d09;        /* terminal panel */
-  --c-sidebar: #000000;      /* sidebar = pure black */
-  --c-editor: #060d09;       /* editor — lifted vs sidebar */
-  --c-gutter: #0a1408;
-  --c-statusbar: #000000;
-  --c-titlebar: #000000;
+  /* ------ Wallpaper mesh (vivid but disciplined) ------ */
+  --wall-base: oklch(96% 0.02 285);     /* light lavender fallback under the mesh */
+  --wall-1: oklch(70% 0.20 285);        /* violet     — top-left   */
+  --wall-2: oklch(75% 0.18 340);        /* fuchsia    — top-right  */
+  --wall-3: oklch(80% 0.15 225);        /* cyan/blue  — bottom-left */
+  --wall-4: oklch(82% 0.16 165);        /* teal       — bottom-right */
 
-  /* ------ Foreground — calm hierarchy so accents read as hot ------ */
-  --c-fg: #95d895;           /* base text — readable sage green */
-  --c-fg-bright: #e0ffe0;    /* focused input / active text — pale phosphor */
-  --c-fg-soft: #6fa86f;      /* prose, paragraphs */
-  --c-fg-muted: #3a6a3a;     /* secondary labels, inactive */
-  --c-fg-dim: #1f3f1f;       /* dim labels */
-  --c-fg-faint: #0d2a0d;     /* very subtle */
+  /* ------ Glass surfaces ------ */
+  --glass: oklch(99% 0.005 285 / 0.5);        /* default frosted panel */
+  --glass-strong: oklch(99% 0.005 285 / 0.74); /* text-heavy panels — keeps AA contrast */
+  --glass-hover: oklch(100% 0.005 285 / 0.64);
+  --glass-blur: 20px;
+  --glass-saturate: 175%;
 
-  /* ------ Neutral paper — for content identifiers ------ */
-  --c-paper: #d8d8d8;        /* file names, body content text */
-  --c-paper-soft: #a8a8a8;   /* secondary neutral */
-  --c-paper-dim: #6a6a6a;    /* dim neutral */
+  /* Specular rim + inner highlight — the "liquid" edge */
+  --glass-border-color: oklch(100% 0 0 / 0.55);
+  --glass-ring:
+    inset 0 1px 0 0 oklch(100% 0 0 / 0.75),
+    inset 0 0 0 1px oklch(100% 0 0 / 0.22);
 
-  /* ------ Hot phosphor — reserved for emphasis ------ */
-  --c-acid: #33ff33;         /* prompt, links, focus, active items */
-  --c-acid-bright: #88ff88;  /* h1, strong, active explorer file */
-  --c-acid-deep: #1fc91f;
-  --c-amber: #ffb000;       /* warm amber — warnings, emphasis */
-  --c-amber-bright: #ffd24d;
-  --c-amber-deep: #c78800;
-  --c-danger: #ff3838;
-  --c-danger-deep: #b81f1f;
+  /* ------ Elevation shadows (cool-tinted, soft) ------ */
+  --shadow-low:
+    0 1px 2px oklch(30% 0.05 285 / 0.08),
+    0 2px 8px oklch(30% 0.05 285 / 0.06);
+  --shadow-raised:
+    0 4px 16px oklch(30% 0.05 285 / 0.12),
+    0 8px 32px oklch(30% 0.05 285 / 0.10);
+  --shadow-floating:
+    0 12px 40px oklch(26% 0.06 285 / 0.18),
+    0 24px 64px oklch(26% 0.06 285 / 0.14);
 
-  /* ------ Borders / rules ------ */
-  --c-border: rgba(51, 255, 51, 0.16);
-  --c-border-soft: rgba(51, 255, 51, 0.08);
-  --c-border-strong: rgba(51, 255, 51, 0.5);
+  /* ------ Text ------ */
+  --text: oklch(24% 0.02 285);          /* near-black, faintly cool */
+  --text-muted: oklch(44% 0.02 285);
+  --text-faint: oklch(58% 0.02 285);
+  --text-on-accent: oklch(99% 0 0);
 
-  /* ------ Glow ------ */
-  --glow-acid: 0 0 8px rgba(51, 255, 51, 0.55), 0 0 22px rgba(51, 255, 51, 0.2);
-  --glow-amber: 0 0 8px rgba(255, 176, 0, 0.55), 0 0 22px rgba(255, 176, 0, 0.18);
-  --glow-soft: 0 0 24px rgba(51, 255, 51, 0.1);
-  --text-glow: 0 0 6px rgba(51, 255, 51, 0.55);
-  --text-glow-amber: 0 0 6px rgba(255, 176, 0, 0.55);
+  /* ------ Accent (semantic: focus, active, links) ------ */
+  --accent: oklch(56% 0.20 285);
+  --accent-bright: oklch(64% 0.22 285);
+  --accent-soft: oklch(56% 0.20 285 / 0.14);
+  --accent-ring: oklch(56% 0.20 285 / 0.45);
 
-  /* ------ Type scale ------ */
-  --text-2xs: 10px;
-  --text-xs: 11px;
-  --text-sm: 12px;
-  --text-base: 13px;
-  --text-md: 14px;
-  --text-lg: 15px;
-  --text-xl: 17px;
-  --text-2xl: 22px;
-  --text-3xl: 30px;
-  --text-display: 48px;
+  /* ------ Status (availability dot + traffic lights) ------ */
+  --ok: oklch(70% 0.17 150);
+  --warn: oklch(80% 0.15 85);
+  --danger: oklch(64% 0.21 25);
+  --tl-close: oklch(64% 0.21 25);
+  --tl-min: oklch(80% 0.15 85);
+  --tl-max: oklch(70% 0.17 150);
 
-  --leading-tight: 1.2;
-  --leading-normal: 1.55;
-  --leading-relaxed: 1.75;
+  /* ------ Type scale (fluid via clamp) ------ */
+  --text-2xs: 0.6875rem;   /* 11px */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.8125rem;    /* 13px */
+  --text-base: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
+  --text-md: 1rem;
+  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --text-3xl: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --text-display: clamp(2.75rem, 1.5rem + 5vw, 5rem);
 
-  /* ------ Spacing ------ */
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  --tracking-wide: 0.04em;
+  --tracking-caps: 0.12em;
+
+  /* ------ Spacing (4px base) ------ */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -76,42 +84,34 @@
   --space-8: 32px;
   --space-10: 40px;
   --space-12: 48px;
+  --space-16: 64px;
 
-  /* ------ Sizing ------ */
-  --h-titlebar: 32px;
-  --h-tabbar: 36px;
-  --h-statusbar: 24px;
-  --w-activitybar: 48px;
-  --w-sidebar-default: 280px;
-  --w-sidebar-min: 180px;
-  --w-sidebar-max: 460px;
-  --h-panel-default: 240px;
-  --h-panel-min: 120px;
-  --h-panel-max: 520px;
+  /* ------ Radii (generous, iOS-like) ------ */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* ------ Chrome sizing ------ */
+  --h-menubar: 38px;
+  --h-dock: 64px;
+  --h-window-titlebar: 40px;
 
   /* ------ Motion ------ */
-  --dur-fast: 120ms;
-  --dur-base: 200ms;
-  --dur-slow: 400ms;
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1); /* gentle overshoot for window open */
 
   /* ------ Z layers ------ */
-  --z-titlebar: 30;
-  --z-statusbar: 30;
-  --z-palette: 80;
-  --z-tooltip: 90;
-  --z-toast: 100;
-
-  /* ------ Syntax (terminal + markdown code) ------ */
-  --syntax-comment: #0e8a0e;
-  --syntax-keyword: var(--c-amber);
-  --syntax-string: var(--c-acid-bright);
-  --syntax-number: var(--c-amber-bright);
-  --syntax-fn: var(--c-acid);
-  --syntax-type: var(--c-amber);
-  --syntax-punct: var(--c-fg-soft);
-  --syntax-tag: var(--c-amber);
+  --z-wallpaper: 0;
+  --z-window-base: 10;
+  --z-chrome: 1000;     /* menubar + dock */
+  --z-palette: 2000;
+  --z-toast: 3000;
 }
 
 @media (prefers-reduced-motion: reduce) {
