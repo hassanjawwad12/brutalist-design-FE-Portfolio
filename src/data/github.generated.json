@@ -1,6 +1,6 @@
 {
   "username": "hassanjawwad12",
-  "fetchedAt": "2026-05-28T23:43:52.374Z",
+  "fetchedAt": "2026-05-29T22:40:03.447Z",
   "repos": [
     {
       "name": "Nutrify.AI",
@@ -69,7 +69,7 @@
       "stars": 2,
       "forks": 0,
       "url": "https://github.com/hassanjawwad12/dev-portfolio",
-      "updated": "2025-12-11T16:58:58Z",
+      "updated": "2026-05-29T20:01:10Z",
       "topics": []
     },
     {
@@ -139,7 +139,7 @@
       "stars": 1,
       "forks": 0,
       "url": "https://github.com/hassanjawwad12/brutalist-design-FE-Portfolio",
-      "updated": "2026-05-25T07:29:58Z",
+      "updated": "2026-05-29T00:12:29Z",
       "topics": []
     },
     {
@@ -280,6 +280,16 @@
       "forks": 0,
       "url": "https://github.com/hassanjawwad12/Shirt-design-3js-website",
       "updated": "2024-07-25T17:51:31Z",
+      "topics": []
+    },
+    {
+      "name": "3d-portfolio",
+      "description": "A 3d Portfolio",
+      "language": "JavaScript",
+      "stars": 0,
+      "forks": 0,
+      "url": "https://github.com/hassanjawwad12/3d-portfolio",
+      "updated": "2026-05-29T17:15:44Z",
       "topics": []
     },
     {
@@ -980,16 +990,6 @@
       "forks": 0,
       "url": "https://github.com/hassanjawwad12/react-dashboard",
       "updated": "2024-01-21T10:16:00Z",
-      "topics": []
-    },
-    {
-      "name": "node-cli",
-      "description": "A CLI (command line interface) for a quiz game app.",
-      "language": "JavaScript",
-      "stars": 0,
-      "forks": 0,
-      "url": "https://github.com/hassanjawwad12/node-cli",
-      "updated": "2023-12-31T12:03:00Z",
       "topics": []
     }
   ]

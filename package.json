@@ -7,25 +7,18 @@
     "prebuild": "node scripts/fetch-github.mjs",
     "build": "next build",
     "start": "next start",
-    "sync:github": "node scripts/fetch-github.mjs",
-    "build:wasm": "cd go && GOOS=js GOARCH=wasm go build -ldflags=\"-s -w\" -o ../public/go/portfolio.wasm . && (cp \"$(go env GOROOT)/lib/wasm/wasm_exec.js\" ../public/go/wasm_exec.js 2>/dev/null || cp \"$(go env GOROOT)/misc/wasm/wasm_exec.js\" ../public/go/wasm_exec.js)"
+    "sync:github": "node scripts/fetch-github.mjs"
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.6.1",
-    "@react-three/rapier": "^2.2.0",
     "next": "16.2.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "shiki": "^4.1.0",
-    "three": "^0.184.0"
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "^0.184.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
