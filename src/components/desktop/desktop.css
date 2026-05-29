@@ -257,39 +257,6 @@
   overscroll-behavior: contain;
 }
 
-/* ---------- App placeholder (Phase 3) ---------- */
-.app-stub {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  color: var(--text-muted);
-  text-align: center;
-}
-.app-stub__icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-md);
-  color: var(--accent);
-  background: var(--accent-soft);
-}
-.app-stub__icon svg {
-  width: 24px;
-  height: 24px;
-}
-.app-stub__title {
-  font-size: var(--text-lg);
-  color: var(--text);
-}
-.app-stub__note {
-  font-size: var(--text-sm);
-  color: var(--text-faint);
-}
-
 /* ---------- Dock ---------- */
 .dock {
   position: fixed;
