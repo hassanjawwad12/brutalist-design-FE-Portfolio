@@ -7,7 +7,6 @@ export type AppId =
   | "experience"
   | "skills"
   | "github"
-  | "testimonials"
   | "contact";
 
 export interface WindowGeometry {
@@ -52,7 +51,6 @@ export const APPS: AppMeta[] = [
     title: "Projects",
     hue: 250,
     geometry: { x: 452, y: 88, w: 560, h: 500 },
-    defaultOpen: true,
     icon: (
       <Icon>
         <rect x="3" y="3" width="8" height="8" rx="1.5" />
@@ -80,7 +78,8 @@ export const APPS: AppMeta[] = [
     id: "experience",
     title: "Experience",
     hue: 60,
-    geometry: { x: 150, y: 120, w: 500, h: 460 },
+    geometry: { x: 452, y: 96, w: 500, h: 460 },
+    defaultOpen: true,
     icon: (
       <Icon>
         <rect x="3" y="7" width="18" height="13" rx="2" />
@@ -97,18 +96,6 @@ export const APPS: AppMeta[] = [
     icon: (
       <Icon>
         <path d="M12 3l2.4 5.4L20 11l-5.6 2.6L12 19l-2.4-5.4L4 11l5.6-2.6z" />
-      </Icon>
-    ),
-  },
-  {
-    id: "testimonials",
-    title: "Testimonials",
-    hue: 330,
-    geometry: { x: 400, y: 150, w: 520, h: 380 },
-    icon: (
-      <Icon>
-        <path d="M4 5h16v10H9l-5 4z" />
-        <path d="M8 9h8M8 12h5" />
       </Icon>
     ),
   },

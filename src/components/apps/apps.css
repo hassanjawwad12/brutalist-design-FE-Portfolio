@@ -1,6 +1,6 @@
 /* ===========================================================
    App window contents — About, Projects, Experience, Skills,
-   GitHub, Testimonials, Contact. Shared primitives first.
+   GitHub, Contact. Shared primitives first.
    =========================================================== */
 
 .app {
@@ -445,88 +445,6 @@
   font-size: var(--text-2xs);
   color: var(--text-faint);
   font-variant-numeric: tabular-nums;
-}
-
-/* ---------- Testimonials (carousel) ---------- */
-.quotes {
-  height: 100%;
-  justify-content: space-between;
-}
-.quote {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  animation: app-rise var(--dur-base) var(--ease-out-expo);
-}
-.quote__mark {
-  font-size: var(--text-display);
-  line-height: 0.6;
-  color: var(--accent-soft);
-  height: 0.4em;
-}
-.quote__text {
-  font-size: var(--text-lg);
-  line-height: var(--leading-relaxed);
-  color: var(--text);
-}
-.quote__by {
-  display: flex;
-  flex-direction: column;
-}
-.quote__author {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--text);
-}
-.quote__role {
-  font-size: var(--text-xs);
-  color: var(--text-faint);
-}
-.quotes__nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--space-4);
-}
-.quotes__btn {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-size: var(--text-lg);
-  color: var(--text-muted);
-  background: var(--glass);
-  border: 1px solid var(--glass-border-color);
-  transition:
-    color var(--dur-fast),
-    background var(--dur-fast);
-}
-.quotes__btn:hover {
-  color: var(--accent);
-  background: var(--accent-soft);
-}
-.quotes__dots {
-  display: flex;
-  gap: var(--space-2);
-}
-.quotes__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--hairline-strong);
-  transition:
-    background var(--dur-fast),
-    transform var(--dur-fast);
-}
-.quotes__dot[data-on] {
-  background: var(--accent);
-  transform: scale(1.3);
-}
-@media (prefers-reduced-motion: reduce) {
-  .quote {
-    animation: none;
-  }
 }
 
 /* ---------- Contact ---------- */

@@ -4,7 +4,6 @@ import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 import { experience } from "@/data/experience";
 import { skills } from "@/data/skills";
-import { testimonials } from "@/data/testimonials";
 
 export const metadata: Metadata = {
   title: `${profile.name} — ${profile.role} (simple view)`,
@@ -140,23 +139,6 @@ export default function SimplePage() {
               </p>
             );
           })}
-        </section>
-
-        <section aria-labelledby="testimonials-heading">
-          <h2 id="testimonials-heading">Testimonials</h2>
-          {testimonials.map((t) => (
-            <article key={t.id}>
-              <p>“{t.quote}”</p>
-              <p
-                style={{
-                  fontSize: "var(--text-xs)",
-                  color: "var(--text-faint)",
-                }}
-              >
-                — <strong style={{ color: "var(--text)" }}>{t.author}</strong>, {t.role}
-              </p>
-            </article>
-          ))}
         </section>
 
         <section aria-labelledby="resume-heading">
