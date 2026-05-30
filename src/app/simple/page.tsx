@@ -40,7 +40,7 @@ export default function SimplePage() {
           {profile.socials.map((s) => (
             <span key={s.label}>
               {" · "}
-              <a href={s.href} rel="noreferrer" target="_blank">
+              <a href={s.href} rel="noopener noreferrer" target="_blank">
                 {s.label}
               </a>
             </span>
@@ -110,13 +110,13 @@ export default function SimplePage() {
                 {p.stack.join(" · ")}
               </p>
               <p>
-                <a href={p.href} target="_blank" rel="noreferrer">
+                <a href={p.href} target="_blank" rel="noopener noreferrer">
                   {p.href}
                 </a>
                 {p.repo ? (
                   <>
                     {" · "}
-                    <a href={p.repo} target="_blank" rel="noreferrer">
+                    <a href={p.repo} target="_blank" rel="noopener noreferrer">
                       repo
                     </a>
                   </>
@@ -162,7 +162,7 @@ export default function SimplePage() {
         <section aria-labelledby="resume-heading">
           <h2 id="resume-heading">Resume</h2>
           <p>
-            <a href={profile.resumeHref} target="_blank" rel="noreferrer">
+            <a href={profile.resumeHref} target="_blank" rel="noopener noreferrer">
               Download resume (PDF) →
             </a>
           </p>

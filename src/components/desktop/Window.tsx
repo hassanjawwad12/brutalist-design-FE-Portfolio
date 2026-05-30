@@ -40,7 +40,7 @@ function WindowImpl({ meta, state, focused }: WindowProps) {
 
   const { dragging, onPointerDown } = useDrag({
     targetRef: rootRef,
-    onStart: () => focusApp(meta.id),
+    // Focus is handled by onPointerDownCapture on the window root (fires first).
     onCommit: (dx, dy) => {
       const p = clampPosition(state.x + dx, state.y + dy);
       moveApp(meta.id, p.x, p.y);
@@ -65,7 +65,6 @@ function WindowImpl({ meta, state, focused }: WindowProps) {
       data-tone="strong"
       data-focused={focused || undefined}
       data-dragging={dragging || undefined}
-      role="dialog"
       aria-labelledby={titleId}
       style={{ left: state.x, top: state.y, width: w, height: h, zIndex: state.z }}
       onPointerDownCapture={() => focusApp(meta.id)}

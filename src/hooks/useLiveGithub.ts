@@ -30,14 +30,18 @@ export function useLiveGithub(): LiveGithub {
     if (cachedRepos) return;
     let cancelled = false;
     inflight ??= fetchLiveRepos();
-    inflight.then((fresh) => {
-      if (fresh && fresh.length > 0) cachedRepos = fresh;
-      inflight = null;
-      if (!cancelled && fresh && fresh.length > 0) {
-        setRepos(fresh);
-        setLive(true);
-      }
-    });
+    inflight
+      .then((fresh) => {
+        if (fresh && fresh.length > 0) cachedRepos = fresh;
+        inflight = null;
+        if (!cancelled && fresh && fresh.length > 0) {
+          setRepos(fresh);
+          setLive(true);
+        }
+      })
+      .catch(() => {
+        inflight = null; // let a later mount retry
+      });
     return () => {
       cancelled = true;
     };

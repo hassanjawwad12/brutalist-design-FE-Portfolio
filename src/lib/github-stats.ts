@@ -59,10 +59,13 @@ interface GhApiRepo {
 // failure so the caller can fall back to the committed build-time snapshot.
 export async function fetchLiveRepos(): Promise<Repo[] | null> {
   try {
+    // Bound the request so a slow/hanging API can't pin the cached state forever.
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
     const res = await fetch(
       `https://api.github.com/users/${github.username}/repos?per_page=100&sort=updated`,
-      { headers: { Accept: "application/vnd.github+json" } },
-    );
+      { headers: { Accept: "application/vnd.github+json" }, signal: controller.signal },
+    ).finally(() => clearTimeout(timeout));
     if (!res.ok) return null;
     const raw: unknown = await res.json();
     if (!Array.isArray(raw)) return null;

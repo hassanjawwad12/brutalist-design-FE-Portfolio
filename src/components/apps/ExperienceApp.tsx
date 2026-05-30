@@ -28,7 +28,7 @@ export function ExperienceApp() {
               <p className="exp__summary">{e.summary}</p>
               <ul className="exp__highlights">
                 {e.highlights.map((h, i) => (
-                  <li key={i}>{h}</li>
+                  <li key={`${e.id}-${i}`}>{h}</li>
                 ))}
               </ul>
             </div>
