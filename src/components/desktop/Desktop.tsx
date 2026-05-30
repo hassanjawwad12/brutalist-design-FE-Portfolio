@@ -9,6 +9,7 @@ import { Window } from "./Window";
 import { MobileStack } from "./MobileStack";
 import { CommandPalette } from "./CommandPalette";
 import { WindowProvider, useWindowsState } from "./store";
+import { MobileStackProvider } from "./mobileStore";
 import { APPS } from "./apps";
 import { useHotkeys } from "@/hooks/useHotkeys";
 import { profile } from "@/data/profile";
@@ -48,19 +49,21 @@ export function Desktop() {
 
   return (
     <WindowProvider>
-      <div className="desktop">
-        <h1 className="sr-only">
-          {profile.name} — {profile.role}
-        </h1>
-        <Wallpaper />
-        <MenuBar onOpenPalette={() => setPaletteOpen(true)} />
-        <WindowsLayer />
-        <MobileStack />
-        <Dock />
-        {paletteOpen && (
-          <CommandPalette onClose={() => setPaletteOpen(false)} />
-        )}
-      </div>
+      <MobileStackProvider>
+        <div className="desktop">
+          <h1 className="sr-only">
+            {profile.name} — {profile.role}
+          </h1>
+          <Wallpaper />
+          <MenuBar onOpenPalette={() => setPaletteOpen(true)} />
+          <WindowsLayer />
+          <MobileStack />
+          <Dock />
+          {paletteOpen && (
+            <CommandPalette onClose={() => setPaletteOpen(false)} />
+          )}
+        </div>
+      </MobileStackProvider>
     </WindowProvider>
   );
 }

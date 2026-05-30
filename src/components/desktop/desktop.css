@@ -185,6 +185,17 @@
   user-select: none;
 }
 
+/* Zoom / maximize: fill the desktop, leaving room for the floating dock. */
+.window[data-maximized] {
+  inset: 0 var(--space-5) calc(var(--h-dock) + var(--space-5)) var(--space-5);
+  width: auto;
+  height: auto;
+  animation: none;
+}
+.window[data-maximized] .window__bar {
+  cursor: default;
+}
+
 @keyframes window-in {
   from {
     opacity: 0;
@@ -485,11 +496,35 @@
   flex-direction: column;
   overflow: hidden;
 }
+.mstack__heading {
+  margin: 0;
+  font: inherit;
+}
+/* Header doubles as the accordion toggle — full-width reset button. */
 .mstack__bar {
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  width: 100%;
   padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out-expo);
+}
+.mstack__bar:hover {
+  background: oklch(70% 0.04 285 / 0.1);
+}
+.mstack__bar:active {
+  background: oklch(70% 0.04 285 / 0.16);
+}
+.mstack__bar:focus-visible {
+  outline: 2px solid var(--accent, oklch(62% 0.2 265));
+  outline-offset: -2px;
+}
+.mstack__card[data-expanded] .mstack__bar {
   border-bottom: 1px solid var(--hairline);
 }
 .mstack__icon {
@@ -507,11 +542,60 @@
   height: 18px;
 }
 .mstack__title {
+  flex: 1;
   font-size: var(--text-md);
   font-weight: 600;
 }
+.mstack__chevron {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: var(--text-faint);
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+.mstack__card[data-expanded] .mstack__chevron {
+  transform: rotate(180deg);
+  color: var(--text);
+}
+/* Accordion reveal: animate grid-template-rows 0fr → 1fr (no fixed max-height). */
+.mstack__reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-base) var(--ease-out-expo);
+}
+.mstack__card[data-expanded] .mstack__reveal {
+  grid-template-rows: 1fr;
+}
 .mstack__body {
+  min-height: 0;
+  overflow: hidden;
   padding: var(--space-5);
+}
+/* Cards animate in as they're launched from the dock. */
+.mstack__card {
+  animation: mstack-card-in var(--dur-base) var(--ease-out-expo) both;
+}
+@keyframes mstack-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.mstack__hint {
+  margin: auto;
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--text-faint);
+  font-size: var(--text-sm);
 }
 
 @media (max-width: 640px) {

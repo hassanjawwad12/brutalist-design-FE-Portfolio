@@ -12,7 +12,7 @@ const clamp = (v: number, min: number, max: number) =>
 const LIGHTS = [
   { cls: "close", label: "Close", action: "close" },
   { cls: "min", label: "Minimize", action: "minimize" },
-  { cls: "zoom", label: "Reset position of", action: "reset" },
+  { cls: "zoom", label: "Zoom", action: "zoom" },
 ] as const;
 
 interface WindowProps {
@@ -22,10 +22,11 @@ interface WindowProps {
 }
 
 function WindowImpl({ meta, state, focused }: WindowProps) {
-  const { focusApp, closeApp, minimizeApp, resetApp, moveApp } =
+  const { focusApp, closeApp, minimizeApp, zoomApp, moveApp } =
     useWindowActions();
   const rootRef = useRef<HTMLElement>(null);
   const { w, h } = meta.geometry;
+  const { maximized } = state;
 
   // Keep a window's position inside the desktop bounds (fixed size from registry).
   const clampPosition = (x: number, y: number) => {
@@ -55,7 +56,7 @@ function WindowImpl({ meta, state, focused }: WindowProps) {
   }, []);
 
   const onLight: Record<(typeof LIGHTS)[number]["action"], (id: AppId) => void> =
-    { close: closeApp, minimize: minimizeApp, reset: resetApp };
+    { close: closeApp, minimize: minimizeApp, zoom: zoomApp };
   const titleId = `win-${meta.id}-title`;
 
   return (
@@ -65,11 +66,20 @@ function WindowImpl({ meta, state, focused }: WindowProps) {
       data-tone="strong"
       data-focused={focused || undefined}
       data-dragging={dragging || undefined}
+      data-maximized={maximized || undefined}
       aria-labelledby={titleId}
-      style={{ left: state.x, top: state.y, width: w, height: h, zIndex: state.z }}
+      style={
+        maximized
+          ? { zIndex: state.z }
+          : { left: state.x, top: state.y, width: w, height: h, zIndex: state.z }
+      }
       onPointerDownCapture={() => focusApp(meta.id)}
     >
-      <header className="window__bar" onPointerDown={onPointerDown}>
+      <header
+        className="window__bar"
+        onPointerDown={maximized ? undefined : onPointerDown}
+        onDoubleClick={() => zoomApp(meta.id)}
+      >
         <div className="window__lights">
           {LIGHTS.map((l) => (
             <button

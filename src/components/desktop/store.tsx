@@ -2,12 +2,14 @@
 
 import { createContext, useContext, useMemo, useReducer } from "react";
 import type { ReactNode } from "react";
-import { APPS, getApp, type AppId } from "./apps";
+import { APPS, type AppId } from "./apps";
 
 export interface WindowState {
   id: AppId;
   open: boolean;
   minimized: boolean;
+  /** Zoomed to fill the desktop (green light / title-bar double-click). */
+  maximized: boolean;
   z: number;
   /** Position only — window size is fixed and lives in the app registry. */
   x: number;
@@ -24,8 +26,8 @@ type Action =
   | { type: "CLOSE"; id: AppId }
   | { type: "FOCUS"; id: AppId }
   | { type: "MINIMIZE"; id: AppId }
+  | { type: "ZOOM"; id: AppId }
   | { type: "MOVE"; id: AppId; x: number; y: number }
-  | { type: "RESET"; id: AppId }
   | { type: "CLOSE_ALL" };
 
 // Window stacking floor. Stays well below --z-chrome (1000) so windows never
@@ -41,6 +43,7 @@ function createInitialState(): State {
       id: app.id,
       open,
       minimized: false,
+      maximized: false,
       z: open ? ++z : BASE_Z,
       x: app.geometry.x,
       y: app.geometry.y,
@@ -75,13 +78,20 @@ function reducer(state: State, action: Action): State {
       return patch(state, action.id, { open: false, minimized: false });
     case "MINIMIZE":
       return patch(state, action.id, { minimized: true });
+    case "ZOOM": {
+      const w = state.windows[action.id];
+      const topZ = state.topZ + 1;
+      return {
+        ...patch(state, action.id, {
+          maximized: !w.maximized,
+          minimized: false,
+          z: topZ,
+        }),
+        topZ,
+      };
+    }
     case "MOVE":
       return patch(state, action.id, { x: action.x, y: action.y });
-    case "RESET": {
-      const g = getApp(action.id).geometry;
-      const topZ = state.topZ + 1;
-      return { ...patch(state, action.id, { x: g.x, y: g.y, z: topZ }), topZ };
-    }
     case "CLOSE_ALL": {
       const windows = {} as Record<AppId, WindowState>;
       for (const id of Object.keys(state.windows) as AppId[]) {
@@ -105,8 +115,8 @@ interface WindowActions {
   closeApp: (id: AppId) => void;
   focusApp: (id: AppId) => void;
   minimizeApp: (id: AppId) => void;
+  zoomApp: (id: AppId) => void;
   moveApp: (id: AppId, x: number, y: number) => void;
-  resetApp: (id: AppId) => void;
   closeAll: () => void;
 }
 
@@ -124,8 +134,8 @@ export function WindowProvider({ children }: { children: ReactNode }) {
       closeApp: (id) => dispatch({ type: "CLOSE", id }),
       focusApp: (id) => dispatch({ type: "FOCUS", id }),
       minimizeApp: (id) => dispatch({ type: "MINIMIZE", id }),
+      zoomApp: (id) => dispatch({ type: "ZOOM", id }),
       moveApp: (id, x, y) => dispatch({ type: "MOVE", id, x, y }),
-      resetApp: (id) => dispatch({ type: "RESET", id }),
       closeAll: () => dispatch({ type: "CLOSE_ALL" }),
     }),
     [],
