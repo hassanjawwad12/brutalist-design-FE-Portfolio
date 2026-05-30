@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { APPS, type AppId } from "./apps";
 import { useWindowsState, useWindowActions } from "./store";
+import { scrollToSection } from "@/lib/scroll";
 
 export function Dock() {
   const { windows, topId } = useWindowsState();
@@ -13,6 +14,8 @@ export function Dock() {
     if (!w.open || w.minimized) openApp(id);
     else if (topId === id) minimizeApp(id);
     else focusApp(id);
+    // On mobile the windows are hidden and the dock acts as a section nav.
+    scrollToSection(id);
   };
 
   return (

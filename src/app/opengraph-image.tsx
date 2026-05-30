@@ -1,9 +1,15 @@
 import { ImageResponse } from "next/og";
-import { profile } from "@/data/profile";
+import { profile, type Profile } from "@/data/profile";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = `${profile.name} — ${profile.role}`;
+
+const AVAIL_COLOR: Record<Profile["availability"], string> = {
+  available: "#34c77b",
+  selective: "#e0a020",
+  closed: "#e0564a",
+};
 
 export default async function OpengraphImage() {
   return new ImageResponse(
@@ -14,125 +20,87 @@ export default async function OpengraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "#000",
-          color: "#33ff33",
-          fontFamily: "monospace",
-          padding: 64,
+          justifyContent: "center",
+          padding: 80,
           position: "relative",
+          fontFamily: "sans-serif",
+          backgroundColor: "#ece9f8",
+          backgroundImage:
+            "radial-gradient(at 16% 20%, #a78bfa 0px, transparent 50%), radial-gradient(at 84% 16%, #f9a8d4 0px, transparent 50%), radial-gradient(at 22% 86%, #7dd3fc 0px, transparent 50%), radial-gradient(at 88% 84%, #5eead4 0px, transparent 50%)",
         }}
       >
         <div
           style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "linear-gradient(rgba(51,255,51,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(51,255,51,0.06) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-            display: "flex",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 56,
-            background: "#050a05",
-            borderBottom: "1px solid rgba(51,255,51,0.4)",
-            display: "flex",
-            alignItems: "center",
-            paddingLeft: 24,
-            gap: 12,
-            fontSize: 20,
-            color: "#0e8a0e",
-            letterSpacing: 6,
-            textTransform: "uppercase",
-          }}
-        >
-          <span
-            style={{
-              width: 14,
-              height: 14,
-              border: "1px solid #33ff33",
-              boxShadow: "0 0 12px #33ff33",
-              display: "flex",
-            }}
-          />
-          {profile.shortName.toLowerCase()}@portfolio
-        </div>
-
-        <div
-          style={{
             display: "flex",
             flexDirection: "column",
-            marginTop: 90,
+            gap: 22,
+            padding: "52px 60px",
+            borderRadius: 32,
+            background: "rgba(255,255,255,0.55)",
+            border: "1px solid rgba(255,255,255,0.75)",
+            boxShadow: "0 30px 80px rgba(42,30,78,0.18)",
           }}
         >
-          <span
+          <div
             style={{
-              fontSize: 26,
-              color: "#0e8a0e",
-              letterSpacing: 6,
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              fontSize: 22,
+              color: "#5b5570",
               textTransform: "uppercase",
-              marginBottom: 16,
+              letterSpacing: 6,
             }}
           >
-            $ whoami
-          </span>
-          <span
+            <div
+              style={{
+                width: 14,
+                height: 14,
+                borderRadius: 99,
+                background: AVAIL_COLOR[profile.availability],
+              }}
+            />
+            {profile.location}
+          </div>
+          <div
             style={{
-              fontSize: 88,
-              color: "#7dff7d",
+              fontSize: 84,
               fontWeight: 700,
+              color: "#241f33",
               lineHeight: 1.05,
-              letterSpacing: -1,
-              textShadow: "0 0 24px rgba(51,255,51,0.45)",
+              letterSpacing: -2,
             }}
           >
             {profile.name}
-          </span>
-          <span
+          </div>
+          <div style={{ fontSize: 40, color: "#6a4bd6" }}>{profile.role}</div>
+          <div
             style={{
-              fontSize: 38,
-              color: "#ffb000",
-              marginTop: 18,
-              letterSpacing: 1,
-              textShadow: "0 0 18px rgba(255,176,0,0.4)",
-            }}
-          >
-            // {profile.role}
-          </span>
-          <span
-            style={{
-              fontSize: 24,
-              color: "#28c628",
-              marginTop: 36,
-              maxWidth: 1000,
+              fontSize: 27,
+              color: "#5b5570",
+              maxWidth: 920,
               lineHeight: 1.4,
             }}
           >
             {profile.tagline}
-          </span>
+          </div>
         </div>
 
         <div
           style={{
-            display: "flex",
             position: "absolute",
-            bottom: 32,
-            left: 64,
-            right: 64,
+            bottom: 46,
+            left: 80,
+            right: 80,
+            display: "flex",
             justifyContent: "space-between",
-            alignItems: "center",
-            fontSize: 20,
-            color: "#0e8a0e",
-            letterSpacing: 4,
-            textTransform: "uppercase",
+            fontSize: 21,
+            color: "#4a4560",
+            letterSpacing: 2,
           }}
         >
-          <span>type `help` to begin</span>
-          <span>{profile.location}</span>
+          <span>{profile.socials[0]?.handle ?? profile.email}</span>
+          <span>⌘K · liquid glass desktop</span>
         </div>
       </div>
     ),

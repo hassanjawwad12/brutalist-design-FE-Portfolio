@@ -278,14 +278,19 @@
   gap: 4px;
 }
 
+/* Shared icon-tile palette (dock + mobile stack), tinted per-app via --tile-hue. */
+.dock__icon,
+.mstack__icon {
+  color: oklch(34% 0.11 var(--tile-hue));
+  background: oklch(95% 0.05 var(--tile-hue) / 0.92);
+}
+
 .dock__icon {
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
   border-radius: var(--radius-md);
-  color: oklch(34% 0.11 var(--tile-hue));
-  background: oklch(95% 0.05 var(--tile-hue) / 0.92);
   border: 1px solid var(--glass-border-color);
   box-shadow: var(--shadow-low);
   transition: transform var(--dur-base) var(--ease-out-expo);
@@ -471,8 +476,87 @@
   margin-right: 2px;
 }
 
+/* ---------- Mobile stack (cards) — hidden ≥768px ---------- */
+.mstack {
+  display: none;
+}
+.mstack__card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mstack__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--hairline);
+}
+.mstack__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  color: oklch(34% 0.11 var(--tile-hue));
+  background: oklch(95% 0.05 var(--tile-hue) / 0.92);
+}
+.mstack__icon svg {
+  width: 18px;
+  height: 18px;
+}
+.mstack__title {
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+.mstack__body {
+  padding: var(--space-5);
+}
+
 @media (max-width: 640px) {
   .menubar__role {
+    display: none;
+  }
+}
+
+/* ---------- Responsive collapse: windows → stack ---------- */
+@media (max-width: 767px) {
+  .desktop__windows {
+    display: none;
+  }
+  .mstack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    position: absolute;
+    inset: calc(var(--h-menubar) + var(--space-3)) 0 0 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--space-3) var(--space-3) calc(var(--h-dock) + var(--space-6));
+  }
+  /* Stacked cards drop the live blur — 7 backdrop-filters over the animated
+     wallpaper would thrash touch-scroll. Near-opaque frosted background instead. */
+  .glass.mstack__card {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: oklch(99% 0.01 285 / 0.92);
+  }
+  /* Dock becomes a compact, scrollable section nav (no hover magnify on touch). */
+  .dock {
+    max-width: calc(100vw - 2 * var(--space-2));
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    overflow-x: auto;
+  }
+  .dock__icon {
+    width: 38px;
+    height: 38px;
+  }
+  .dock__item:hover .dock__icon {
+    transform: none;
+  }
+  .dock__item::after {
     display: none;
   }
 }

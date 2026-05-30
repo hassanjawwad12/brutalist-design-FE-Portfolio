@@ -28,7 +28,7 @@ export default function SimplePage() {
           }}
         >
           plain semantic view ·{" "}
-          <Link href="/">return to the IDE →</Link>
+          <Link href="/">back to the desktop →</Link>
         </p>
         <h1>{profile.name}</h1>
         <p>
@@ -178,7 +178,7 @@ export default function SimplePage() {
 
       <footer>
         <p>
-          This is the plain semantic version of <Link href="/">the IDE-style portfolio</Link>.
+          This is the plain semantic version of <Link href="/">the Liquid Glass desktop</Link>.
           No JavaScript required. Same content, no chrome.
         </p>
       </footer>

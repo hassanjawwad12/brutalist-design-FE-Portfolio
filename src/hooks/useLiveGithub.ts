@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { fetchLiveRepos } from "@/lib/github-stats";
 import { github, type Repo } from "@/data/github";
 
-// Session cache so reopening the GitHub window doesn't re-hit the (unauthenticated,
-// rate-limited at 60/hr) API — the first successful fetch is reused thereafter.
+// Session caches. `cachedRepos` holds the first successful live result; `inflight`
+// dedupes concurrent mounts (the GitHub app renders in both the desktop window and
+// the hidden mobile stack) into a single API call — the endpoint is rate-limited.
 let cachedRepos: Repo[] | null = null;
+let inflight: Promise<Repo[] | null> | null = null;
 
 interface LiveGithub {
   repos: Repo[];
@@ -27,9 +29,11 @@ export function useLiveGithub(): LiveGithub {
   useEffect(() => {
     if (cachedRepos) return;
     let cancelled = false;
-    fetchLiveRepos().then((fresh) => {
+    inflight ??= fetchLiveRepos();
+    inflight.then((fresh) => {
+      if (fresh && fresh.length > 0) cachedRepos = fresh;
+      inflight = null;
       if (!cancelled && fresh && fresh.length > 0) {
-        cachedRepos = fresh;
         setRepos(fresh);
         setLive(true);
       }

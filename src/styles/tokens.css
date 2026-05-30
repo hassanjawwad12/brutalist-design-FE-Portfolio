@@ -98,6 +98,7 @@
 
   /* ------ Chrome sizing ------ */
   --h-menubar: 38px;
+  --h-dock: 64px;
   --h-window-titlebar: 40px;
 
   /* ------ Motion ------ */

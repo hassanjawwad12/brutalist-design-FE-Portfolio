@@ -6,6 +6,8 @@ import { APPS } from "./apps";
 import { useWindowActions } from "./store";
 import { profile } from "@/data/profile";
 import { fuzzyRank } from "@/lib/fuzzy";
+import { scrollToSection } from "@/lib/scroll";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { Icon } from "@/components/ui/Icon";
 
@@ -58,8 +60,11 @@ interface CommandPaletteProps {
 export function CommandPalette({ onClose }: CommandPaletteProps) {
   const actions = useWindowActions();
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(0);
+
+  useFocusTrap(panelRef);
 
   const commands = useMemo<Command[]>(
     () => [
@@ -68,7 +73,12 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
         label: `Open ${a.title}`,
         hint: "App",
         icon: a.icon,
-        run: () => actions.openApp(a.id),
+        run: () => {
+          // Opens the window (desktop) and scrolls to the section (mobile);
+          // each is a no-op on the layout that isn't visible.
+          actions.openApp(a.id);
+          scrollToSection(a.id);
+        },
       })),
       ...profile.socials.map((s) => ({
         id: `link-${s.label}`,
@@ -151,6 +161,7 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
   return (
     <div className="palette" role="presentation" onPointerDown={onBackdrop}>
       <GlassPanel
+        ref={panelRef}
         tone="strong"
         elevation="floating"
         className="palette__panel"
