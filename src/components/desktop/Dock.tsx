@@ -9,7 +9,7 @@ import { scrollToSection } from "@/lib/scroll";
 export function Dock() {
   const { windows, topId } = useWindowsState();
   const { openApp, focusApp, minimizeApp } = useWindowActions();
-  const { expand } = useMobileStack();
+  const { openCard } = useMobileStack();
 
   const handle = (id: AppId) => {
     const w = windows[id];
@@ -17,8 +17,8 @@ export function Dock() {
     else if (topId === id) minimizeApp(id);
     else focusApp(id);
     // On mobile the windows are hidden and the dock acts as a section nav:
-    // expand the card (floating it to the top) and scroll it into view.
-    expand(id);
+    // open the card (floating it to the top) and scroll it into view.
+    openCard(id);
     requestAnimationFrame(() => requestAnimationFrame(() => scrollToSection(id)));
   };
 

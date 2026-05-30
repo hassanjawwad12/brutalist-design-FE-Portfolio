@@ -4,8 +4,8 @@ import { createContext, useCallback, useContext, useMemo, useState } from "react
 import type { ReactNode } from "react";
 import { APPS, type AppId } from "./apps";
 
-/** How many cards open by default on mobile. The user can open as many as they
- *  like from the dock afterwards — this only bounds the initial state. */
+/** How many cards open by default on mobile. The visitor can open as many as
+ *  they like from the dock afterwards — this only bounds the initial state. */
 const INITIAL_LIMIT = 2;
 
 // Seed with the default-open apps, capped at INITIAL_LIMIT, in dock order.
@@ -14,13 +14,17 @@ const INITIAL_OPEN: AppId[] = APPS.filter((a) => a.defaultOpen)
   .map((a) => a.id);
 
 interface MobileStackValue {
-  /** Expanded card ids, most-recently-opened first (drives top-of-stack order). */
-  expanded: AppId[];
-  isExpanded: (id: AppId) => boolean;
-  /** Expand a card and float it to the top. No-op if already on top. */
-  expand: (id: AppId) => void;
-  /** Toggle a card; expanding floats it to the top and enforces the cap. */
-  toggle: (id: AppId) => void;
+  /** Open card ids, most-recently-opened first (drives top-of-stack order). */
+  open: AppId[];
+  isOpen: (id: AppId) => boolean;
+  /** Whether an open card's body is collapsed (header still shown). */
+  isMinimized: (id: AppId) => boolean;
+  /** Dock launcher: open a card, float it to the top, and un-minimize it. */
+  openCard: (id: AppId) => void;
+  /** Red dot: remove the card from the stack entirely. */
+  closeCard: (id: AppId) => void;
+  /** Chevron: collapse/restore the card body without removing the card. */
+  toggleMinimize: (id: AppId) => void;
 }
 
 const MobileStackContext = createContext<MobileStackValue | null>(null);
@@ -33,21 +37,35 @@ const promote = (prev: AppId[], id: AppId): AppId[] => [
 ];
 
 export function MobileStackProvider({ children }: { children: ReactNode }) {
-  const [expanded, setExpanded] = useState<AppId[]>(INITIAL_OPEN);
+  const [open, setOpen] = useState<AppId[]>(INITIAL_OPEN);
+  const [minimized, setMinimized] = useState<AppId[]>([]);
 
-  const expand = useCallback((id: AppId) => {
-    setExpanded((prev) => (prev[0] === id ? prev : promote(prev, id)));
+  const openCard = useCallback((id: AppId) => {
+    setOpen((prev) => (prev[0] === id ? prev : promote(prev, id)));
+    setMinimized((prev) => prev.filter((x) => x !== id));
   }, []);
 
-  const toggle = useCallback((id: AppId) => {
-    setExpanded((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : promote(prev, id),
+  const closeCard = useCallback((id: AppId) => {
+    setOpen((prev) => prev.filter((x) => x !== id));
+    setMinimized((prev) => prev.filter((x) => x !== id));
+  }, []);
+
+  const toggleMinimize = useCallback((id: AppId) => {
+    setMinimized((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   }, []);
 
   const value = useMemo<MobileStackValue>(
-    () => ({ expanded, isExpanded: (id) => expanded.includes(id), expand, toggle }),
-    [expanded, expand, toggle],
+    () => ({
+      open,
+      isOpen: (id) => open.includes(id),
+      isMinimized: (id) => minimized.includes(id),
+      openCard,
+      closeCard,
+      toggleMinimize,
+    }),
+    [open, minimized, openCard, closeCard, toggleMinimize],
   );
 
   return (

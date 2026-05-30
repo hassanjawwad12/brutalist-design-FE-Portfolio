@@ -496,36 +496,71 @@
   flex-direction: column;
   overflow: hidden;
 }
+/* Header row: red close dot + minimize toggle (icon, title, chevron). */
+.mstack__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+}
+.mstack__card[data-expanded] .mstack__bar {
+  border-bottom: 1px solid var(--hairline);
+}
+/* Red dot — closes the card (removes it from the stack). */
+.mstack__close {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--tl-close);
+  box-shadow: inset 0 0 0 1px oklch(0% 0 0 / 0.12);
+  cursor: pointer;
+  transition:
+    filter var(--dur-fast) var(--ease-out-expo),
+    transform var(--dur-fast) var(--ease-out-expo);
+}
+.mstack__close:hover {
+  filter: brightness(0.9);
+}
+.mstack__close:active {
+  transform: scale(0.9);
+}
+.mstack__close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 .mstack__heading {
   margin: 0;
+  flex: 1;
+  min-width: 0;
   font: inherit;
 }
-/* Header doubles as the accordion toggle — full-width reset button. */
-.mstack__bar {
+/* Chevron toggle — minimizes/restores the body without closing the card. */
+.mstack__toggle {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   width: 100%;
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-2);
   background: transparent;
   border: 0;
+  border-radius: var(--radius-md);
   color: inherit;
+  font: inherit;
   text-align: left;
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out-expo);
 }
-.mstack__bar:hover {
+.mstack__toggle:hover {
   background: oklch(70% 0.04 285 / 0.1);
 }
-.mstack__bar:active {
+.mstack__toggle:active {
   background: oklch(70% 0.04 285 / 0.16);
 }
-.mstack__bar:focus-visible {
-  outline: 2px solid var(--accent, oklch(62% 0.2 265));
+.mstack__toggle:focus-visible {
+  outline: 2px solid var(--accent);
   outline-offset: -2px;
-}
-.mstack__card[data-expanded] .mstack__bar {
-  border-bottom: 1px solid var(--hairline);
 }
 .mstack__icon {
   display: grid;
